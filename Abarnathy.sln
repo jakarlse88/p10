@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abarnathy.DemographicsAPI", "Abarnathy.DemographicsAPI\Abarnathy.DemographicsAPI.csproj", "{899799DB-D7CD-4235-B779-F667C4E7FD22}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abarnathy.Client", "Abarnathy.Client\Abarnathy.Client.csproj", "{DF2225AC-D405-4E8D-B06A-087231C318D7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{899799DB-D7CD-4235-B779-F667C4E7FD22}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{899799DB-D7CD-4235-B779-F667C4E7FD22}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{899799DB-D7CD-4235-B779-F667C4E7FD22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF2225AC-D405-4E8D-B06A-087231C318D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF2225AC-D405-4E8D-B06A-087231C318D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF2225AC-D405-4E8D-B06A-087231C318D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF2225AC-D405-4E8D-B06A-087231C318D7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
