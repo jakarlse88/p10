@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Abarnathy.DemographicsAPI.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
+    [DbContext(typeof(DemographicsDbContext))]
     [Migration("20200422083248_Initial")]
     partial class Initial
     {

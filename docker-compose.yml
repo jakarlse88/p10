@@ -6,31 +6,35 @@ networks:
 
 services:
   
-  abarnathy.reverseproxy:
+  reverse_proxy:
+    container_name: reverse_proxy
     build: Abarnathy.ReverseProxy/.
     networks:
       - app-network
   
-  abarnathy.sqlserver:
+  sql_server:
+    container_name: sql_server
     build: Abarnathy.SQLServer/.
     networks:
       - app-network
 
-  abarnathy.blazorserver:
-    container_name: abarnathy.blazorserver
+  blazor_server:
+    container_name: blazor_server
     depends_on:
-        - abarnathy.reverseproxy
+        - reverse_proxy
     build: 
         context: .
         dockerfile: Abarnathy.BlazorClient/Server/Dockerfile
     networks:
       - app-network
 
-  abarnathy.demographicsapi:
-    container_name: abarnathy.demographicsapi
+  demographics_api:
+    container_name: demographics_api
     image: ${DOCKER_REGISTRY-}abarnathydemographicsapi
     build:
       context: .
       dockerfile: Abarnathy.DemographicsAPI/Dockerfile
+    depends_on:
+        - sql_server
     networks:
       - app-network

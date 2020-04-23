@@ -2,12 +2,12 @@ version: '3.4'
 
 services:
 
-  abarnathy.reverseproxy:
+  reverse_proxy:
     ports:
       - "${NGINX_PORT_EXT}:${NGINX_PORT_INT}"
     restart: always
 
-  abarnathy.sqlserver:
+  sql_server:
     environment: 
         - ACCEPT_EULA=Y
         - SA_PASSWORD=${SA_PASSWORD_SEED}
@@ -20,16 +20,14 @@ services:
         - abarnathy-sqldata:/var/opt/mssql
         - abarnathy-sqluser:/var/opt/sql
 
-  abarnathy.blazorserver:
-    # container_name: blazor-server
+  blazor_server:
     ports:
-        - "8081:80" 
+      - "${BLAZOR_SERVER_PORT_EXT}:${BLAZOR_SERVER_PORT_INT}"
 
-  abarnathy.demographicsapi:
-    # container_name: demographics_api
+  demographics_api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - "ConnectionString=Server=${SQL_SERVER_SERVER_NAME},${SQL_SERVER_PORT_EXT};Initial Catalog=${DEMOGRAPHICS_API_DB_INITIAL_CATALOG};User Id=${DEMOGRAPHICS_API_DB_USER_ID};Password=${DEMOGRAPHICS_API_DB_PASSWORD}"
+      - "ConnectionStrings__DefaultConnection=Server=${SQL_SERVER_SERVER_NAME},${SQL_SERVER_PORT_INT};Initial Catalog=${DEMOGRAPHICS_API_DB_INITIAL_CATALOG};User Id=${DEMOGRAPHICS_API_DB_USER_ID};Password=${DEMOGRAPHICS_API_DB_PASSWORD}"
     ports:
       - "${DEMOGRAPHICS_API_PORT_EXT}:${DEMOGRAPHICS_API_PORT_INT}"
 

@@ -14,6 +14,7 @@ namespace Abarnathy.DemographicsAPI
             var appSettings = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json")
+                .AddEnvironmentVariables()
                 .Build();
 
             Log.Logger = new LoggerConfiguration()
@@ -25,10 +26,10 @@ namespace Abarnathy.DemographicsAPI
                 .WriteTo.File("Logs/",
                     rollingInterval: RollingInterval.Day,
                     retainedFileCountLimit: 14)
-                // .WriteTo.MSSqlServer(
-                //     connectionString: appSettings["ConnectionString"],
-                //     tableName: "Log",
-                //     autoCreateSqlTable: true)
+                 .WriteTo.MSSqlServer(
+                     connectionString: appSettings.GetConnectionString("DefaultConnection"),
+                     tableName: "Log",
+                     autoCreateSqlTable: true)
                 .Enrich.FromLogContext()
                 .CreateLogger();
 

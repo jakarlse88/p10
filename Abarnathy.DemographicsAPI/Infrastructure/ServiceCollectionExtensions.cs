@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Serilog;
 using System;
 using System.Reflection;
 
@@ -11,9 +12,11 @@ namespace Abarnathy.DemographicsAPI.Infrastructure
     {
         public static void ConfigureDbContext(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
+            Log.Information("ConnectionString: {0}", configuration.GetConnectionString("DefaultConnection"));
+
+            services.AddDbContext<DemographicsDbContext>(options =>
             {
-                options.UseSqlServer(configuration["ConnectionString"], sqlServerOptionsAction: sqlOptions =>
+                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"), sqlServerOptionsAction: sqlOptions =>
                 {
                     sqlOptions
                         .MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name);
