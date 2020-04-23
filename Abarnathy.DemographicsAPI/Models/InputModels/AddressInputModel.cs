@@ -7,7 +7,7 @@ namespace Abarnathy.DemographicsAPI.Models
     {
         public AddressInputModel()
         {
-            PatientAddress = new HashSet<PatientAddress>();
+            PatientAddress = new HashSet<PatientAddressInputModel>();
         }
 
         public int Id { get; set; }
@@ -17,6 +17,6 @@ namespace Abarnathy.DemographicsAPI.Models
         public string State { get; set; }
         public string Zipcode { get; set; }
 
-        public ICollection<PatientAddress> PatientAddress { get; set; }
+        public ICollection<PatientAddressInputModel> PatientAddress { get; set; }
     }
 }

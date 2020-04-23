@@ -7,12 +7,12 @@ namespace Abarnathy.DemographicsAPI.Models
     {
         public SexInputModel()
         {
-            Patient = new HashSet<Patient>();
+            Patient = new HashSet<PatientInputModel>();
         }
 
         public int Id { get; set; }
         public string Type { get; set; }
 
-        public virtual ICollection<Patient> Patient { get; set; }
+        public ICollection<PatientInputModel> Patient { get; set; }
     }
 }

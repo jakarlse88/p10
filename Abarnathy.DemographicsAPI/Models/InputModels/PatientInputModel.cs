@@ -7,8 +7,8 @@ namespace Abarnathy.DemographicsAPI.Models
     {
         public PatientInputModel()
         {
-            PatientAddress = new HashSet<PatientAddress>();
-            PatientTelephoneNumber = new HashSet<PatientTelephoneNumber>();
+            PatientAddress = new HashSet<PatientAddressInputModel>();
+            PatientTelephoneNumber = new HashSet<PatientTelephoneNumberInputModel>();
         }
 
         public int Id { get; set; }
@@ -17,8 +17,8 @@ namespace Abarnathy.DemographicsAPI.Models
         public string MiddleName { get; set; }
         public string FamilyName { get; set; }
 
-        public Sex Sex { get; set; }
-        public ICollection<PatientAddress> PatientAddress { get; set; }
-        public ICollection<PatientTelephoneNumber> PatientTelephoneNumber { get; set; }
+        public SexInputModel Sex { get; set; }
+        public ICollection<PatientAddressInputModel> PatientAddress { get; set; }
+        public ICollection<PatientTelephoneNumberInputModel> PatientTelephoneNumber { get; set; }
     }
 }
