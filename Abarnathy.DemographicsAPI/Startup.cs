@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
 using Abarnathy.DemographicsAPI.Infrastructure;
+using ApplicationBuilderExtensions = Abarnathy.DemographicsAPI.Infrastructure.ApplicationBuilderExtensions;
 
 namespace Abarnathy.DemographicsAPI
 {
@@ -17,22 +18,19 @@ namespace Abarnathy.DemographicsAPI
 
         public IConfiguration Configuration { get; }
 
-        
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
 
             services.ConfigureDbContext(Configuration);
+
+            services.ConfigureSwagger();
         }
 
-        
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseForwardedHeaders(new ForwardedHeadersOptions
-            {
-                ForwardedHeaders = ForwardedHeaders.XForwardedFor |
-                                    ForwardedHeaders.XForwardedProto
-            });
+            ApplicationBuilderExtensions.UseForwardedHeaders(app);
 
             if (env.IsDevelopment())
             {
@@ -41,14 +39,13 @@ namespace Abarnathy.DemographicsAPI
 
             app.ApplyMigrations();
 
+            app.UseSwaggerUI();
+
             app.UseRouting();
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
     }
 }
