@@ -3,11 +3,10 @@
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim AS base
 WORKDIR /app
 EXPOSE 80
-EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
-COPY ["Abarnathy.DemographicsAPI/Abarnathy.DemographicsAPI.csproj", "Abarnathy.DemographicsAPI/"] .
+COPY ["Abarnathy.DemographicsAPI/Abarnathy.DemographicsAPI.csproj", "Abarnathy.DemographicsAPI/"]
 RUN dotnet restore "Abarnathy.DemographicsAPI/Abarnathy.DemographicsAPI.csproj"
 COPY . .
 WORKDIR "/src/Abarnathy.DemographicsAPI"

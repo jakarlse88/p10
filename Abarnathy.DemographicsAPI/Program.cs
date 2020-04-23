@@ -1,11 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Serilog;
+using System.IO;
+using Serilog.Sinks.SystemConsole.Themes;
 
 namespace Abarnathy.DemographicsAPI
 {
@@ -13,6 +11,27 @@ namespace Abarnathy.DemographicsAPI
     {
         public static void Main(string[] args)
         {
+            var appSettings = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json")
+                .Build();
+
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Debug()
+                .WriteTo.Console(
+                    outputTemplate:
+                    "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}",
+                    theme: AnsiConsoleTheme.Literate)
+                .WriteTo.File("Logs/",
+                    rollingInterval: RollingInterval.Day,
+                    retainedFileCountLimit: 14)
+                // .WriteTo.MSSqlServer(
+                //     connectionString: appSettings["ConnectionString"],
+                //     tableName: "Log",
+                //     autoCreateSqlTable: true)
+                .Enrich.FromLogContext()
+                .CreateLogger();
+
             CreateHostBuilder(args).Build().Run();
         }
 

@@ -5,7 +5,7 @@ using System.Text;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Abarnathy.Client
+namespace Abarnathy.BlazorClient.Client
 {
     public class Program
     {

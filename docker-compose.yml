@@ -1,0 +1,36 @@
+version: '3.4'
+
+networks:
+  app-network:
+    driver: bridge
+
+services:
+  
+  abarnathy.reverseproxy:
+    build: Abarnathy.ReverseProxy/.
+    networks:
+      - app-network
+  
+  abarnathy.sqlserver:
+    build: Abarnathy.SQLServer/.
+    networks:
+      - app-network
+
+  abarnathy.blazorserver:
+    container_name: abarnathy.blazorserver
+    depends_on:
+        - abarnathy.reverseproxy
+    build: 
+        context: .
+        dockerfile: Abarnathy.BlazorClient/Server/Dockerfile
+    networks:
+      - app-network
+
+  abarnathy.demographicsapi:
+    container_name: abarnathy.demographicsapi
+    image: ${DOCKER_REGISTRY-}abarnathydemographicsapi
+    build:
+      context: .
+      dockerfile: Abarnathy.DemographicsAPI/Dockerfile
+    networks:
+      - app-network

@@ -1,8 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abarnathy.DemographicsAPI", "Abarnathy.DemographicsAPI\Abarnathy.DemographicsAPI.csproj", "{899799DB-D7CD-4235-B779-F667C4E7FD22}"
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30011.22
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abarnathy.DemographicsAPI", "Abarnathy.DemographicsAPI\Abarnathy.DemographicsAPI.csproj", "{D0C32157-FE08-470F-88F5-CA364AD49B47}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abarnathy.Client", "Abarnathy.Client\Abarnathy.Client.csproj", "{DF2225AC-D405-4E8D-B06A-087231C318D7}"
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{891DADD1-1E08-4A0F-859F-CB54B37BE850}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abarnathy.BlazorClient.Server", "Abarnathy.BlazorClient\Server\Abarnathy.BlazorClient.Server.csproj", "{13565B8F-7B50-469B-B269-81DC5871D322}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abarnathy.BlazorClient.Client", "Abarnathy.BlazorClient\Client\Abarnathy.BlazorClient.Client.csproj", "{14910213-C180-4EEB-B481-6A9762469F37}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -10,13 +17,27 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{899799DB-D7CD-4235-B779-F667C4E7FD22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{899799DB-D7CD-4235-B779-F667C4E7FD22}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{899799DB-D7CD-4235-B779-F667C4E7FD22}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{899799DB-D7CD-4235-B779-F667C4E7FD22}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DF2225AC-D405-4E8D-B06A-087231C318D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DF2225AC-D405-4E8D-B06A-087231C318D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DF2225AC-D405-4E8D-B06A-087231C318D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DF2225AC-D405-4E8D-B06A-087231C318D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0C32157-FE08-470F-88F5-CA364AD49B47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0C32157-FE08-470F-88F5-CA364AD49B47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0C32157-FE08-470F-88F5-CA364AD49B47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0C32157-FE08-470F-88F5-CA364AD49B47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{891DADD1-1E08-4A0F-859F-CB54B37BE850}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{891DADD1-1E08-4A0F-859F-CB54B37BE850}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{891DADD1-1E08-4A0F-859F-CB54B37BE850}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{891DADD1-1E08-4A0F-859F-CB54B37BE850}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13565B8F-7B50-469B-B269-81DC5871D322}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13565B8F-7B50-469B-B269-81DC5871D322}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13565B8F-7B50-469B-B269-81DC5871D322}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13565B8F-7B50-469B-B269-81DC5871D322}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14910213-C180-4EEB-B481-6A9762469F37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14910213-C180-4EEB-B481-6A9762469F37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14910213-C180-4EEB-B481-6A9762469F37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14910213-C180-4EEB-B481-6A9762469F37}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {835E535C-1F98-48D8-81F3-8304DEEDEA64}
 	EndGlobalSection
 EndGlobal

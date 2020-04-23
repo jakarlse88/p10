@@ -1,0 +1,40 @@
+version: '3.4'
+
+services:
+
+  abarnathy.reverseproxy:
+    ports:
+      - "${NGINX_PORT_EXT}:${NGINX_PORT_INT}"
+    restart: always
+
+  abarnathy.sqlserver:
+    environment: 
+        - ACCEPT_EULA=Y
+        - SA_PASSWORD=${SA_PASSWORD_SEED}
+        - MSSQL_PID=Express
+    healthcheck:
+        test: ["CMD", "/opt/mssql-tools/bin/sqlcmd", "-USA", "-P${SA_PASSWORD_SEED}", "-Q", "SELECT 1"]
+    ports:
+        - "${SQL_SERVER_PORT_EXT}:${SQL_SERVER_PORT_INT}"
+    volumes:
+        - abarnathy-sqldata:/var/opt/mssql
+        - abarnathy-sqluser:/var/opt/sql
+
+  abarnathy.blazorserver:
+    # container_name: blazor-server
+    ports:
+        - "8081:80" 
+
+  abarnathy.demographicsapi:
+    # container_name: demographics_api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionString=Server=${SQL_SERVER_SERVER_NAME},${SQL_SERVER_PORT_EXT};Initial Catalog=${DEMOGRAPHICS_API_DB_INITIAL_CATALOG};User Id=${DEMOGRAPHICS_API_DB_USER_ID};Password=${DEMOGRAPHICS_API_DB_PASSWORD}"
+    ports:
+      - "${DEMOGRAPHICS_API_PORT_EXT}:${DEMOGRAPHICS_API_PORT_INT}"
+
+volumes:
+  abarnathy-sqldata:
+    external: false
+  abarnathy-sqluser:
+    external: false
