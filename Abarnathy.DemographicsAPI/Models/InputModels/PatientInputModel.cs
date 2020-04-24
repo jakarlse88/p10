@@ -15,7 +15,6 @@ namespace Abarnathy.DemographicsAPI.Models
         public string FamilyName { get; set; }
         public string PhoneNumber { get; set; }
 
-        public SexInputModel Sex { get; set; }
         public ICollection<AddressInputModel> Addresses { get; set; }
     }
 }

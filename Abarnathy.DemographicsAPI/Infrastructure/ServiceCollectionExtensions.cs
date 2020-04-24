@@ -6,12 +6,28 @@ using Serilog;
 using System;
 using System.IO;
 using System.Reflection;
+using Abarnathy.DemographicsAPI.Infrastructure.ActionFilters;
+using FluentValidation.AspNetCore;
 using Microsoft.OpenApi.Models;
 
 namespace Abarnathy.DemographicsAPI.Infrastructure
 {
     public static class ServiceCollectionExtensions
     {
+        /// <summary>
+        /// Configures controllers with action filters,
+        /// and configures and adds FluentValidation.
+        /// </summary>
+        /// <param name="services"></param>
+        public static void ConfigureControllers(this IServiceCollection services)
+        {
+            services.AddControllers(options => { options.Filters.Add(new ModelValidationActionFilter()); })
+                .AddFluentValidation(fv =>
+                {
+                    fv.RegisterValidatorsFromAssemblyContaining<Startup>();
+                    fv.ImplicitlyValidateChildProperties = true;
+                });
+        }
         /// <summary>
         /// Configures the DbContext.
         /// </summary>

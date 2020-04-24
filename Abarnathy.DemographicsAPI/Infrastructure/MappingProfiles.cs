@@ -19,12 +19,10 @@ namespace Abarnathy.DemographicsAPI.Infrastructure
                 );
 
             CreateMap<Address, AddressInputModel>();
-            CreateMap<Sex, SexInputModel>();
 
             // To entities
             CreateMap<PatientInputModel, Patient>();
             CreateMap<AddressInputModel, Address>();
-            CreateMap<SexInputModel, Sex>();
         }
     }
 }

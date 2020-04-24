@@ -66,7 +66,7 @@ namespace Abarnathy.DemographicsAPI.Data
 
                 entity.Property(e => e.PhoneNumber)
                     .IsRequired()
-                    .HasMaxLength(50);
+                    .HasMaxLength(10);
 
                 entity.HasOne(d => d.Sex)
                     .WithMany(p => p.Patient)

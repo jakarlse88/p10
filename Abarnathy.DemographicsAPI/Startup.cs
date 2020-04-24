@@ -4,7 +4,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Abarnathy.DemographicsAPI.Infrastructure;
+using Abarnathy.DemographicsAPI.Infrastructure.ActionFilters;
 using AutoMapper;
+using FluentValidation.AspNetCore;
 using ApplicationBuilderExtensions = Abarnathy.DemographicsAPI.Infrastructure.ApplicationBuilderExtensions;
 
 namespace Abarnathy.DemographicsAPI
@@ -21,7 +23,7 @@ namespace Abarnathy.DemographicsAPI
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.ConfigureControllers();
 
             services.ConfigureDbContext(Configuration);
 
