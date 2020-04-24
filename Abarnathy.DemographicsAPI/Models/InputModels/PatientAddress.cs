@@ -8,7 +8,7 @@ namespace Abarnathy.DemographicsAPI.Models
         public int PatientId { get; set; }
         public int AddressId { get; set; }
 
-        public AddressInputModel Address { get; set; }
-        public PatientInputModel Patient { get; set; }
+        public virtual AddressInputModel Address { get; set; }
+        public virtual PatientInputModel Patient { get; set; }
     }
 }

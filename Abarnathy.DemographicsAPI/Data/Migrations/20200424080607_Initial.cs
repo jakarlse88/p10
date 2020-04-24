@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Abarnathy.DemographicsAPI.Migrations
+namespace Abarnathy.DemographicsAPI.Data.Migrations
 {
     public partial class Initial : Migration
     {
@@ -12,11 +12,11 @@ namespace Abarnathy.DemographicsAPI.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    StreetName = table.Column<string>(nullable: true),
-                    HouseNumber = table.Column<string>(nullable: true),
-                    Town = table.Column<string>(nullable: true),
-                    State = table.Column<string>(nullable: true),
-                    ZIPCode = table.Column<string>(nullable: true)
+                    StreetName = table.Column<string>(maxLength: 40, nullable: false),
+                    HouseNumber = table.Column<string>(maxLength: 6, nullable: false),
+                    Town = table.Column<string>(maxLength: 40, nullable: false),
+                    State = table.Column<string>(maxLength: 20, nullable: false),
+                    ZIPCode = table.Column<string>(maxLength: 10, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -29,24 +29,11 @@ namespace Abarnathy.DemographicsAPI.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Type = table.Column<string>(nullable: true)
+                    Type = table.Column<string>(maxLength: 10, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Sex", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "TelephoneNumber",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Number = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TelephoneNumber", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -55,20 +42,20 @@ namespace Abarnathy.DemographicsAPI.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    GivenName = table.Column<string>(nullable: true),
-                    MiddleName = table.Column<string>(nullable: true),
-                    FamilyName = table.Column<string>(nullable: true),
-                    SexId = table.Column<int>(nullable: false)
+                    SexId = table.Column<int>(nullable: false),
+                    GivenName = table.Column<string>(maxLength: 50, nullable: false),
+                    FamilyName = table.Column<string>(maxLength: 50, nullable: false),
+                    PhoneNumber = table.Column<string>(maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Patient", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Patient_Sex_SexId",
+                        name: "FK_Patient_Sex",
                         column: x => x.SexId,
                         principalTable: "Sex",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -82,41 +69,17 @@ namespace Abarnathy.DemographicsAPI.Migrations
                 {
                     table.PrimaryKey("PK_PatientAddress", x => new { x.PatientId, x.AddressId });
                     table.ForeignKey(
-                        name: "FK_PatientAddress_Address_AddressId",
+                        name: "FK_PatientAddress_Address",
                         column: x => x.AddressId,
                         principalTable: "Address",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_PatientAddress_Patient_PatientId",
+                        name: "FK_PatientAddress_Patient",
                         column: x => x.PatientId,
                         principalTable: "Patient",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "PatientTelephoneNumber",
-                columns: table => new
-                {
-                    PatientId = table.Column<int>(nullable: false),
-                    TelephoneNumberId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PatientTelephoneNumber", x => new { x.PatientId, x.TelephoneNumberId });
-                    table.ForeignKey(
-                        name: "FK_PatientTelephoneNumber_Patient_PatientId",
-                        column: x => x.PatientId,
-                        principalTable: "Patient",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_PatientTelephoneNumber_TelephoneNumber_TelephoneNumberId",
-                        column: x => x.TelephoneNumberId,
-                        principalTable: "TelephoneNumber",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -128,11 +91,6 @@ namespace Abarnathy.DemographicsAPI.Migrations
                 name: "IX_PatientAddress_AddressId",
                 table: "PatientAddress",
                 column: "AddressId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PatientTelephoneNumber_TelephoneNumberId",
-                table: "PatientTelephoneNumber",
-                column: "TelephoneNumberId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -141,16 +99,10 @@ namespace Abarnathy.DemographicsAPI.Migrations
                 name: "PatientAddress");
 
             migrationBuilder.DropTable(
-                name: "PatientTelephoneNumber");
-
-            migrationBuilder.DropTable(
                 name: "Address");
 
             migrationBuilder.DropTable(
                 name: "Patient");
-
-            migrationBuilder.DropTable(
-                name: "TelephoneNumber");
 
             migrationBuilder.DropTable(
                 name: "Sex");

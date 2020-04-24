@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Abarnathy.DemographicsAPI.Models
 {
-    public class SexInputModel
+    public partial class SexInputModel
     {
         public SexInputModel()
         {
@@ -13,6 +13,6 @@ namespace Abarnathy.DemographicsAPI.Models
         public int Id { get; set; }
         public string Type { get; set; }
 
-        public ICollection<PatientInputModel> Patient { get; set; }
+        public virtual ICollection<PatientInputModel> Patient { get; set; }
     }
 }
