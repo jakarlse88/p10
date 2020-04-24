@@ -4,9 +4,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Abarnathy.DemographicsAPI.Infrastructure;
-using Abarnathy.DemographicsAPI.Infrastructure.ActionFilters;
+using Abarnathy.DemographicsAPI.Repositories;
 using AutoMapper;
-using FluentValidation.AspNetCore;
 using ApplicationBuilderExtensions = Abarnathy.DemographicsAPI.Infrastructure.ApplicationBuilderExtensions;
 
 namespace Abarnathy.DemographicsAPI
@@ -18,8 +17,7 @@ namespace Abarnathy.DemographicsAPI
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
-
+        private IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -29,6 +27,8 @@ namespace Abarnathy.DemographicsAPI
 
             services.ConfigureSwagger();
 
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            
             services.AddAutoMapper(typeof(Startup));
         }
 
@@ -41,7 +41,7 @@ namespace Abarnathy.DemographicsAPI
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseExceptionHandler();
+            app.UseExceptionHandler("/Error");
 
             app.ApplyMigrations();
 

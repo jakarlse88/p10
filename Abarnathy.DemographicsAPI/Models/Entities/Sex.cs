@@ -12,6 +12,6 @@ namespace Abarnathy.DemographicsAPI.Models
         public int Id { get; set; }
         public string Type { get; set; }
 
-        public virtual ICollection<Patient> Patient { get; set; }
+        public ICollection<Patient> Patient { get; set; }
     }
 }

@@ -1,5 +1,3 @@
-using System.Threading.Tasks;
-using Abarnathy.DemographicsAPI.Infrastructure.Validators;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
