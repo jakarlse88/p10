@@ -41,6 +41,8 @@ namespace Abarnathy.DemographicsAPI
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseExceptionHandler();
+
             app.ApplyMigrations();
 
             app.UseSwaggerUI();

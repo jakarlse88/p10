@@ -8,6 +8,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Polly;
 using Serilog;
 using System;
+using System.Net;
+using Abarnathy.DemographicsAPI.Models;
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
 
 namespace Abarnathy.DemographicsAPI.Infrastructure
@@ -80,6 +84,32 @@ namespace Abarnathy.DemographicsAPI.Infrastructure
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Abarnathy Demographics API 1.0");
                 c.RoutePrefix = string.Empty;
+            });
+        }
+
+
+        public static void ConfigureExceptionHandler(this IApplicationBuilder app)
+        {
+            app.UseExceptionHandler(appError =>
+            {
+                appError.Run(async context =>
+                    {
+                        context.Response.StatusCode = (int) HttpStatusCode.InternalServerError;
+                        context.Response.ContentType = "application/json";
+
+                        var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
+
+                        if (contextFeature != null)
+                        {
+                            Log.Error("Error: {0}", contextFeature.Error);
+
+                            await context.Response.WriteAsync(new ErrorDetails()
+                            {
+                                StatusCode = context.Response.StatusCode,
+                                Message = "Internal Server Error"
+                            }.ToString());
+                        }
+                    });
             });
         }
     }
