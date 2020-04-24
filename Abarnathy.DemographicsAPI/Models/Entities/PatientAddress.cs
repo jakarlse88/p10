@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Abarnathy.DemographicsAPI.Models
+﻿namespace Abarnathy.DemographicsAPI.Models
 {
     public partial class PatientAddress
     {

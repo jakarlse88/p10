@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.AspNetCore.HttpOverrides;
 using Abarnathy.DemographicsAPI.Infrastructure;
+using AutoMapper;
 using ApplicationBuilderExtensions = Abarnathy.DemographicsAPI.Infrastructure.ApplicationBuilderExtensions;
 
 namespace Abarnathy.DemographicsAPI
@@ -26,6 +26,8 @@ namespace Abarnathy.DemographicsAPI
             services.ConfigureDbContext(Configuration);
 
             services.ConfigureSwagger();
+
+            services.AddAutoMapper(typeof(Startup));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

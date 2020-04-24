@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Abarnathy.DemographicsAPI.Data;
 using Abarnathy.DemographicsAPI.Models;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace Abarnathy.DemographicsAPI.Controllers
 {
@@ -13,16 +12,20 @@ namespace Abarnathy.DemographicsAPI.Controllers
     public class PatientController : ControllerBase
     {
         private readonly DemographicsDbContext _context;
+        private readonly IMapper _mapper;
 
-        public PatientController(DemographicsDbContext context)
+        public PatientController(DemographicsDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         [HttpGet]
-        public IEnumerable<Patient> Get()
+        public IEnumerable<PatientInputModel> Get()
         {
-            return _context.Patient.ToList();
+            var patients = _context.Patient.ToList();
+
+            return _mapper.Map<IEnumerable<PatientInputModel>>(patients);
         }
     }
 }

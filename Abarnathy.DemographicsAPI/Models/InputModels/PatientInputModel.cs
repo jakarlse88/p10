@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Abarnathy.DemographicsAPI.Models
 {
-    public partial class PatientInputModel
+    public class PatientInputModel
     {
         public PatientInputModel()
         {
-            PatientAddress = new HashSet<PatientAddressInputModel>();
+            Addresses = new HashSet<AddressInputModel>();
         }
 
         public int Id { get; set; }
@@ -16,7 +15,7 @@ namespace Abarnathy.DemographicsAPI.Models
         public string FamilyName { get; set; }
         public string PhoneNumber { get; set; }
 
-        public virtual SexInputModel Sex { get; set; }
-        public virtual ICollection<PatientAddressInputModel> PatientAddress { get; set; }
+        public SexInputModel Sex { get; set; }
+        public ICollection<AddressInputModel> Addresses { get; set; }
     }
 }
