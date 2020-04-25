@@ -1,5 +1,4 @@
 using System.Threading.Tasks;
-using Abarnathy.DemographicsAPI.Models;
 
 namespace Abarnathy.DemographicsAPI.Repositories
 {

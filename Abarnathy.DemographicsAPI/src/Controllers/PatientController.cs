@@ -1,10 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Abarnathy.DemographicsAPI.Data;
 using Abarnathy.DemographicsAPI.Models;
 using Abarnathy.DemographicsAPI.Services.Interfaces;
-using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 

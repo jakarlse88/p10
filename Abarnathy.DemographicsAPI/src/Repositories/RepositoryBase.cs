@@ -1,14 +1,13 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 using Abarnathy.DemographicsAPI.Data;
+using Abarnathy.DemographicsAPI.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Abarnathy.DemographicsAPI.Repositories
 {
-    public class RepositoryBase<TEntity> : IRepositoryBase<TEntity> where TEntity : class
+    public class RepositoryBase<TEntity> : IRepositoryBase<TEntity> where TEntity : EntityBase
     {
         private readonly DemographicsDbContext _context;
 
@@ -29,7 +28,7 @@ namespace Abarnathy.DemographicsAPI.Repositories
             {
                 throw new ArgumentNullException();
             }
-            
+
             var result = _context
                 .Set<TEntity>()
                 .Where(predicate)
@@ -87,26 +86,6 @@ namespace Abarnathy.DemographicsAPI.Repositories
             _context
                 .Set<TEntity>()
                 .Remove(entity);
-        }
-
-        /// <summary>
-        /// Verifies whether an entity exists that satisfies a given predicate.
-        /// </summary>
-        /// <param name="expression"></param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
-        public bool Exists(Expression<Func<TEntity, bool>> expression)
-        {
-            if (expression == null)
-            {
-                throw new ArgumentNullException();
-            }
-
-            var result = _context
-                .Set<TEntity>()
-                .Any(expression);
-
-            return result;
         }
     }
 }

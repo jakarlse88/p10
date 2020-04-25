@@ -2,7 +2,7 @@
 
 namespace Abarnathy.DemographicsAPI.Models
 {
-    public partial class Sex
+    public partial class Sex : EntityBase
     {
         public Sex()
         {

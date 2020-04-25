@@ -2,7 +2,7 @@
 
 namespace Abarnathy.DemographicsAPI.Models
 {
-    public partial class Patient
+    public partial class Patient : EntityBase
     {
         public Patient()
         {
