@@ -11,7 +11,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abarnathy.BlazorClient.Clie
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abarnathy.DemographicsAPI", "Abarnathy.DemographicsAPI\src\Abarnathy.DemographicsAPI.csproj", "{9C013AC1-86FB-48DD-9503-7DE87AF8382E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abarnathy.DemographicsAPI.Test", "Abarnathy.DemographicsAPI\Test\Abarnathy.DemographicsAPI.Test.csproj", "{746694AE-174D-4A80-AE0F-7183B2E955B5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abarnathy.DemographicsAPI.Test.Unit", "Abarnathy.DemographicsAPI\Test\Abarnathy.DemographicsAPI.Test.Unit\Abarnathy.DemographicsAPI.Test.Unit.csproj", "{46787498-BB13-4393-879D-4EEF54DC0CAA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abarnathy.DemographicsAPI.Test.Integration", "Abarnathy.DemographicsAPI\Test\Abarnathy.DemographicsAPI.Test.Integration\Abarnathy.DemographicsAPI.Test.Integration.csproj", "{C2D944EC-037E-4A6E-B05E-FE25FCEC3037}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +37,14 @@ Global
 		{9C013AC1-86FB-48DD-9503-7DE87AF8382E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C013AC1-86FB-48DD-9503-7DE87AF8382E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C013AC1-86FB-48DD-9503-7DE87AF8382E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{746694AE-174D-4A80-AE0F-7183B2E955B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{746694AE-174D-4A80-AE0F-7183B2E955B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{746694AE-174D-4A80-AE0F-7183B2E955B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{746694AE-174D-4A80-AE0F-7183B2E955B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46787498-BB13-4393-879D-4EEF54DC0CAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46787498-BB13-4393-879D-4EEF54DC0CAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46787498-BB13-4393-879D-4EEF54DC0CAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46787498-BB13-4393-879D-4EEF54DC0CAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2D944EC-037E-4A6E-B05E-FE25FCEC3037}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2D944EC-037E-4A6E-B05E-FE25FCEC3037}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2D944EC-037E-4A6E-B05E-FE25FCEC3037}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2D944EC-037E-4A6E-B05E-FE25FCEC3037}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

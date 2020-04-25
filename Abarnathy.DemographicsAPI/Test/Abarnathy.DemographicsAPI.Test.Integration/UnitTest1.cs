@@ -1,7 +1,7 @@
 using System;
 using Xunit;
 
-namespace Abarnathy.DemographicsAPI.Test
+namespace Abarnathy.DemographicsAPI.Test.Integration
 {
     public class UnitTest1
     {

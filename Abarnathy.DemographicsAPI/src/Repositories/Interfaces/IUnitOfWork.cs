@@ -9,10 +9,6 @@ namespace Abarnathy.DemographicsAPI.Repositories
     public interface IUnitOfWork
     {
         IPatientRepository PatientRepository { get; }
-        RepositoryBase<Address> AddressRepositoryBase { get; }
-        RepositoryBase<Sex> SexRepositoryBase { get; }
-        RepositoryBase<PatientAddress> PatientAddressRepositoryBase { get; }
-
         Task CommitAsync();
         Task RollbackAsync();
     }
