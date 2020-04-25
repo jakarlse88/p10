@@ -87,7 +87,10 @@ namespace Abarnathy.DemographicsAPI.Infrastructure
             });
         }
 
-
+        /// <summary>
+        /// Configures the global exception handler middleware.
+        /// </summary>
+        /// <param name="app"></param>
         public static void ConfigureExceptionHandler(this IApplicationBuilder app)
         {
             app.UseExceptionHandler(appError =>

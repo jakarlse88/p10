@@ -5,13 +5,13 @@ networks:
     driver: bridge
 
 services:
-  
+
   reverse_proxy:
     container_name: reverse_proxy
     build: Abarnathy.ReverseProxy/.
     networks:
       - app-network
-  
+
   sql_server:
     container_name: sql_server
     build: Abarnathy.SQLServer/.
@@ -21,10 +21,10 @@ services:
   blazor_server:
     container_name: blazor_server
     depends_on:
-        - reverse_proxy
-    build: 
-        context: .
-        dockerfile: Abarnathy.BlazorClient/Server/Dockerfile
+      - reverse_proxy
+    build:
+      context: .
+      dockerfile: Abarnathy.BlazorClient/Server/Dockerfile
     networks:
       - app-network
 
@@ -33,8 +33,8 @@ services:
     image: ${DOCKER_REGISTRY-}abarnathydemographicsapi
     build:
       context: .
-      dockerfile: Abarnathy.DemographicsAPI/Dockerfile
+      dockerfile: Abarnathy.DemographicsAPI/src/Dockerfile
     depends_on:
-        - sql_server
+      - sql_server
     networks:
       - app-network

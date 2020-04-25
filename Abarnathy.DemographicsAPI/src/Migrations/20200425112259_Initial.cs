@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Abarnathy.DemographicsAPI.Data.Migrations
+namespace Abarnathy.DemographicsAPI.Migrations
 {
     public partial class Initial : Migration
     {
@@ -45,7 +45,7 @@ namespace Abarnathy.DemographicsAPI.Data.Migrations
                     SexId = table.Column<int>(nullable: false),
                     GivenName = table.Column<string>(maxLength: 50, nullable: false),
                     FamilyName = table.Column<string>(maxLength: 50, nullable: false),
-                    PhoneNumber = table.Column<string>(maxLength: 50, nullable: false)
+                    PhoneNumber = table.Column<string>(maxLength: 10, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -81,6 +81,16 @@ namespace Abarnathy.DemographicsAPI.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.InsertData(
+                table: "Sex",
+                columns: new[] { "Id", "Type" },
+                values: new object[] { 1, "Male" });
+
+            migrationBuilder.InsertData(
+                table: "Sex",
+                columns: new[] { "Id", "Type" },
+                values: new object[] { 2, "Female" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Patient_SexId",

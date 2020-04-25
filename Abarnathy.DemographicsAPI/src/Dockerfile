@@ -6,7 +6,7 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
-COPY ["Abarnathy.DemographicsAPI/Abarnathy.DemographicsAPI.csproj", "Abarnathy.DemographicsAPI/"]
+COPY ["Abarnathy.DemographicsAPI/src/Abarnathy.DemographicsAPI.csproj", "Abarnathy.DemographicsAPI/"]
 RUN dotnet restore "Abarnathy.DemographicsAPI/Abarnathy.DemographicsAPI.csproj"
 COPY . .
 WORKDIR "/src/Abarnathy.DemographicsAPI"

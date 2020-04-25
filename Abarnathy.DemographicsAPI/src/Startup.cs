@@ -29,6 +29,8 @@ namespace Abarnathy.DemographicsAPI
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             
+            services.ConfigureLocalServices();
+            
             services.AddAutoMapper(typeof(Startup));
         }
 

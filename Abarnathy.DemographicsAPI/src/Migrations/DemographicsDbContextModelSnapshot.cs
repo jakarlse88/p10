@@ -3,16 +3,14 @@ using Abarnathy.DemographicsAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Abarnathy.DemographicsAPI.Data.Migrations
+namespace Abarnathy.DemographicsAPI.Migrations
 {
     [DbContext(typeof(DemographicsDbContext))]
-    [Migration("20200424080607_Initial")]
-    partial class Initial
+    partial class DemographicsDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -77,8 +75,8 @@ namespace Abarnathy.DemographicsAPI.Data.Migrations
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
+                        .HasColumnType("nvarchar(10)")
+                        .HasMaxLength(10);
 
                     b.Property<int>("SexId")
                         .HasColumnType("int");
@@ -120,6 +118,18 @@ namespace Abarnathy.DemographicsAPI.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Sex");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Type = "Male"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Type = "Female"
+                        });
                 });
 
             modelBuilder.Entity("Abarnathy.DemographicsAPI.Models.Patient", b =>

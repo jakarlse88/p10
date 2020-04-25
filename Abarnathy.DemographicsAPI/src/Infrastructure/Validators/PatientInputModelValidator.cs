@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Text.RegularExpressions;
 using Abarnathy.DemographicsAPI.Models;
 using FluentValidation;
@@ -21,10 +22,9 @@ namespace Abarnathy.DemographicsAPI.Infrastructure.Validators
                 .MaximumLength(50);
 
             RuleFor(x => x.PhoneNumber)
-                .Matches(new Regex("^[0-9]*$"))
-                .WithMessage("Telephone number cannot contain letters.")
-                .Must(p => p.Length == 10)
-                .WithMessage("Telephone number must contain exactly 10 digits.");
+                .Matches(new Regex(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$"))
+                    .When(s => !string.IsNullOrWhiteSpace(s.PhoneNumber))
+                .WithMessage("Telephone number must conform to US standard.");
         }
     }
 }

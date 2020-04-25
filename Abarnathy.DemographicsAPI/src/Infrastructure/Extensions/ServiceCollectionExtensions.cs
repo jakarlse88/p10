@@ -5,9 +5,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using Abarnathy.DemographicsAPI.Infrastructure.ActionFilters;
+using Abarnathy.DemographicsAPI.Services;
+using Abarnathy.DemographicsAPI.Services.Interfaces;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.OpenApi.Models;
 
 namespace Abarnathy.DemographicsAPI.Infrastructure
@@ -15,13 +19,33 @@ namespace Abarnathy.DemographicsAPI.Infrastructure
     public static class ServiceCollectionExtensions
     {
         /// <summary>
+        /// Configures the app's local services.
+        /// </summary>
+        /// <param name="services"></param>
+        public static void ConfigureLocalServices(this IServiceCollection services)
+        {
+            services.AddTransient<IPatientService, PatientService>();
+        }
+        
+        /// <summary>
         /// Configures controllers with action filters,
         /// and configures and adds FluentValidation.
         /// </summary>
         /// <param name="services"></param>
         public static void ConfigureControllers(this IServiceCollection services)
         {
-            services.AddControllers(options => { options.Filters.Add(new ModelValidationActionFilter()); })
+            services.AddControllers(options =>
+                {
+                    options.Filters.Add(new ModelValidationActionFilter());
+
+                    var noContentFormatter =
+                        options.OutputFormatters.OfType<HttpNoContentOutputFormatter>().FirstOrDefault();
+
+                    if (noContentFormatter != null)
+                    {
+                        noContentFormatter.TreatNullValueAsNoContent = false;
+                    }
+                })
                 .AddFluentValidation(fv =>
                 {
                     fv.RegisterValidatorsFromAssemblyContaining<Startup>();
@@ -35,8 +59,6 @@ namespace Abarnathy.DemographicsAPI.Infrastructure
         /// <param name="configuration"></param>
         public static void ConfigureDbContext(this IServiceCollection services, IConfiguration configuration)
         {
-            Log.Debug("ConnectionString: {0}", configuration.GetConnectionString("DefaultConnection"));
-
             services.AddDbContext<DemographicsDbContext>(options =>
             {
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"), sqlServerOptionsAction: sqlOptions =>

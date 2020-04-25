@@ -97,11 +97,18 @@ namespace Abarnathy.DemographicsAPI.Data
                 entity.Property(e => e.Type)
                     .IsRequired()
                     .HasMaxLength(10);
+
+                entity.HasData(new Sex
+                    {
+                        Id = 1,
+                        Type = "Male"
+                    },
+                    new Sex
+                    {
+                        Id = 2,
+                        Type = "Female"
+                    });
             });
-
-            OnModelCreatingPartial(modelBuilder);
         }
-
-        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
 }

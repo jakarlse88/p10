@@ -8,10 +8,10 @@ namespace Abarnathy.DemographicsAPI.Repositories
     /// </summary>
     public interface IUnitOfWork
     {
-        Repository<Patient> PatientRepository { get; }
-        Repository<Address> AddressRepository { get; }
-        Repository<Sex> SexRepository { get; }
-        Repository<PatientAddress> PatientAddressRepository { get; }
+        IPatientRepository PatientRepository { get; }
+        RepositoryBase<Address> AddressRepositoryBase { get; }
+        RepositoryBase<Sex> SexRepositoryBase { get; }
+        RepositoryBase<PatientAddress> PatientAddressRepositoryBase { get; }
 
         Task CommitAsync();
         Task RollbackAsync();

@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace Abarnathy.DemographicsAPI.Repositories
 {
@@ -8,10 +10,9 @@ namespace Abarnathy.DemographicsAPI.Repositories
     /// Provides generic base repository functionality.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public interface IRepository<T>
+    public interface IRepositoryBase<T>
     {
-        IEnumerable<T> GetAll();
-        IEnumerable<T> GetByCondition(Expression<Func<T, bool>> expression);
+        IQueryable<T> GetByCondition(Expression<Func<T, bool>> predicate);
         void Insert(T entity);
         void Update(T entity);
         void Delete(T entity);
