@@ -1,12 +1,10 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Abarnathy.DemographicsAPI.Data;
 using Abarnathy.DemographicsAPI.Models;
 using Abarnathy.DemographicsAPI.Repositories;
-using Microsoft.EntityFrameworkCore;
 using MockQueryable.Moq;
 using Moq;
 using Xunit;

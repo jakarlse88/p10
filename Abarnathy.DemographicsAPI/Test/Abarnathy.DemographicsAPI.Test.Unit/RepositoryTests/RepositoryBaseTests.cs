@@ -4,7 +4,7 @@ using System.Linq;
 using Abarnathy.DemographicsAPI.Data;
 using Abarnathy.DemographicsAPI.Models;
 using Abarnathy.DemographicsAPI.Repositories;
-using Microsoft.EntityFrameworkCore;
+using MockQueryable.Moq;
 using Moq;
 using Xunit;
 
@@ -30,7 +30,7 @@ namespace Abarnathy.DemographicsAPI.Test.Unit.RepositoryTests
         {
             // Arrange
             var users = GenerateEntityBaseList();
-            var mockDbSet = RepositoryTestUtilities.GenerateMockDbSet<EntityBase>(users.AsQueryable());
+            var mockDbSet = users.AsQueryable().BuildMockDbSet();
             
             var mockContext = new Mock<DemographicsDbContext>();
             mockContext
@@ -56,7 +56,7 @@ namespace Abarnathy.DemographicsAPI.Test.Unit.RepositoryTests
         {
             // Arrange
             var users = GenerateEntityBaseList();
-            var mockDbSet = RepositoryTestUtilities.GenerateMockDbSet<EntityBase>(users.AsQueryable());
+            var mockDbSet = users.AsQueryable().BuildMockDbSet();
 
             var mockContext = new Mock<DemographicsDbContext>();
             mockContext
@@ -97,7 +97,7 @@ namespace Abarnathy.DemographicsAPI.Test.Unit.RepositoryTests
             var testObject = new EntityBase();
 
             var users = GenerateEntityBaseList();
-            var mockDbSet = RepositoryTestUtilities.GenerateMockDbSet<EntityBase>(users.AsQueryable());
+            var mockDbSet = users.AsQueryable().BuildMockDbSet();
 
             var mockContext = new Mock<DemographicsDbContext>();
             mockContext
@@ -138,7 +138,7 @@ namespace Abarnathy.DemographicsAPI.Test.Unit.RepositoryTests
             var testObject = new EntityBase { Id = 6 };
 
             var users = GenerateEntityBaseList();
-            var mockDbSet = RepositoryTestUtilities.GenerateMockDbSet<EntityBase>(users.AsQueryable());
+            var mockDbSet = users.AsQueryable().BuildMockDbSet();
 
             var mockContext = new Mock<DemographicsDbContext>();
             mockContext
@@ -179,7 +179,7 @@ namespace Abarnathy.DemographicsAPI.Test.Unit.RepositoryTests
             var testObject = new EntityBase { Id = 5 };
 
             var users = GenerateEntityBaseList();
-            var mockDbSet = RepositoryTestUtilities.GenerateMockDbSet<EntityBase>(users.AsQueryable());
+            var mockDbSet = users.AsQueryable().BuildMockDbSet();
 
             var mockContext = new Mock<DemographicsDbContext>();
             mockContext
