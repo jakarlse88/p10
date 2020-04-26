@@ -6,8 +6,8 @@ namespace Abarnathy.DemographicsAPI.Services.Interfaces
 {
     public interface IPatientService
     {
-        Task<PatientInputModel> GetById(int id);
-        Task<IEnumerable<PatientInputModel>> GetAll();
+        Task<PatientInputModel> GetInputModelById(int id);
+        Task<IEnumerable<PatientInputModel>> GetInputModelsAll();
         Task<int> Create(PatientInputModel model);
         Task Update(int id, PatientInputModel model);
     }

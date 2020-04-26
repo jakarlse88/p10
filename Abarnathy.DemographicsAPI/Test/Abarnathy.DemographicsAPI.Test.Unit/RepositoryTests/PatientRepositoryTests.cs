@@ -100,41 +100,12 @@ namespace Abarnathy.DemographicsAPI.Test.Unit.RepositoryTests
         }
 
 
-
-
         /**
          * Internal helper methods
          * 
          */
         private static IEnumerable<Patient> GeneratePatientEntityList()
         {
-            // var address = new Address
-            // {
-            //     Id = 1,
-            //     Town = "TestTown"
-            // };
-            //
-            // var patient = new Patient
-            // {
-            //     FamilyName = "One",
-            //     GivenName = "Two",
-            //     Sex = new Sex { Id = 1 },
-            //     PatientAddress = new List<PatientAddress>(),
-            //     PhoneNumber = ""
-            // };
-            //
-            // var patientAddress = new PatientAddress
-            // {
-            //     PatientId = 1,
-            //     Patient = patient,
-            //     AddressId = 1,
-            //     Address = address
-            // };
-            //
-            // patient.PatientAddress.Add(patientAddress);
-            //
-            // var list = new List<Patient> { patient };
-
             var list = new List<Patient>
             {
                 new Patient { Id = 1 },
@@ -143,7 +114,7 @@ namespace Abarnathy.DemographicsAPI.Test.Unit.RepositoryTests
                 new Patient { Id = 4 },
                 new Patient { Id = 5 }
             };
-            
+
             return list;
         }
     }

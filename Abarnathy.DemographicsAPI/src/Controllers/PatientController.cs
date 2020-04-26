@@ -27,7 +27,7 @@ namespace Abarnathy.DemographicsAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<PatientInputModel>>> Get()
         {
-            var result = await _patientService.GetAll();
+            var result = await _patientService.GetInputModelsAll();
 
             return Ok(result);
         }
@@ -49,7 +49,7 @@ namespace Abarnathy.DemographicsAPI.Controllers
                 return BadRequest();
             }
 
-            var result = await _patientService.GetById(id);
+            var result = await _patientService.GetInputModelById(id);
 
             return Ok(result);
         }

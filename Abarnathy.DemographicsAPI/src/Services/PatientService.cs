@@ -26,7 +26,7 @@ namespace Abarnathy.DemographicsAPI.Services
         /// <param name="id"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentOutOfRangeException"></exception>
-        public async Task<PatientInputModel> GetById(int id)
+        public async Task<PatientInputModel> GetInputModelById(int id)
         {
             if (id <= 0)
             {
@@ -34,6 +34,11 @@ namespace Abarnathy.DemographicsAPI.Services
             }
 
             var entity = await _unitOfWork.PatientRepository.GetById(id);
+
+            if (entity == null)
+            {
+                return null;
+            }
 
             var result = _mapper.Map<PatientInputModel>(entity);
 
@@ -45,7 +50,7 @@ namespace Abarnathy.DemographicsAPI.Services
         /// and returns it as an InputModel.
         /// </summary>
         /// <returns></returns>
-        public async Task<IEnumerable<PatientInputModel>> GetAll()
+        public async Task<IEnumerable<PatientInputModel>> GetInputModelsAll()
         {
             var entities = await _unitOfWork.PatientRepository.GetAll();
 
