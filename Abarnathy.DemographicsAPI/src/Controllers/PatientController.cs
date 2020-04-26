@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Net.Mime;
 using System.Threading.Tasks;
 using Abarnathy.DemographicsAPI.Models;
 using Abarnathy.DemographicsAPI.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Reflection;
 
 namespace Abarnathy.DemographicsAPI.Controllers
 {
@@ -72,8 +74,8 @@ namespace Abarnathy.DemographicsAPI.Controllers
             }
 
             var resultId = await _patientService.Create(model);
-
-            return CreatedAtAction("Post", new { Id = resultId });
+            
+            return CreatedAtAction("Get", new { Id = resultId });
         }
     }
 }
