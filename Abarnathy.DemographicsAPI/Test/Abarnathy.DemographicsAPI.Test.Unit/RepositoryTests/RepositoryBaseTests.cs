@@ -30,8 +30,8 @@ namespace Abarnathy.DemographicsAPI.Test.Unit.RepositoryTests
         {
             // Arrange
             var users = GenerateEntityBaseList();
-            var mockDbSet = GenerateMockDbSet(users.AsQueryable());
-
+            var mockDbSet = RepositoryTestUtilities.GenerateMockDbSet<EntityBase>(users.AsQueryable());
+            
             var mockContext = new Mock<DemographicsDbContext>();
             mockContext
                 .Setup(x => x.Set<EntityBase>())
@@ -56,7 +56,7 @@ namespace Abarnathy.DemographicsAPI.Test.Unit.RepositoryTests
         {
             // Arrange
             var users = GenerateEntityBaseList();
-            var mockDbSet = GenerateMockDbSet(users.AsQueryable());
+            var mockDbSet = RepositoryTestUtilities.GenerateMockDbSet<EntityBase>(users.AsQueryable());
 
             var mockContext = new Mock<DemographicsDbContext>();
             mockContext
@@ -97,7 +97,7 @@ namespace Abarnathy.DemographicsAPI.Test.Unit.RepositoryTests
             var testObject = new EntityBase();
 
             var users = GenerateEntityBaseList();
-            var mockDbSet = GenerateMockDbSet(users.AsQueryable());
+            var mockDbSet = RepositoryTestUtilities.GenerateMockDbSet<EntityBase>(users.AsQueryable());
 
             var mockContext = new Mock<DemographicsDbContext>();
             mockContext
@@ -138,7 +138,7 @@ namespace Abarnathy.DemographicsAPI.Test.Unit.RepositoryTests
             var testObject = new EntityBase { Id = 6 };
 
             var users = GenerateEntityBaseList();
-            var mockDbSet = GenerateMockDbSet(users.AsQueryable());
+            var mockDbSet = RepositoryTestUtilities.GenerateMockDbSet<EntityBase>(users.AsQueryable());
 
             var mockContext = new Mock<DemographicsDbContext>();
             mockContext
@@ -179,7 +179,7 @@ namespace Abarnathy.DemographicsAPI.Test.Unit.RepositoryTests
             var testObject = new EntityBase { Id = 5 };
 
             var users = GenerateEntityBaseList();
-            var mockDbSet = GenerateMockDbSet(users.AsQueryable());
+            var mockDbSet = RepositoryTestUtilities.GenerateMockDbSet<EntityBase>(users.AsQueryable());
 
             var mockContext = new Mock<DemographicsDbContext>();
             mockContext
@@ -214,31 +214,6 @@ namespace Abarnathy.DemographicsAPI.Test.Unit.RepositoryTests
                 new EntityBase { Id = 4 },
                 new EntityBase { Id = 5 }
             };
-        }
-
-        private static Mock<DbSet<EntityBase>> GenerateMockDbSet(IQueryable<EntityBase> usersQueryable)
-        {
-            var mockDbSet = new Mock<DbSet<EntityBase>>();
-
-            mockDbSet
-                .As<IQueryable<EntityBase>>().Setup(x => x.Provider)
-                .Returns(usersQueryable.Provider);
-
-            mockDbSet
-                .As<IQueryable<EntityBase>>()
-                .Setup(m => m.Expression)
-                .Returns(usersQueryable.Expression);
-
-            mockDbSet
-                .As<IQueryable<EntityBase>>()
-                .Setup(m => m.ElementType)
-                .Returns(usersQueryable.ElementType);
-
-            mockDbSet
-                .As<IQueryable<EntityBase>>()
-                .Setup(m => m.GetEnumerator())
-                .Returns(usersQueryable.GetEnumerator());
-            return mockDbSet;
         }
     }
 }

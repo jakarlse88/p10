@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Abarnathy.DemographicsAPI.Data;
@@ -14,6 +15,11 @@ namespace Abarnathy.DemographicsAPI.Repositories
 
         public async Task<Patient> GetById(int id)
         {
+            if (id <= 0)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+            
             var result = 
                 await 
                     base.GetByCondition(p => p.Id == id)
@@ -28,7 +34,7 @@ namespace Abarnathy.DemographicsAPI.Repositories
         public async Task<IEnumerable<Patient>> GetAll()
         {
             var result =
-                await base.GetByCondition(_ => true)
+                await base.GetByCondition(p => true)
                     .Include(p => p.PatientAddress)
                     .ThenInclude(pa => pa.Address)
                     .Include(p => p.Sex)
