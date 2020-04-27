@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Linq;
+using Microsoft.Net.Http.Headers;
 
 namespace Abarnathy.BlazorClient.Server
 {
@@ -24,6 +25,19 @@ namespace Abarnathy.BlazorClient.Server
         {
 
             services.AddControllersWithViews();
+            
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder =>
+                    {
+                        builder
+                            .AllowAnyHeader()
+                            .AllowAnyMethod()
+                            .AllowCredentials()
+                            .WithOrigins("http://localhost:8081");
+                    });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,6 +64,8 @@ namespace Abarnathy.BlazorClient.Server
 
             app.UseRouting();
 
+            app.UseCors("CorsPolicy");
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

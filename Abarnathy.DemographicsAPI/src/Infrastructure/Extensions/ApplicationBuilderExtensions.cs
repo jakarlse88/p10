@@ -33,8 +33,7 @@ namespace Abarnathy.DemographicsAPI.Infrastructure
                 }
                 else
                 {
-                    Log.Information("Database is not up-to-date.");
-                    Log.Information("Applying migrations. This may take some time.");
+                    Log.Information("Database is not up-to-date; applying migrations. This may take some time.");
 
                     try
                     {

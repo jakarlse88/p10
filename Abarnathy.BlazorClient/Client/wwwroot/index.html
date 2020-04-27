@@ -2,23 +2,37 @@
 <html>
 
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>Abarnathy.BlazorClient</title>
-    <base href="/" />
-    <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" />
-    <link href="css/site.css" rel="stylesheet" />
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title>Abarnathy Clinic</title>
+    <base href="/"/>
+    <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
+    <link href="css/site.css" rel="stylesheet"/>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet"/>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
+    <script>
+        window.InitDataTable = () =>
+            $(document).ready(() =>
+                $('#patients-table').DataTable()
+            );
+    </script>
+
 </head>
 
 <body>
-    <app>Loading...</app>
+<app>Loading...</app>
 
-    <div id="blazor-error-ui">
-        An unhandled error has occurred.
-        <a href="" class="reload">Reload</a>
-        <a class="dismiss">🗙</a>
-    </div>
-    <script src="_framework/blazor.webassembly.js"></script>
+<div id="blazor-error-ui">
+    An unhandled error has occurred.
+    <a href="" class="reload">Reload</a>
+    <a class="dismiss">🗙</a>
+</div>
+
+<script src="_framework/blazor.webassembly.js"></script>
+
 </body>
 
 </html>

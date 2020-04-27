@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
-using System.Net.Mime;
+using System.Linq;
 using System.Threading.Tasks;
 using Abarnathy.DemographicsAPI.Models;
 using Abarnathy.DemographicsAPI.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Reflection;
 
 namespace Abarnathy.DemographicsAPI.Controllers
 {
@@ -24,14 +23,21 @@ namespace Abarnathy.DemographicsAPI.Controllers
         /// Gets all Patient entities as InputModels.
         /// </summary>
         /// <returns></returns>
-        /// <response code="200">Request OK, returns results.</response>
+        /// <response code="200">Request OK, return results.</response>
+        /// <response code="204">Request OK, no results to return.</response>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<ActionResult<IEnumerable<PatientInputModel>>> Get()
         {
             var result = await _patientService.GetInputModelsAll();
 
-            return Ok(result);
+            if (result.Any())
+            {
+                return Ok(result);
+            }
+
+            return NoContent();
         }
 
         /// <summary>
@@ -39,7 +45,7 @@ namespace Abarnathy.DemographicsAPI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        /// <response code="200">Request OK, returns result.</response>
+        /// <response code="200">Request OK, return result.</response>
         /// <response code="400">Malformed request (bad ID).</response>
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]

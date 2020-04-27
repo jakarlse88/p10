@@ -32,6 +32,8 @@ namespace Abarnathy.DemographicsAPI
             services.ConfigureLocalServices();
             
             services.AddAutoMapper(typeof(Startup));
+
+            services.ConfigureCors();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -42,6 +44,8 @@ namespace Abarnathy.DemographicsAPI
             {
                 app.UseDeveloperExceptionPage();
             }
+            
+            // ApplicationBuilderExtensions.UseCors(app);
 
             app.UseExceptionHandler("/Error");
 
@@ -52,6 +56,8 @@ namespace Abarnathy.DemographicsAPI
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseCors();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }

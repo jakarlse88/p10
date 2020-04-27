@@ -6,10 +6,10 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Abarnathy.DemographicsAPI.Migrations
+namespace Abarnathy.DemographicsAPI.Data.Migrations
 {
     [DbContext(typeof(DemographicsDbContext))]
-    [Migration("20200425112259_Initial")]
+    [Migration("20200427075705_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

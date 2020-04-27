@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Abarnathy.DemographicsAPI.Migrations
+namespace Abarnathy.DemographicsAPI.Data.Migrations
 {
     public partial class Initial : Migration
     {

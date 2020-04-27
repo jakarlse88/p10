@@ -16,9 +16,5 @@
     <ProjectReference Include="..\Client\Abarnathy.BlazorClient.Client.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
 
 </Project>

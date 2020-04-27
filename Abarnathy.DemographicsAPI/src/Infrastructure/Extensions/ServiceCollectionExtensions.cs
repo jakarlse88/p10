@@ -25,7 +25,7 @@ namespace Abarnathy.DemographicsAPI.Infrastructure
         {
             services.AddTransient<IPatientService, PatientService>();
         }
-        
+
         /// <summary>
         /// Configures controllers with action filters,
         /// and configures and adds FluentValidation.
@@ -51,6 +51,27 @@ namespace Abarnathy.DemographicsAPI.Infrastructure
                     fv.ImplicitlyValidateChildProperties = true;
                 });
         }
+
+        /// <summary>
+        /// Configures the global CORS policy.
+        /// </summary>
+        /// <param name="services"></param>
+        public static void ConfigureCors(this IServiceCollection services)
+        {
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(builder =>
+                {
+                    builder
+                        .WithOrigins("http://localhost:8081")
+                        // .AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowCredentials();
+                });
+            });
+        }
+
         /// <summary>
         /// Configures the DbContext.
         /// </summary>
@@ -60,14 +81,16 @@ namespace Abarnathy.DemographicsAPI.Infrastructure
         {
             services.AddDbContext<DemographicsDbContext>(options =>
             {
-                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"), sqlServerOptionsAction: sqlOptions =>
-                {
-                    sqlOptions
-                        .MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name);
+                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
+                    sqlServerOptionsAction: sqlOptions =>
+                    {
+                        sqlOptions
+                            .MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name);
 
-                    sqlOptions
-                        .EnableRetryOnFailure(maxRetryCount: 15, maxRetryDelay: TimeSpan.FromSeconds(30), errorNumbersToAdd: null);
-                });
+                        sqlOptions
+                            .EnableRetryOnFailure(maxRetryCount: 15, maxRetryDelay: TimeSpan.FromSeconds(30),
+                                errorNumbersToAdd: null);
+                    });
             });
         }
 

@@ -12,7 +12,7 @@ namespace Abarnathy.DemographicsAPI
         public static void Main(string[] args)
         {
             var appSettings = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
+                .SetBasePath(Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + "src")
                 .AddJsonFile("appsettings.json")
                 .AddEnvironmentVariables()
                 .Build();
