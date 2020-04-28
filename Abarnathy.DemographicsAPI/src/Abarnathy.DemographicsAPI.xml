@@ -1,0 +1,167 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Abarnathy.DemographicsAPI</name>
+    </assembly>
+    <members>
+        <member name="M:Abarnathy.DemographicsAPI.Controllers.PatientController.Get">
+            <summary>
+            Gets all Patient entities as InputModels.
+            </summary>
+            <returns></returns>
+            <response code="200">Request OK, return results.</response>
+            <response code="204">Request OK, no results to return.</response>
+        </member>
+        <member name="M:Abarnathy.DemographicsAPI.Controllers.PatientController.Get(System.Int32)">
+            <summary>
+            Gets a single Patient entity as an InputModel by the entity's ID.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+            <response code="200">Request OK, return result.</response>
+            <response code="400">Malformed request (bad ID).</response>
+        </member>
+        <member name="M:Abarnathy.DemographicsAPI.Controllers.PatientController.Post(Abarnathy.DemographicsAPI.Models.PatientInputModel)">
+            <summary>
+            Creates a new Patient entity.
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+            <response code="201">The entity was successfully created.</response>
+            <response code="400">Malformed request (arg null).</response>
+        </member>
+        <member name="M:Abarnathy.DemographicsAPI.Infrastructure.ApplicationBuilderExtensions.ApplyMigrations(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Applies initial schema migration, if necessary.
+            </summary>
+            <param name="app"></param>
+        </member>
+        <member name="M:Abarnathy.DemographicsAPI.Infrastructure.ApplicationBuilderExtensions.UseForwardedHeaders(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Configure forwarded headers.
+            </summary>
+            <param name="app"></param>
+        </member>
+        <member name="M:Abarnathy.DemographicsAPI.Infrastructure.ApplicationBuilderExtensions.UseSwaggerUI(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Configure Swagger UI.
+            </summary>
+            <param name="app"></param>
+        </member>
+        <member name="M:Abarnathy.DemographicsAPI.Infrastructure.ApplicationBuilderExtensions.UseCustomExceptionHandler(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Configures the global exception handler middleware.
+            </summary>
+            <param name="app"></param>
+        </member>
+        <member name="M:Abarnathy.DemographicsAPI.Infrastructure.ServiceCollectionExtensions.ConfigureLocalServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Configures the app's local services.
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="M:Abarnathy.DemographicsAPI.Infrastructure.ServiceCollectionExtensions.ConfigureControllers(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Configures controllers with action filters,
+            and configures and adds FluentValidation.
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="M:Abarnathy.DemographicsAPI.Infrastructure.ServiceCollectionExtensions.ConfigureCors(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Configures the global CORS policy.
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="M:Abarnathy.DemographicsAPI.Infrastructure.ServiceCollectionExtensions.ConfigureDbContext(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Configures the DbContext.
+            </summary>
+            <param name="services"></param>
+            <param name="configuration"></param>
+        </member>
+        <member name="M:Abarnathy.DemographicsAPI.Infrastructure.ServiceCollectionExtensions.ConfigureSwagger(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Configures Swagger.
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="T:Abarnathy.DemographicsAPI.Models.EntityBase">
+            <summary>
+            Facilitates entity constraint on RepositoryBase.
+            </summary>
+        </member>
+        <member name="T:Abarnathy.DemographicsAPI.Repositories.IRepositoryBase`1">
+            <summary>
+            Provides generic base repository functionality.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="T:Abarnathy.DemographicsAPI.Repositories.IUnitOfWork">
+            <summary>
+            Maintains a list of objects affected by a business transaction and coordinates the writing out of changes.
+            </summary>
+        </member>
+        <member name="M:Abarnathy.DemographicsAPI.Repositories.RepositoryBase`1.GetByCondition(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            Gets a subset of entity T by a given condition.
+            </summary>
+            <param name="predicate"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:Abarnathy.DemographicsAPI.Repositories.RepositoryBase`1.Insert(`0)">
+            <summary>
+            Begin tracking the entity in the Added state.
+            </summary>
+            <param name="entity"></param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:Abarnathy.DemographicsAPI.Repositories.RepositoryBase`1.Update(`0)">
+            <summary>
+            Begin tracking the entity in the Modified state (generally).
+            </summary>
+            <param name="entity"></param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:Abarnathy.DemographicsAPI.Repositories.RepositoryBase`1.Delete(`0)">
+            <summary>
+            Begins tracking the entity in the Deleted state.
+            </summary>
+            <param name="entity"></param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:Abarnathy.DemographicsAPI.Services.PatientService.GetInputModelById(System.Int32)">
+            <summary>
+            Asynchronously gets a Patient entity (including its relations) by ID
+            and returns it as an InputModel.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+        </member>
+        <member name="M:Abarnathy.DemographicsAPI.Services.PatientService.GetInputModelsAll">
+            <summary>
+            Asynchronously get all Patient entities (including their relations) by ID
+            and returns it as an InputModel.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Abarnathy.DemographicsAPI.Services.PatientService.Create(Abarnathy.DemographicsAPI.Models.PatientInputModel)">
+            <summary>
+            Asynchronously creates a new Patient entity and persists it to the DB.
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:Abarnathy.DemographicsAPI.Services.PatientService.Update(System.Int32,Abarnathy.DemographicsAPI.Models.PatientInputModel)">
+            <summary>
+            Updates a Patient entity and persists any changes made to the DB.
+            </summary>
+            <param name="id"></param>
+            <param name="model"></param>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+    </members>
+</doc>

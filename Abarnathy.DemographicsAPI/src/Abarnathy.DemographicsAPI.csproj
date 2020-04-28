@@ -11,6 +11,10 @@
         <WarningLevel>3</WarningLevel>
     </PropertyGroup>
 
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+      <DocumentationFile>C:\Users\Test\source\repos\p10-new\Abarnathy\Abarnathy.DemographicsAPI\src\Abarnathy.DemographicsAPI.xml</DocumentationFile>
+    </PropertyGroup>
+
     <ItemGroup>
         <PackageReference Include="AutoMapper" Version="9.0.0" />
         <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />

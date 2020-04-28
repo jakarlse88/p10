@@ -8,13 +8,15 @@ services:
 
   reverse_proxy:
     container_name: reverse_proxy
-    build: Abarnathy.ReverseProxy/.
+    build: 
+        context: Abarnathy.ReverseProxy/
     networks:
       - app-network
 
   sql_server:
     container_name: sql_server
-    build: Abarnathy.SQLServer/.
+    build: 
+        context: Abarnathy.SQLServer/
     networks:
       - app-network
 
@@ -30,7 +32,6 @@ services:
 
   demographics_api:
     container_name: demographics_api
-    image: ${DOCKER_REGISTRY-}abarnathydemographicsapi
     build:
       context: .
       dockerfile: Abarnathy.DemographicsAPI/src/Dockerfile
