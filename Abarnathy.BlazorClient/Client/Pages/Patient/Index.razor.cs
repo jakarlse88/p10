@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Abarnathy.BlazorClient.Client.Models;
+using Abarnathy.BlazorClient.Client.Shared;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using Newtonsoft.Json;
@@ -17,13 +18,6 @@ namespace Abarnathy.BlazorClient.Client.Pages.Patient
         [Inject] public IJSRuntime JsRuntime { get; set; }
         public IEnumerable<PatientInputModel> PatientList { get; set; }
         protected OperationStatus Status { get; set; }
-
-        protected enum OperationStatus
-        {
-            Loading,
-            Success,
-            Error
-        }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {

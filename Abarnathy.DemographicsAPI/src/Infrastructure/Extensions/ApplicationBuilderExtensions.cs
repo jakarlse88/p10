@@ -38,7 +38,7 @@ namespace Abarnathy.DemographicsAPI.Infrastructure
                     try
                     {
                         var retry = Policy.Handle<SqlException>()
-                            .WaitAndRetry(new TimeSpan[]
+                            .WaitAndRetry(new []
                             {
                                 TimeSpan.FromSeconds(120),
                                 TimeSpan.FromSeconds(90),
@@ -90,7 +90,7 @@ namespace Abarnathy.DemographicsAPI.Infrastructure
         /// Configures the global exception handler middleware.
         /// </summary>
         /// <param name="app"></param>
-        public static void ConfigureExceptionHandler(this IApplicationBuilder app)
+        public static void UseCustomExceptionHandler(this IApplicationBuilder app)
         {
             app.UseExceptionHandler(appError =>
             {

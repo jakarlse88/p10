@@ -6,12 +6,12 @@ namespace Abarnathy.DemographicsAPI.Models
     {
         public Sex()
         {
-            Patient = new HashSet<Patient>();
+            Patients = new HashSet<Patient>();
         }
 
-        public int Id { get; set; }
+        public new int Id { get; set; }
         public string Type { get; set; }
 
-        public ICollection<Patient> Patient { get; set; }
+        public ICollection<Patient> Patients { get; set; }
     }
 }

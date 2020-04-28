@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Abarnathy.DemographicsAPI.Models
 {
@@ -6,16 +7,19 @@ namespace Abarnathy.DemographicsAPI.Models
     {
         public Patient()
         {
-            PatientAddress = new HashSet<PatientAddress>();
+            PatientAddresses = new HashSet<PatientAddress>();
+            PatientPhoneNumbers = new HashSet<PatientPhoneNumber>();
         }
 
-        public int Id { get; set; }
-        public int SexId { get; set; }
+        public new int Id { get; set; }
         public string GivenName { get; set; }
         public string FamilyName { get; set; }
-        public string PhoneNumber { get; set; }
+        public DateTime DateOfBirth { get; set; }
 
-        public virtual Sex Sex { get; set; }
-        public virtual ICollection<PatientAddress> PatientAddress { get; set; }
+        public int SexId { get; set; }
+        public Sex Sex { get; set; }
+        
+        public ICollection<PatientAddress> PatientAddresses { get; set; }
+        public ICollection<PatientPhoneNumber> PatientPhoneNumbers { get; set; }
     }
 }

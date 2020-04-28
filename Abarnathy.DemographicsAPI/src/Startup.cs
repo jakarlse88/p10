@@ -45,9 +45,7 @@ namespace Abarnathy.DemographicsAPI
                 app.UseDeveloperExceptionPage();
             }
             
-            // ApplicationBuilderExtensions.UseCors(app);
-
-            app.UseExceptionHandler("/Error");
+            app.UseCustomExceptionHandler();
 
             app.ApplyMigrations();
 

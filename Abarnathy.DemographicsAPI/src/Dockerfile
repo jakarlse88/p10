@@ -18,4 +18,7 @@ RUN dotnet publish "Abarnathy.DemographicsAPI.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Abarnathy.DemographicsAPI.dll"]
+COPY Abarnathy.DemographicsAPI/src/wait-for-it.sh ./wait-for-it.sh
+# ENTRYPOINT ["dotnet", "Abarnathy.DemographicsAPI.dll"]
+RUN chmod +x ./wait-for-it.sh
+ENTRYPOINT ["./wait-for-it.sh", "sql_server:1434", "-t", "120", "--", "dotnet", "Abarnathy.DemographicsAPI.dll"]

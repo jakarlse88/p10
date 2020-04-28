@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Abarnathy.DemographicsAPI.Data.Migrations
 {
@@ -24,6 +25,19 @@ namespace Abarnathy.DemographicsAPI.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "PhoneNumber",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Number = table.Column<string>(maxLength: 10, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PhoneNumber", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Sex",
                 columns: table => new
                 {
@@ -42,10 +56,10 @@ namespace Abarnathy.DemographicsAPI.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    SexId = table.Column<int>(nullable: false),
                     GivenName = table.Column<string>(maxLength: 50, nullable: false),
                     FamilyName = table.Column<string>(maxLength: 50, nullable: false),
-                    PhoneNumber = table.Column<string>(maxLength: 10, nullable: false)
+                    DateOfBirth = table.Column<DateTime>(nullable: false),
+                    SexId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -82,6 +96,30 @@ namespace Abarnathy.DemographicsAPI.Data.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "PatientPhoneNumbers",
+                columns: table => new
+                {
+                    PatientId = table.Column<int>(nullable: false),
+                    PhoneNumberId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PatientPhoneNumbers", x => new { x.PatientId, x.PhoneNumberId });
+                    table.ForeignKey(
+                        name: "FK_PatientPhoneNumber_Patient",
+                        column: x => x.PatientId,
+                        principalTable: "Patient",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_PatientPhoneNumber_PhoneNumber",
+                        column: x => x.PhoneNumberId,
+                        principalTable: "PhoneNumber",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.InsertData(
                 table: "Sex",
                 columns: new[] { "Id", "Type" },
@@ -101,6 +139,11 @@ namespace Abarnathy.DemographicsAPI.Data.Migrations
                 name: "IX_PatientAddress_AddressId",
                 table: "PatientAddress",
                 column: "AddressId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PatientPhoneNumbers_PhoneNumberId",
+                table: "PatientPhoneNumbers",
+                column: "PhoneNumberId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -109,10 +152,16 @@ namespace Abarnathy.DemographicsAPI.Data.Migrations
                 name: "PatientAddress");
 
             migrationBuilder.DropTable(
+                name: "PatientPhoneNumbers");
+
+            migrationBuilder.DropTable(
                 name: "Address");
 
             migrationBuilder.DropTable(
                 name: "Patient");
+
+            migrationBuilder.DropTable(
+                name: "PhoneNumber");
 
             migrationBuilder.DropTable(
                 name: "Sex");
