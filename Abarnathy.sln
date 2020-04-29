@@ -1,6 +1,24 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abarnathy.DemographicsAPI", "Abarnathy.DemographicsAPI\Abarnathy.DemographicsAPI.csproj", "{899799DB-D7CD-4235-B779-F667C4E7FD22}"
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30011.22
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{891DADD1-1E08-4A0F-859F-CB54B37BE850}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abarnathy.BlazorClient.Server", "Abarnathy.BlazorClient\Server\Abarnathy.BlazorClient.Server.csproj", "{13565B8F-7B50-469B-B269-81DC5871D322}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abarnathy.BlazorClient.Client", "Abarnathy.BlazorClient\Client\Abarnathy.BlazorClient.Client.csproj", "{14910213-C180-4EEB-B481-6A9762469F37}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abarnathy.DemographicsAPI", "Abarnathy.DemographicsAPI\src\Abarnathy.DemographicsAPI.csproj", "{9C013AC1-86FB-48DD-9503-7DE87AF8382E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abarnathy.DemographicsAPI.Test.Unit", "Abarnathy.DemographicsAPI\Test\Abarnathy.DemographicsAPI.Test.Unit\Abarnathy.DemographicsAPI.Test.Unit.csproj", "{46787498-BB13-4393-879D-4EEF54DC0CAA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abarnathy.DemographicsAPI.Test.Integration", "Abarnathy.DemographicsAPI\Test\Abarnathy.DemographicsAPI.Test.Integration\Abarnathy.DemographicsAPI.Test.Integration.csproj", "{C2D944EC-037E-4A6E-B05E-FE25FCEC3037}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0636AA39-9770-42D4-8E22-8EC8A2DB16EC}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -8,9 +26,35 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{899799DB-D7CD-4235-B779-F667C4E7FD22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{899799DB-D7CD-4235-B779-F667C4E7FD22}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{899799DB-D7CD-4235-B779-F667C4E7FD22}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{899799DB-D7CD-4235-B779-F667C4E7FD22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{891DADD1-1E08-4A0F-859F-CB54B37BE850}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{891DADD1-1E08-4A0F-859F-CB54B37BE850}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{891DADD1-1E08-4A0F-859F-CB54B37BE850}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{891DADD1-1E08-4A0F-859F-CB54B37BE850}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13565B8F-7B50-469B-B269-81DC5871D322}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13565B8F-7B50-469B-B269-81DC5871D322}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13565B8F-7B50-469B-B269-81DC5871D322}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13565B8F-7B50-469B-B269-81DC5871D322}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14910213-C180-4EEB-B481-6A9762469F37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14910213-C180-4EEB-B481-6A9762469F37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14910213-C180-4EEB-B481-6A9762469F37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14910213-C180-4EEB-B481-6A9762469F37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C013AC1-86FB-48DD-9503-7DE87AF8382E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C013AC1-86FB-48DD-9503-7DE87AF8382E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C013AC1-86FB-48DD-9503-7DE87AF8382E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C013AC1-86FB-48DD-9503-7DE87AF8382E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46787498-BB13-4393-879D-4EEF54DC0CAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46787498-BB13-4393-879D-4EEF54DC0CAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46787498-BB13-4393-879D-4EEF54DC0CAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46787498-BB13-4393-879D-4EEF54DC0CAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2D944EC-037E-4A6E-B05E-FE25FCEC3037}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2D944EC-037E-4A6E-B05E-FE25FCEC3037}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2D944EC-037E-4A6E-B05E-FE25FCEC3037}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2D944EC-037E-4A6E-B05E-FE25FCEC3037}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {835E535C-1F98-48D8-81F3-8304DEEDEA64}
 	EndGlobalSection
 EndGlobal
