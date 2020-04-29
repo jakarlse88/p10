@@ -8,6 +8,8 @@ namespace Abarnathy.DemographicsAPI.Repositories
     public interface IUnitOfWork
     {
         IPatientRepository PatientRepository { get; }
+        IAddressRepository AddressRepository { get; }
+
         Task CommitAsync();
         Task RollbackAsync();
     }
