@@ -4,7 +4,7 @@ using FluentValidation;
 
 namespace Abarnathy.DemographicsAPI.Infrastructure.Validators
 {
-    public class AddressInputModelValidator : AbstractValidator<AddressInputModel>
+    public class AddressInputModelValidator : AbstractValidator<AddressDTO>
     {
         public AddressInputModelValidator()
         {

@@ -5,9 +5,13 @@ using Abarnathy.DemographicsAPI.Models;
 using Abarnathy.DemographicsAPI.Repositories;
 using Abarnathy.DemographicsAPI.Services.Interfaces;
 using AutoMapper;
+using System.Linq;
 
 namespace Abarnathy.DemographicsAPI.Services
 {
+    /// <summary>
+    /// Patient entity domain logic. 
+    /// </summary>
     public class PatientService : IPatientService
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -26,7 +30,7 @@ namespace Abarnathy.DemographicsAPI.Services
         /// <param name="id"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentOutOfRangeException"></exception>
-        public async Task<PatientInputModel> GetInputModelById(int id)
+        public async Task<PatientDTO> GetInputModelById(int id)
         {
             if (id <= 0)
             {
@@ -40,7 +44,7 @@ namespace Abarnathy.DemographicsAPI.Services
                 return null;
             }
 
-            var result = _mapper.Map<PatientInputModel>(entity);
+            var result = _mapper.Map<PatientDTO>(entity);
 
             return result;
         }
@@ -50,11 +54,11 @@ namespace Abarnathy.DemographicsAPI.Services
         /// and returns it as an InputModel.
         /// </summary>
         /// <returns></returns>
-        public async Task<IEnumerable<PatientInputModel>> GetInputModelsAll()
+        public async Task<IEnumerable<PatientDTO>> GetInputModelsAll()
         {
             var entities = await _unitOfWork.PatientRepository.GetAll();
 
-            var result = _mapper.Map<IEnumerable<PatientInputModel>>(entities);
+            var result = _mapper.Map<IEnumerable<PatientDTO>>(entities);
 
             return result;
         }
@@ -65,18 +69,25 @@ namespace Abarnathy.DemographicsAPI.Services
         /// <param name="model"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
-        public async Task<int> Create(PatientInputModel model)
+        public async Task<int> Create(PatientDTO model)
         {
             if (model == null)
             {
                 throw new ArgumentNullException();
             }
 
-            var entity = _mapper.Map<Patient>(model);
-            
+            var entity = new Patient();
+
+            _mapper.Map(model, entity);
+
+            if (model.Addresses.Any())
+            {
+                entity
+            }
+
             try
             {
-                _unitOfWork.PatientRepository.Insert(entity);
+                _unitOfWork.PatientRepository.Create(entity);
                 await _unitOfWork.CommitAsync();
                 return entity.Id;
             }
@@ -93,7 +104,7 @@ namespace Abarnathy.DemographicsAPI.Services
         /// <param name="id"></param>
         /// <param name="model"></param>
         /// <exception cref="NotImplementedException"></exception>
-        public async Task Update(int id, PatientInputModel model)
+        public async Task Update(int id, PatientDTO model)
         {
             if (id <= 0)
             {

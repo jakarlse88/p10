@@ -4,7 +4,7 @@ using FluentValidation;
 
 namespace Abarnathy.DemographicsAPI.Infrastructure.Validators
 {
-    public class PhoneNumberInputModelValidator : AbstractValidator<PhoneNumberInputModel>
+    public class PhoneNumberInputModelValidator : AbstractValidator<PhoneNumberDTO>
     {
         public PhoneNumberInputModelValidator()
         {

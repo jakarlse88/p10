@@ -78,7 +78,8 @@ namespace Abarnathy.DemographicsAPI.Data
                     .WithMany(p => p.Patients)
                     .HasForeignKey(d => d.SexId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Patient_Sex");
+                    .HasConstraintName("FK_Patient_Sex")
+                    .IsRequired();
             });
 
             modelBuilder.Entity<PatientAddress>(entity =>

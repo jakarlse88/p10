@@ -7,6 +7,7 @@ namespace Abarnathy.DemographicsAPI.Repositories
     {
         private readonly DemographicsDbContext _context;
         private IPatientRepository _patientRepository;
+        private IAddressRepository _addressRepository;
 
         public UnitOfWork(DemographicsDbContext context)
         {
@@ -15,6 +16,9 @@ namespace Abarnathy.DemographicsAPI.Repositories
 
         public IPatientRepository PatientRepository =>
             _patientRepository ??= new PatientRepository(_context);
+
+        public IAddressRepository AddressRepository =>
+            _addressRepository ??= new AddressRepository(_context);
 
         public async Task CommitAsync() =>
             await _context.SaveChangesAsync();

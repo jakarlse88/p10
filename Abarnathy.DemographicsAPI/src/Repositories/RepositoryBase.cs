@@ -42,7 +42,7 @@ namespace Abarnathy.DemographicsAPI.Repositories
         /// </summary>
         /// <param name="entity"></param>
         /// <exception cref="ArgumentNullException"></exception>
-        public void Insert(TEntity entity)
+        public void Create(TEntity entity)
         {
             if (entity == null)
             {

@@ -32,7 +32,7 @@ namespace Abarnathy.DemographicsAPI.Test.Unit.ServiceTests
             var service = new PatientService(null, null);
 
             // Act
-            async Task<PatientInputModel> TestAction() => await service.GetInputModelById(0);
+            async Task<PatientDTO> TestAction() => await service.GetInputModelById(0);
 
             // Assert
             await Assert.ThrowsAsync<ArgumentOutOfRangeException>(TestAction);
@@ -72,7 +72,7 @@ namespace Abarnathy.DemographicsAPI.Test.Unit.ServiceTests
 
             // Assert
             Assert.NotNull(result);
-            Assert.IsAssignableFrom<PatientInputModel>(result);
+            Assert.IsAssignableFrom<PatientDTO>(result);
             Assert.Equal(5, result.Id);
         }
 
@@ -94,7 +94,7 @@ namespace Abarnathy.DemographicsAPI.Test.Unit.ServiceTests
 
             // Assert
             Assert.Equal(5, result.Count());
-            Assert.IsAssignableFrom<IEnumerable<PatientInputModel>>(result);
+            Assert.IsAssignableFrom<IEnumerable<PatientDTO>>(result);
         }
 
         [Fact]
@@ -117,7 +117,7 @@ namespace Abarnathy.DemographicsAPI.Test.Unit.ServiceTests
             var mockUnitOfWork = new Mock<IUnitOfWork>();
 
             mockUnitOfWork
-                .Setup(x => x.PatientRepository.Insert(It.IsAny<Patient>()))
+                .Setup(x => x.PatientRepository.Create(It.IsAny<Patient>()))
                 .Verifiable();
 
             mockUnitOfWork
@@ -127,14 +127,14 @@ namespace Abarnathy.DemographicsAPI.Test.Unit.ServiceTests
             var service = new PatientService(mockUnitOfWork.Object, _mapper);
 
             // Act
-            var result = await service.Create(new PatientInputModel
+            var result = await service.Create(new PatientDTO
             {
                 FamilyName = "Test",
             });
 
             // Assert
             mockUnitOfWork
-                .Verify(x => x.PatientRepository.Insert(It.IsAny<Patient>()), Times.Once);
+                .Verify(x => x.PatientRepository.Create(It.IsAny<Patient>()), Times.Once);
 
             mockUnitOfWork
                 .Verify(x => x.CommitAsync(), Times.Once);
@@ -147,7 +147,7 @@ namespace Abarnathy.DemographicsAPI.Test.Unit.ServiceTests
             var mockUnitOfWork = new Mock<IUnitOfWork>();
 
             mockUnitOfWork
-                .Setup(x => x.PatientRepository.Insert(It.IsAny<Patient>()))
+                .Setup(x => x.PatientRepository.Create(It.IsAny<Patient>()))
                 .Verifiable();
 
             mockUnitOfWork
@@ -162,7 +162,7 @@ namespace Abarnathy.DemographicsAPI.Test.Unit.ServiceTests
             var service = new PatientService(mockUnitOfWork.Object, _mapper);
 
             // Act
-            async Task<int> TestAction() => await service.Create(new PatientInputModel
+            async Task<int> TestAction() => await service.Create(new PatientDTO
             {
                 FamilyName = "Test",
             });
@@ -170,7 +170,7 @@ namespace Abarnathy.DemographicsAPI.Test.Unit.ServiceTests
             // Assert
             await Assert.ThrowsAsync<Exception>(TestAction);
             mockUnitOfWork
-                .Verify(x => x.PatientRepository.Insert(It.IsAny<Patient>()), Times.Once);
+                .Verify(x => x.PatientRepository.Create(It.IsAny<Patient>()), Times.Once);
 
             mockUnitOfWork
                 .Verify(x => x.CommitAsync(), Times.Once);

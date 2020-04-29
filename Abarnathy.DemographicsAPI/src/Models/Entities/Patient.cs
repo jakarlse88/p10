@@ -11,7 +11,7 @@ namespace Abarnathy.DemographicsAPI.Models
             PatientPhoneNumbers = new HashSet<PatientPhoneNumber>();
         }
 
-        public new int Id { get; set; }
+        //public new int Id { get; set; }
         public string GivenName { get; set; }
         public string FamilyName { get; set; }
         public DateTime DateOfBirth { get; set; }

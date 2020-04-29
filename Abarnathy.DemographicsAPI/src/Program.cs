@@ -38,9 +38,6 @@ namespace Abarnathy.DemographicsAPI
                             outputTemplate:
                             "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}",
                             theme: AnsiConsoleTheme.Literate)
-                        .WriteTo.File("Logs/",
-                            rollingInterval: RollingInterval.Day,
-                            retainedFileCountLimit: 14)
                         .WriteTo.MSSqlServer(
                             connectionString: appSettings.GetConnectionString("DefaultConnection"),
                             tableName: "Log",

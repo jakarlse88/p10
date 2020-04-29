@@ -21,7 +21,7 @@
             <response code="200">Request OK, return result.</response>
             <response code="400">Malformed request (bad ID).</response>
         </member>
-        <member name="M:Abarnathy.DemographicsAPI.Controllers.PatientController.Post(Abarnathy.DemographicsAPI.Models.PatientInputModel)">
+        <member name="M:Abarnathy.DemographicsAPI.Controllers.PatientController.Post(Abarnathy.DemographicsAPI.Models.PatientDTO)">
             <summary>
             Creates a new Patient entity.
             </summary>
@@ -86,6 +86,16 @@
             </summary>
             <param name="services"></param>
         </member>
+        <member name="T:Abarnathy.DemographicsAPI.Infrastructure.MappingProfiles">
+            <summary>
+            Contains AutoMapper configuration profiles.
+            </summary>
+        </member>
+        <member name="M:Abarnathy.DemographicsAPI.Infrastructure.MappingProfiles.#ctor">
+            <summary>
+            Configures AutoMapper mapping profiles.
+            </summary>
+        </member>
         <member name="T:Abarnathy.DemographicsAPI.Models.EntityBase">
             <summary>
             Facilitates entity constraint on RepositoryBase.
@@ -110,7 +120,7 @@
             <returns></returns>
             <exception cref="T:System.ArgumentNullException"></exception>
         </member>
-        <member name="M:Abarnathy.DemographicsAPI.Repositories.RepositoryBase`1.Insert(`0)">
+        <member name="M:Abarnathy.DemographicsAPI.Repositories.RepositoryBase`1.Create(`0)">
             <summary>
             Begin tracking the entity in the Added state.
             </summary>
@@ -131,6 +141,11 @@
             <param name="entity"></param>
             <exception cref="T:System.ArgumentNullException"></exception>
         </member>
+        <member name="T:Abarnathy.DemographicsAPI.Services.PatientService">
+            <summary>
+            Patient entity domain logic. 
+            </summary>
+        </member>
         <member name="M:Abarnathy.DemographicsAPI.Services.PatientService.GetInputModelById(System.Int32)">
             <summary>
             Asynchronously gets a Patient entity (including its relations) by ID
@@ -147,7 +162,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Abarnathy.DemographicsAPI.Services.PatientService.Create(Abarnathy.DemographicsAPI.Models.PatientInputModel)">
+        <member name="M:Abarnathy.DemographicsAPI.Services.PatientService.Create(Abarnathy.DemographicsAPI.Models.PatientDTO)">
             <summary>
             Asynchronously creates a new Patient entity and persists it to the DB.
             </summary>
@@ -155,7 +170,7 @@
             <returns></returns>
             <exception cref="T:System.ArgumentNullException"></exception>
         </member>
-        <member name="M:Abarnathy.DemographicsAPI.Services.PatientService.Update(System.Int32,Abarnathy.DemographicsAPI.Models.PatientInputModel)">
+        <member name="M:Abarnathy.DemographicsAPI.Services.PatientService.Update(System.Int32,Abarnathy.DemographicsAPI.Models.PatientDTO)">
             <summary>
             Updates a Patient entity and persists any changes made to the DB.
             </summary>

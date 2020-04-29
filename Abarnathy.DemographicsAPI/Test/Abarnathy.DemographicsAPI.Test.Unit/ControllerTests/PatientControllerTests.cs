@@ -20,7 +20,7 @@ namespace Abarnathy.DemographicsAPI.Test.Unit.ControllerTests
             var mockService = new Mock<IPatientService>();
             mockService
                 .Setup(x => x.GetInputModelsAll())
-                .ReturnsAsync(new List<PatientInputModel> { new PatientInputModel { Id = 1 } })
+                .ReturnsAsync(new List<PatientDTO> { new PatientDTO { Id = 1 } })
                 .Verifiable();
 
             var controller = new PatientController(mockService.Object);
@@ -32,7 +32,7 @@ namespace Abarnathy.DemographicsAPI.Test.Unit.ControllerTests
             var actionResult =
                 Assert.IsAssignableFrom<OkObjectResult>(result.Result);
             var objectResult =
-                Assert.IsAssignableFrom<IEnumerable<PatientInputModel>>(actionResult.Value);
+                Assert.IsAssignableFrom<IEnumerable<PatientDTO>>(actionResult.Value);
 
             mockService
                 .Verify(x => x.GetInputModelsAll(), Times.Once());
@@ -58,7 +58,7 @@ namespace Abarnathy.DemographicsAPI.Test.Unit.ControllerTests
             var mockService = new Mock<IPatientService>();
             mockService
                 .Setup(x => x.GetInputModelById(5))
-                .ReturnsAsync(new PatientInputModel { Id = 5 });
+                .ReturnsAsync(new PatientDTO { Id = 5 });
 
             var controller = new PatientController(mockService.Object);
 
@@ -69,7 +69,7 @@ namespace Abarnathy.DemographicsAPI.Test.Unit.ControllerTests
             var actionResult =
                 Assert.IsAssignableFrom<OkObjectResult>(result.Result);
             var objectResult =
-                Assert.IsAssignableFrom<PatientInputModel>(actionResult.Value);
+                Assert.IsAssignableFrom<PatientDTO>(actionResult.Value);
 
             mockService
                 .Verify(x => x.GetInputModelById(5), Times.Once);
@@ -94,13 +94,13 @@ namespace Abarnathy.DemographicsAPI.Test.Unit.ControllerTests
             // Arrange
             var mockService = new Mock<IPatientService>();
             mockService
-                .Setup(x => x.Create(It.IsAny<PatientInputModel>()))
+                .Setup(x => x.Create(It.IsAny<PatientDTO>()))
                 .ReturnsAsync(4);
 
             var controller = new PatientController(mockService.Object);
 
             // Act
-            var result = await controller.Post(new PatientInputModel());
+            var result = await controller.Post(new PatientDTO());
 
             // Assert
             var actionResult =

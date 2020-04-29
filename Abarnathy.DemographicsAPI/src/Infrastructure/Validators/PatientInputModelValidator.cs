@@ -1,10 +1,9 @@
-using System.Text.RegularExpressions;
 using Abarnathy.DemographicsAPI.Models;
 using FluentValidation;
 
 namespace Abarnathy.DemographicsAPI.Infrastructure.Validators
 {
-    public class PatientInputModelValidator : AbstractValidator<PatientInputModel>
+    public class PatientInputModelValidator : AbstractValidator<PatientDTO>
     {
         public PatientInputModelValidator()
         {

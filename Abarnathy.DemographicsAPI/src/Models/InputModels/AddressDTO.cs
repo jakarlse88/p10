@@ -1,6 +1,6 @@
 ﻿namespace Abarnathy.DemographicsAPI.Models
 {
-    public class AddressInputModel
+    public class AddressDTO
     {
         public int Id { get; set; }
         public string StreetName { get; set; }

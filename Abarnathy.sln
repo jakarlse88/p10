@@ -5,15 +5,20 @@ VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{891DADD1-1E08-4A0F-859F-CB54B37BE850}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abarnathy.BlazorClient.Server", "Abarnathy.BlazorClient\Server\Abarnathy.BlazorClient.Server.csproj", "{13565B8F-7B50-469B-B269-81DC5871D322}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abarnathy.BlazorClient.Server", "Abarnathy.BlazorClient\Server\Abarnathy.BlazorClient.Server.csproj", "{13565B8F-7B50-469B-B269-81DC5871D322}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abarnathy.BlazorClient.Client", "Abarnathy.BlazorClient\Client\Abarnathy.BlazorClient.Client.csproj", "{14910213-C180-4EEB-B481-6A9762469F37}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abarnathy.BlazorClient.Client", "Abarnathy.BlazorClient\Client\Abarnathy.BlazorClient.Client.csproj", "{14910213-C180-4EEB-B481-6A9762469F37}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abarnathy.DemographicsAPI", "Abarnathy.DemographicsAPI\src\Abarnathy.DemographicsAPI.csproj", "{9C013AC1-86FB-48DD-9503-7DE87AF8382E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abarnathy.DemographicsAPI", "Abarnathy.DemographicsAPI\src\Abarnathy.DemographicsAPI.csproj", "{9C013AC1-86FB-48DD-9503-7DE87AF8382E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abarnathy.DemographicsAPI.Test.Unit", "Abarnathy.DemographicsAPI\Test\Abarnathy.DemographicsAPI.Test.Unit\Abarnathy.DemographicsAPI.Test.Unit.csproj", "{46787498-BB13-4393-879D-4EEF54DC0CAA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abarnathy.DemographicsAPI.Test.Unit", "Abarnathy.DemographicsAPI\Test\Abarnathy.DemographicsAPI.Test.Unit\Abarnathy.DemographicsAPI.Test.Unit.csproj", "{46787498-BB13-4393-879D-4EEF54DC0CAA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abarnathy.DemographicsAPI.Test.Integration", "Abarnathy.DemographicsAPI\Test\Abarnathy.DemographicsAPI.Test.Integration\Abarnathy.DemographicsAPI.Test.Integration.csproj", "{C2D944EC-037E-4A6E-B05E-FE25FCEC3037}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abarnathy.DemographicsAPI.Test.Integration", "Abarnathy.DemographicsAPI\Test\Abarnathy.DemographicsAPI.Test.Integration\Abarnathy.DemographicsAPI.Test.Integration.csproj", "{C2D944EC-037E-4A6E-B05E-FE25FCEC3037}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0636AA39-9770-42D4-8E22-8EC8A2DB16EC}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,6 +1,6 @@
 namespace Abarnathy.DemographicsAPI.Models
 {
-    public class PhoneNumberInputModel
+    public class PhoneNumberDTO
     {
         public int Id { get; set; }
         public string Number { get; set; }

@@ -28,7 +28,7 @@ namespace Abarnathy.DemographicsAPI.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<ActionResult<IEnumerable<PatientInputModel>>> Get()
+        public async Task<ActionResult<IEnumerable<PatientDTO>>> Get()
         {
             var result = await _patientService.GetInputModelsAll();
 
@@ -50,7 +50,7 @@ namespace Abarnathy.DemographicsAPI.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<PatientInputModel>> Get(int id)
+        public async Task<ActionResult<PatientDTO>> Get(int id)
         {
             if (id <= 0)
             {
@@ -72,7 +72,7 @@ namespace Abarnathy.DemographicsAPI.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Post(PatientInputModel model)
+        public async Task<IActionResult> Post(PatientDTO model)
         {
             if (model == null)
             {

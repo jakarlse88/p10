@@ -3,12 +3,12 @@ using System.Collections.Generic;
 
 namespace Abarnathy.DemographicsAPI.Models
 {
-    public class PatientInputModel
+    public class PatientDTO
     {
-        public PatientInputModel()
+        public PatientDTO()
         {
-            Addresses = new HashSet<AddressInputModel>();
-            PhoneNumbers = new HashSet<PhoneNumberInputModel>();
+            Addresses = new HashSet<AddressDTO>();
+            PhoneNumbers = new HashSet<PhoneNumberDTO>();
         }
 
         public int Id { get; set; }
@@ -16,10 +16,9 @@ namespace Abarnathy.DemographicsAPI.Models
         public string FamilyName { get; set; }
         public DateTime DateOfBirth { get; set; }
 
-
         public int SexId { get; set; }
         
-        public ICollection<AddressInputModel> Addresses { get; set; }
-        public ICollection<PhoneNumberInputModel> PhoneNumbers { get; set; }
+        public ICollection<AddressDTO> Addresses { get; set; }
+        public ICollection<PhoneNumberDTO> PhoneNumbers { get; set; }
     }
 }

@@ -84,7 +84,7 @@ namespace Abarnathy.DemographicsAPI.Test.Unit.RepositoryTests
             var repositoryBase = new RepositoryBase<EntityBase>(null);
 
             // Act
-            void TestAction() => repositoryBase.Insert(null);
+            void TestAction() => repositoryBase.Create(null);
 
             // Assert
             Assert.Throws<ArgumentNullException>(TestAction);
@@ -109,7 +109,7 @@ namespace Abarnathy.DemographicsAPI.Test.Unit.RepositoryTests
                 new RepositoryBase<EntityBase>(mockContext.Object);
 
             // Act
-            repositoryBase.Insert(testObject);
+            repositoryBase.Create(testObject);
 
             // Assert
             mockContext
