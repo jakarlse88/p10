@@ -3,7 +3,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using Abarnathy.DemographicsAPI.Data;
 using Abarnathy.DemographicsAPI.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace Abarnathy.DemographicsAPI.Repositories
 {
@@ -31,8 +30,7 @@ namespace Abarnathy.DemographicsAPI.Repositories
 
             var result = _context
                 .Set<TEntity>()
-                .Where(predicate)
-                .AsNoTracking();
+                .Where(predicate);
 
             return result;
         }

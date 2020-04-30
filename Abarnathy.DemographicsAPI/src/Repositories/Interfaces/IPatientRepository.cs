@@ -8,5 +8,7 @@ namespace Abarnathy.DemographicsAPI.Repositories
     {
         Task<Patient> GetById(int id);
         Task<IEnumerable<Patient>> GetAll();
+        Task<Patient> GetByFullPersonalia(PatientDTO model);
+
     }
 }

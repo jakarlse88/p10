@@ -20,6 +20,5 @@ WORKDIR /app
 COPY --from=publish /app/publish .
 COPY Abarnathy.DemographicsAPI/src/. .
 COPY Abarnathy.DemographicsAPI/src/wait-for-it.sh ./wait-for-it.sh
-# ENTRYPOINT ["dotnet", "Abarnathy.DemographicsAPI.dll"]
 RUN chmod +x ./wait-for-it.sh
-ENTRYPOINT ["./wait-for-it.sh", "sql_server:1434", "-t", "90", "--", "dotnet", "Abarnathy.DemographicsAPI.dll"]
+ENTRYPOINT ["./wait-for-it.sh", "sql_server:1434", "-t", "40", "--", "dotnet", "Abarnathy.DemographicsAPI.dll"]

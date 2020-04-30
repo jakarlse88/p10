@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Abarnathy.DemographicsAPI.Models
 {
-    public partial class Patient : EntityBase
+    public class Patient : EntityBase
     {
         public Patient()
         {

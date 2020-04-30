@@ -1,6 +1,6 @@
 ﻿using Abarnathy.DemographicsAPI.Models;
 
-namespace Abarnathy.DemographicsAPI.Infrastructure.Extensions
+namespace Abarnathy.DemographicsAPI.Infrastructure
 {
     public static class EntityExtensions
     {
@@ -13,7 +13,7 @@ namespace Abarnathy.DemographicsAPI.Infrastructure.Extensions
         /// <param name="entity"></param>
         /// <param name="obj">The object against which to compare.</param>
         /// <returns>The boolean result of the value comparison.</returns>
-        public static bool ValueEquals(this Patient entity, object obj)
+        public static bool ValuesEqual(this Patient entity, object obj)
         {
             if (obj is null)
             {
@@ -47,7 +47,7 @@ namespace Abarnathy.DemographicsAPI.Infrastructure.Extensions
         /// <param name="entity"></param>
         /// <param name="obj">The object against which to compare.</param>
         /// <returns>The boolean result of the value comparison.</returns>
-        public static bool ValueEquals(this Address entity, object obj)
+        public static bool ValuesEqual(this Address entity, object obj)
         {
             if (obj is null)
             {
@@ -83,7 +83,7 @@ namespace Abarnathy.DemographicsAPI.Infrastructure.Extensions
         /// <param name="entity"></param>
         /// <param name="obj">The object against which to compare.</param>
         /// <returns>The boolean result of the value comparison.</returns>
-        public static bool ValueEquals(this PhoneNumber entity, object obj)
+        public static bool ValuesEqual(this PhoneNumber entity, object obj)
         {
             if (obj is null)
             {

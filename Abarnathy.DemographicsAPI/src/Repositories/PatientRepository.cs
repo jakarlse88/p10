@@ -42,5 +42,21 @@ namespace Abarnathy.DemographicsAPI.Repositories
 
             return result;
         }
+
+        public async Task<Patient> GetByFullPersonalia(PatientDTO dto)
+        {
+            if (dto == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            var result =
+                await base.GetByCondition(p => 
+                p.FamilyName.Contains(dto.FamilyName) && 
+                p.GivenName.Contains(dto.GivenName))
+                .FirstOrDefaultAsync(p => p.SexId == dto.SexId && p.DateOfBirth.Date == dto.DateOfBirth.Date);
+
+            return result;
+        }
     }
 }
