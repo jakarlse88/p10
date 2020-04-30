@@ -76,14 +76,12 @@ namespace Abarnathy.DemographicsAPI.Services
                 throw new ArgumentNullException();
             }
 
-            var entity = new Patient();
+            // var entity = new Patient();
+            // _mapper.Map(model, entity);
 
-            _mapper.Map(model, entity);
+            var entity = _mapper.Map<Patient>(model);
 
-            if (model.Addresses.Any())
-            {
-                
-            }
+            await LinkAddresses(model.Addresses, entity);
 
             try
             {
@@ -110,7 +108,7 @@ namespace Abarnathy.DemographicsAPI.Services
             {
                 throw new ArgumentOutOfRangeException();
             }
-            
+
             if (model == null)
             {
                 throw new ArgumentNullException();
@@ -126,7 +124,7 @@ namespace Abarnathy.DemographicsAPI.Services
             try
             {
                 _mapper.Map(model, entity);
-                
+
                 _unitOfWork
                     .PatientRepository
                     .Update(entity);
@@ -138,5 +136,56 @@ namespace Abarnathy.DemographicsAPI.Services
                 throw;
             }
         }
+        
+        /**
+         * Private helper methods
+         * 
+         */
+        
+        /// <summary>
+        /// Links one or more addresses to a <see cref="Patient"/> entity.
+        /// </summary>
+        /// <param name="models"></param>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        private async Task LinkAddresses(IEnumerable<AddressDTO> models, Patient entity)
+        {
+            if (models == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            // Avoid multiple enumration
+            var addressArray = models as AddressDTO[] ?? models.ToArray();
+            
+            if (addressArray.Any())
+            {
+                foreach (var addressDTO in addressArray)
+                {
+                    // Does the address already exist?
+                    var result = await _unitOfWork.AddressRepository.GetByCompleteAddressAsync(addressDTO);
+
+                    // No--create a new Address entity and link it to our Patient entity
+                    if (result == null)
+                    {
+                        var address = _mapper.Map<Address>(addressDTO);
+
+                        entity.PatientAddresses.Add(new PatientAddress
+                        {
+                            Patient = entity,
+                            Address = address
+                        });
+                    }
+
+                    // Yes--link it to our Patient entity
+                    entity.PatientAddresses.Add(new PatientAddress
+                    {
+                        Patient = entity,
+                        Address = result
+                    });
+                }
+            }
+        }
+        
     }
 }

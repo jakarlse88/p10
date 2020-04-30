@@ -37,8 +37,8 @@ namespace Abarnathy.DemographicsAPI.Infrastructure
                 .ForMember(dest => dest.PatientAddresses, action => action.Ignore())
                 .ForMember(dest => dest.PatientPhoneNumbers, action => action.Ignore());
 
-            //CreateMap<AddressDTO, Address>();
-            //CreateMap<PhoneNumberDTO, PhoneNumber>();
+            CreateMap<AddressDTO, Address>();
+            CreateMap<PhoneNumberDTO, PhoneNumber>();
         }
     }
 }

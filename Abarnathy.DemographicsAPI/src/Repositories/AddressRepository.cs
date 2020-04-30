@@ -2,7 +2,9 @@
 using Abarnathy.DemographicsAPI.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
+using Abarnathy.DemographicsAPI.Infrastructure;
 
 namespace Abarnathy.DemographicsAPI.Repositories
 {
@@ -21,22 +23,22 @@ namespace Abarnathy.DemographicsAPI.Repositories
         {
             var result =
                 await base.GetByCondition(a =>
-                    (NormaliseString(a.StreetName) == NormaliseString(dto.StreetName)) &&
-                    (NormaliseString(a.HouseNumber) == NormaliseString(dto.HouseNumber)) &&
-                    (NormaliseString(a.Town) == NormaliseString(dto.Town)) &&
-                    (NormaliseString(a.State) == NormaliseString(dto.State)) &&
-                    (NormaliseString(a.Zipcode) == NormaliseString(dto.Zipcode))
-                )
-                .FirstOrDefaultAsync();
+                    a.StreetName.Contains(dto.StreetName))
+                    .FirstOrDefaultAsync();
 
             return result;
         }
+        
+        // &&
+        // (NormaliseString(a.HouseNumber) == NormaliseString(dto.HouseNumber)) &&
+        // (NormaliseString(a.Town) == NormaliseString(dto.Town)) &&
+        // (NormaliseString(a.State) == NormaliseString(dto.State)) &&
+        // (NormaliseString(a.Zipcode) == NormaliseString(dto.Zipcode))
 
         /**
          * Helper methods
          * 
          **/
-
         private string NormaliseString(string str)
         {
             if (string.IsNullOrWhiteSpace(str))

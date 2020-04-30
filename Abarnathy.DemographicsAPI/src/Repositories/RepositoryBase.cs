@@ -38,6 +38,24 @@ namespace Abarnathy.DemographicsAPI.Repositories
         }
 
         /// <summary>
+        /// Returns a subset of an entity TEntity by matching a given property
+        /// against a given search term.
+        /// </summary>
+        /// <param name="property"></param>
+        /// <param name="searchTerm"></param>
+        /// <returns></returns>
+        public IQueryable<TEntity> SearchByTextProperty(Func<TEntity, string> property, string searchTerm)
+        {
+            var result =
+                _context
+                    .Set<TEntity>()
+                    .Where(x => property(x).Contains(searchTerm))
+                    .AsNoTracking();
+
+            return result;
+        }
+
+        /// <summary>
         /// Begin tracking the entity in the Added state.
         /// </summary>
         /// <param name="entity"></param>
