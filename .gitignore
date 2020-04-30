@@ -1,6 +1,6 @@
 bin/
 obj/
 /packages/
-.idea/
+.idea/**
 .vs/
 Abarnathy.DemographicsAPI/Test/.DS_Store
