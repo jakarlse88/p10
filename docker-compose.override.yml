@@ -2,11 +2,6 @@ version: '3.4'
 
 services:
 
-  reverse_proxy:
-    ports:
-      - "${NGINX_PORT_EXT}:${NGINX_PORT_INT}"
-    restart: always
-
   sql_server:
     environment: 
         - ACCEPT_EULA=Y

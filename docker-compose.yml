@@ -6,13 +6,6 @@ networks:
 
 services:
 
-  reverse_proxy:
-    container_name: reverse_proxy
-    build: 
-        context: Abarnathy.ReverseProxy/
-    networks:
-      - app-network
-
   sql_server:
     container_name: sql_server
     build: 
@@ -22,8 +15,6 @@ services:
 
   blazor_server:
     container_name: blazor_server
-    depends_on:
-      - reverse_proxy
     build:
       context: .
       dockerfile: Abarnathy.BlazorClient/Server/Dockerfile

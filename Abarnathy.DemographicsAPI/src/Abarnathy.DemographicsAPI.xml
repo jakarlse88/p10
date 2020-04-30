@@ -54,6 +54,40 @@
             </summary>
             <param name="app"></param>
         </member>
+        <member name="M:Abarnathy.DemographicsAPI.Infrastructure.Extensions.EntityExtensions.ValueEquals(Abarnathy.DemographicsAPI.Models.Patient,System.Object)">
+            <summary>
+            Determines value equivalence between two <see cref="T:Abarnathy.DemographicsAPI.Models.Patient"/> entities 
+            by comparing the GivenName, FamilyName, SexId, and DateOfBirth properties.
+            </summary>
+            <param name="entity"></param>
+            <param name="obj">The object against which to compare.</param>
+            <returns>The boolean result of the value comparison.</returns>
+        </member>
+        <member name="M:Abarnathy.DemographicsAPI.Infrastructure.Extensions.EntityExtensions.ValueEquals(Abarnathy.DemographicsAPI.Models.Address,System.Object)">
+            <summary>
+            Determine value equivalence between two <see cref="T:Abarnathy.DemographicsAPI.Models.Address"/> entities 
+            by comparing the StreetName, HouseNumber, Town, State, and ZipCode properties.
+            </summary>
+            <param name="entity"></param>
+            <param name="obj">The object against which to compare.</param>
+            <returns>The boolean result of the value comparison.</returns>
+        </member>
+        <member name="M:Abarnathy.DemographicsAPI.Infrastructure.Extensions.EntityExtensions.ValueEquals(Abarnathy.DemographicsAPI.Models.PhoneNumber,System.Object)">
+            <summary>
+            Determine value equivalence between two <see cref="T:Abarnathy.DemographicsAPI.Models.PhoneNumber"/> entities 
+            by comparing the Number property.
+            </summary>
+            <param name="entity"></param>
+            <param name="obj">The object against which to compare.</param>
+            <returns>The boolean result of the value comparison.</returns>
+        </member>
+        <member name="M:Abarnathy.DemographicsAPI.Infrastructure.Extensions.EntityExtensions.NormaliseString(System.String)">
+            Helper methods
+            
+            <summary>
+            Given a non-null s
+            </summary>
+        </member>
         <member name="M:Abarnathy.DemographicsAPI.Infrastructure.ServiceCollectionExtensions.ConfigureLocalServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
             Configures the app's local services.
@@ -100,6 +134,18 @@
             <summary>
             Facilitates entity constraint on RepositoryBase.
             </summary>
+        </member>
+        <member name="M:Abarnathy.DemographicsAPI.Repositories.AddressRepository.GetByCompleteAddressAsync(Abarnathy.DemographicsAPI.Models.AddressDTO)">
+            <summary>
+            
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Abarnathy.DemographicsAPI.Repositories.AddressRepository.NormaliseString(System.String)">
+             Helper methods
+             
+            
         </member>
         <member name="T:Abarnathy.DemographicsAPI.Repositories.IRepositoryBase`1">
             <summary>
