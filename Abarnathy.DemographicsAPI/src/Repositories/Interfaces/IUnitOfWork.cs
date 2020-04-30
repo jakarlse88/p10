@@ -1,3 +1,4 @@
+using Abarnathy.DemographicsAPI.Repositories.Interfaces;
 using System.Threading.Tasks;
 
 namespace Abarnathy.DemographicsAPI.Repositories
@@ -9,6 +10,7 @@ namespace Abarnathy.DemographicsAPI.Repositories
     {
         IPatientRepository PatientRepository { get; }
         IAddressRepository AddressRepository { get; }
+        IPhoneNumberRepository PhoneNumberRepository { get; }
 
         Task CommitAsync();
         Task RollbackAsync();

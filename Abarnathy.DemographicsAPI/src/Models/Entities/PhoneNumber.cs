@@ -9,7 +9,7 @@ namespace Abarnathy.DemographicsAPI.Models
             PatientPhoneNumbers = new HashSet<PatientPhoneNumber>();
         }
         
-        public new int Id { get; set; }
+        //public new int Id { get; set; }
         public string Number { get; set; }
 
         

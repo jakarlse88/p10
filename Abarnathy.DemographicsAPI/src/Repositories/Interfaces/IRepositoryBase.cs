@@ -11,7 +11,6 @@ namespace Abarnathy.DemographicsAPI.Repositories
     public interface IRepositoryBase<T>
     {
         IQueryable<T> GetByCondition(Expression<Func<T, bool>> predicate);
-        IQueryable<T> SearchByTextProperty(Func<T, string> property, string searchTerm);
         void Create(T entity);
         void Update(T entity);
         void Delete(T entity);

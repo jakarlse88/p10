@@ -3,7 +3,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using Abarnathy.DemographicsAPI.Data;
 using Abarnathy.DemographicsAPI.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace Abarnathy.DemographicsAPI.Repositories
 {
@@ -31,26 +30,7 @@ namespace Abarnathy.DemographicsAPI.Repositories
 
             var result = _context
                 .Set<TEntity>()
-                .Where(predicate)
-                .AsNoTracking();
-
-            return result;
-        }
-
-        /// <summary>
-        /// Returns a subset of an entity TEntity by matching a given property
-        /// against a given search term.
-        /// </summary>
-        /// <param name="property"></param>
-        /// <param name="searchTerm"></param>
-        /// <returns></returns>
-        public IQueryable<TEntity> SearchByTextProperty(Func<TEntity, string> property, string searchTerm)
-        {
-            var result =
-                _context
-                    .Set<TEntity>()
-                    .Where(x => property(x).Contains(searchTerm))
-                    .AsNoTracking();
+                .Where(predicate);
 
             return result;
         }

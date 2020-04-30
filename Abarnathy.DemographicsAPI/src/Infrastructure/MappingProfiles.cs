@@ -1,4 +1,6 @@
+using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Abarnathy.DemographicsAPI.Models;
 using AutoMapper;
 
@@ -30,6 +32,7 @@ namespace Abarnathy.DemographicsAPI.Infrastructure
                 );
 
             CreateMap<Address, AddressDTO>();
+
             CreateMap<PhoneNumber, PhoneNumberDTO>();
 
             // To entity
@@ -38,6 +41,7 @@ namespace Abarnathy.DemographicsAPI.Infrastructure
                 .ForMember(dest => dest.PatientPhoneNumbers, action => action.Ignore());
 
             CreateMap<AddressDTO, Address>();
+
             CreateMap<PhoneNumberDTO, PhoneNumber>();
         }
     }

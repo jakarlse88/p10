@@ -1,11 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Abarnathy.DemographicsAPI.Models;
 using Abarnathy.DemographicsAPI.Repositories;
 using Abarnathy.DemographicsAPI.Services.Interfaces;
 using AutoMapper;
+using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace Abarnathy.DemographicsAPI.Services
 {
@@ -76,12 +77,17 @@ namespace Abarnathy.DemographicsAPI.Services
                 throw new ArgumentNullException();
             }
 
-            // var entity = new Patient();
-            // _mapper.Map(model, entity);
+            var patient = await _unitOfWork.PatientRepository.GetByFullPersonalia(model);
+
+            if (patient != null)
+            {
+                throw new Exception("Error: a Patient entity already exists that matches the supplied personalia.");
+            }
 
             var entity = _mapper.Map<Patient>(model);
 
             await LinkAddresses(model.Addresses, entity);
+            await LinkPhoneNumbers(model.PhoneNumbers, entity);
 
             try
             {
@@ -101,7 +107,6 @@ namespace Abarnathy.DemographicsAPI.Services
         /// </summary>
         /// <param name="id"></param>
         /// <param name="model"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public async Task Update(int id, PatientDTO model)
         {
             if (id <= 0)
@@ -143,14 +148,14 @@ namespace Abarnathy.DemographicsAPI.Services
          */
         
         /// <summary>
-        /// Links one or more addresses to a <see cref="Patient"/> entity.
+        /// Links one or more <see cref="Address"/> entities to a <see cref="Patient"/> entity.
         /// </summary>
         /// <param name="models"></param>
         /// <param name="entity"></param>
         /// <returns></returns>
         private async Task LinkAddresses(IEnumerable<AddressDTO> models, Patient entity)
         {
-            if (models == null)
+            if (models == null || entity == null)
             {
                 throw new ArgumentNullException();
             }
@@ -162,13 +167,14 @@ namespace Abarnathy.DemographicsAPI.Services
             {
                 foreach (var addressDTO in addressArray)
                 {
-                    // Does the address already exist?
+                    // Does a functionally identical entity already exist?
                     var result = await _unitOfWork.AddressRepository.GetByCompleteAddressAsync(addressDTO);
 
-                    // No--create a new Address entity and link it to our Patient entity
-                    if (result == null)
+                    if (result == null) // No--create a new entity and link it up
                     {
                         var address = _mapper.Map<Address>(addressDTO);
+
+                        _unitOfWork.AddressRepository.Create(address);
 
                         entity.PatientAddresses.Add(new PatientAddress
                         {
@@ -176,13 +182,66 @@ namespace Abarnathy.DemographicsAPI.Services
                             Address = address
                         });
                     }
-
-                    // Yes--link it to our Patient entity
-                    entity.PatientAddresses.Add(new PatientAddress
+                    else // Yes--link it up
                     {
-                        Patient = entity,
-                        Address = result
-                    });
+                        entity.PatientAddresses.Add(new PatientAddress
+                        {
+                            Patient = entity,
+                            Address = result
+                        });
+                    }
+                    
+                }
+            }
+        }
+
+        /// <summary>
+        /// Links one or more <see cref="PhoneNumber"/> entities to a <see cref="Patient"/> entity.
+        /// </summary>
+        /// <param name="models"></param>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        private async Task LinkPhoneNumbers(IEnumerable<PhoneNumberDTO> models, Patient entity)
+        {
+            if (models == null || entity == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            // Avoid multiple enumeration
+            var phoneNumberDTOArray = models as PhoneNumberDTO[] ?? models.ToArray();
+
+            if (phoneNumberDTOArray.Any())
+            {
+                foreach (var dto in phoneNumberDTOArray)
+                {
+                    // Does a functionally identical entity already exist?
+                    var result = await _unitOfWork.PhoneNumberRepository.GetByNumber(dto);
+
+                    if (result == null) // No--create a new entity and link it up
+                    {
+                        var phoneNumber = _mapper.Map<PhoneNumber>(dto);
+
+                        //new Regex(@"^([- ().])+$").Replace(phoneNumber.Number, "");
+
+                        phoneNumber.Number = Regex.Replace(phoneNumber.Number, @"[- ().]", "");
+
+                        _unitOfWork.PhoneNumberRepository.Create(phoneNumber);
+
+                        entity.PatientPhoneNumbers.Add(new PatientPhoneNumber
+                        {
+                            Patient = entity,
+                            PhoneNumber = phoneNumber
+                        });
+                    }
+                    else // Yes--link it up
+                    {
+                        entity.PatientPhoneNumbers.Add(new PatientPhoneNumber
+                        {
+                            Patient = entity,
+                            PhoneNumber = result
+                        });
+                    }
                 }
             }
         }

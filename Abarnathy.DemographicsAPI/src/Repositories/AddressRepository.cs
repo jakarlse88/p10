@@ -1,10 +1,7 @@
 ﻿using Abarnathy.DemographicsAPI.Data;
 using Abarnathy.DemographicsAPI.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Linq;
 using System.Threading.Tasks;
-using Abarnathy.DemographicsAPI.Infrastructure;
 
 namespace Abarnathy.DemographicsAPI.Repositories
 {
@@ -23,18 +20,15 @@ namespace Abarnathy.DemographicsAPI.Repositories
         {
             var result =
                 await base.GetByCondition(a =>
-                    a.StreetName.Contains(dto.StreetName))
+                    a.StreetName.Contains(dto.StreetName) &&
+                    a.HouseNumber.Contains(dto.HouseNumber) &&
+                    a.State.Contains(dto.State) &&
+                    a.Zipcode.Contains(dto.Zipcode))
                     .FirstOrDefaultAsync();
 
             return result;
         }
         
-        // &&
-        // (NormaliseString(a.HouseNumber) == NormaliseString(dto.HouseNumber)) &&
-        // (NormaliseString(a.Town) == NormaliseString(dto.Town)) &&
-        // (NormaliseString(a.State) == NormaliseString(dto.State)) &&
-        // (NormaliseString(a.Zipcode) == NormaliseString(dto.Zipcode))
-
         /**
          * Helper methods
          * 
