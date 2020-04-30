@@ -1,0 +1,522 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="2994f7a6-3214-4763-940e-3378cfe700da" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Abarnathy.BlazorClient/Client/Models/SexEnum.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abarnathy.BlazorClient/Client/Pages/Patient/Create.razor" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abarnathy.BlazorClient/Client/Pages/Patient/Create.razor.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abarnathy.BlazorClient/Client/Pages/Patient/Single.razor" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abarnathy.BlazorClient/Client/Pages/Patient/Single.razor.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abarnathy.BlazorClient/Client/Shared/OperationStatus.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Infrastructure/Validators/PhoneNumberInputModelValidator.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Models/Entities/PatientPhoneNumber.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Models/Entities/PhoneNumber.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Models/InputModels/PhoneNumberInputModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abarnathy.BlazorClient/Client/Abarnathy.BlazorClient.Client.csproj.DotSettings" beforeDir="false" afterPath="$PROJECT_DIR$/Abarnathy.BlazorClient/Client/Abarnathy.BlazorClient.Client.csproj.DotSettings" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abarnathy.BlazorClient/Client/Models/PatientInputModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Abarnathy.BlazorClient/Client/Models/PatientInputModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abarnathy.BlazorClient/Client/Pages/Counter.razor" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abarnathy.BlazorClient/Client/Pages/Index.razor" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abarnathy.BlazorClient/Client/Pages/Patient/Index.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Abarnathy.BlazorClient/Client/Pages/Patient/Index.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abarnathy.BlazorClient/Client/Pages/Patient/IndexBase.razor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Abarnathy.BlazorClient/Client/Pages/Patient/Index.razor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abarnathy.BlazorClient/Client/Shared/NavMenu.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Abarnathy.BlazorClient/Client/Shared/NavMenu.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abarnathy.BlazorClient/Client/_Imports.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Abarnathy.BlazorClient/Client/_Imports.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/.dockerignore" beforeDir="false" afterPath="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/.dockerignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Abarnathy.DemographicsAPI.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Abarnathy.DemographicsAPI.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Data/DemographicsDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Data/DemographicsDbContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Data/Migrations/20200427075705_Initial.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Data/Migrations/20200427075705_Initial.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Data/Migrations/DemographicsDbContextModelSnapshot.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Infrastructure/Extensions/ApplicationBuilderExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Infrastructure/Extensions/ApplicationBuilderExtensions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Infrastructure/MappingProfiles.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Infrastructure/MappingProfiles.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Infrastructure/Validators/PatientInputModelValidator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Infrastructure/Validators/PatientInputModelValidator.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Models/Entities/Address.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Models/Entities/Address.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Models/Entities/Interfaces/EntityBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Models/Entities/EntityBase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Models/Entities/Patient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Models/Entities/Patient.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Models/Entities/Sex.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Models/Entities/Sex.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Models/InputModels/AddressInputModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Models/InputModels/AddressInputModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Models/InputModels/PatientInputModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Models/InputModels/PatientInputModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Repositories/PatientRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Repositories/PatientRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Startup.cs" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="Abarnathy" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/4D99A906-C9F9-4A03-8E7B-A508CDAD20B1/5f/9bb22102/CollectionExtensions.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Infrastructure/MappingProfiles.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Repositories/PatientRepository.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Repositories/RepositoryBase.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Repositories/UnitOfWork.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Abarnathy.BlazorClient/Client/Shared/NavMenu.razor" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Controllers/PatientController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Abarnathy.BlazorClient/Client/Shared/MainLayout.razor" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/F7760A3C-30F8-4B75-B285-52A3FEA80370/ce/e7c69d52/ExceptionHandlerExtensions.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/ECE1AEF6-99CF-4466-94DD-543487586588/e1/56ab5b26/Mock`1.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Abarnathy.BlazorClient/Client/_Imports.razor" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Services/PatientService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Abarnathy.BlazorClient/Client/Program.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Models/ErrorDetails.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Abarnathy.BlazorClient/Client/App.razor" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Data/DemographicsDbContext.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Abarnathy.DemographicsAPI/Test/Abarnathy.DemographicsAPI.Test.Integration/CustomWebApplicationFactory.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Program.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Startup.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/appsettings.json" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Infrastructure/Validators/PatientInputModelValidator.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Infrastructure/Extensions/ServiceCollectionExtensions.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Infrastructure/Validators/PhoneNumberInputModelValidator.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Abarnathy.DemographicsAPI/Test/Abarnathy.DemographicsAPI.Test.Unit/ControllerTests/PatientControllerTests.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Abarnathy.DemographicsAPI/Test/Abarnathy.DemographicsAPI.Test.Unit/ServiceTests/PatientServiceTests.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Abarnathy.BlazorClient/Client/Models/AddressInputModel.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Abarnathy.BlazorClient/Client/Models/PatientInputModel.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Infrastructure/Extensions/ApplicationBuilderExtensions.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Models/InputModels/PatientInputModel.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Repositories/Interfaces/IUnitOfWork.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Models/InputModels/PhoneNumberInputModel.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Models/InputModels/AddressInputModel.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Abarnathy.BlazorClient/Client/Pages/Patient/Index.razor.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Abarnathy.BlazorClient/Client/Pages/Patient/Index.razor" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Repositories/Interfaces/IRepositoryBase.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Abarnathy.DemographicsAPI/Test/Abarnathy.DemographicsAPI.Test.Unit/RepositoryTests/RepositoryBaseTests.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Models/Entities/EntityBase.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Models/Entities/PhoneNumber.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Abarnathy.BlazorClient/Server/Startup.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Models/Entities/PatientPhoneNumber.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Abarnathy.BlazorClient/Client/Models/SexEnum.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Abarnathy.DemographicsAPI/Test/Abarnathy.DemographicsAPI.Test.Integration/SeedData.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Abarnathy.BlazorClient/Client/Pages/Patient/Create.razor.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Abarnathy.BlazorClient/Client/Pages/Patient/Create.razor" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Abarnathy.BlazorClient/Client/Shared/OperationStatus.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Abarnathy.BlazorClient/Client/Pages/Patient/Single.razor.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Abarnathy.BlazorClient/Client/Pages/Patient/Single.razor" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Abarnathy.DemographicsAPI/Test/Abarnathy.DemographicsAPI.Test.Unit/RepositoryTests/UnitOfWorkTests.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Abarnathy.DemographicsAPI/Test/Abarnathy.DemographicsAPI.Test.Integration/PatientControllerTests.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Models/Entities/Address.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Models/Entities/PatientAddress.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Abarnathy.DemographicsAPI/Test/Abarnathy.DemographicsAPI.Test.Unit/RepositoryTests/PatientRepositoryTests.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Models/Entities/Patient.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Models/Entities/Sex.cs" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/Abarnathy.DemographicsAPI/Test/Abarnathy.DemographicsAPI.Test.Unit/ControllerTests/PatientControllerTests.cs" />
+        <option value="$PROJECT_DIR$/Abarnathy.DemographicsAPI/Test/Abarnathy.DemographicsAPI.Test.Integration/ConfigureWebHost.cs" />
+        <option value="$PROJECT_DIR$/Abarnathy.DemographicsAPI/Test/Abarnathy.DemographicsAPI.Test.Integration/SeedData.cs" />
+        <option value="$PROJECT_DIR$/Abarnathy.DemographicsAPI/Test/Abarnathy.DemographicsAPI.Test.Integration/PatientControllerTests.cs" />
+        <option value="$PROJECT_DIR$/Abarnathy.DemographicsAPI/Test/Abarnathy.DemographicsAPI.Test.Integration/CustomWebApplicationFactory.cs" />
+        <option value="$PROJECT_DIR$/Abarnathy.BlazorClient/Client/Pages/Patients.razor.cs" />
+        <option value="$PROJECT_DIR$/Abarnathy.BlazorClient/Client/Pages/PatientsBase.razor.cs" />
+        <option value="$PROJECT_DIR$/Abarnathy.BlazorClient/Client/Pages/Patients.razor" />
+        <option value="$PROJECT_DIR$/Abarnathy.BlazorClient/Client/Pages/Patient/Patients.razor" />
+        <option value="$PROJECT_DIR$/Abarnathy.BlazorClient/Client/Pages/Patient/PatientsBase.razor.cs" />
+        <option value="$PROJECT_DIR$/Abarnathy.BlazorClient/Client/_Imports.razor" />
+        <option value="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/.dockerignore" />
+        <option value="$PROJECT_DIR$/.dockerignore" />
+        <option value="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Abarnathy.DemographicsAPI.csproj" />
+        <option value="$PROJECT_DIR$/Abarnathy.BlazorClient/Client/Program.cs" />
+        <option value="$PROJECT_DIR$/Abarnathy.BlazorClient/Server/Startup.cs" />
+        <option value="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Controllers/PatientController.cs" />
+        <option value="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Infrastructure/Extensions/ServiceCollectionExtensions.cs" />
+        <option value="$PROJECT_DIR$/Abarnathy.BlazorClient/Client/Pages/Patient/IndexBase.razor.cs" />
+        <option value="$PROJECT_DIR$/Abarnathy.BlazorClient/Client/wwwroot/index.html" />
+        <option value="$PROJECT_DIR$/Abarnathy.BlazorClient/Client/Shared/OperationStatus.cs" />
+        <option value="$PROJECT_DIR$/Abarnathy.BlazorClient/Client/Pages/Patient/Index.razor.cs" />
+        <option value="$PROJECT_DIR$/Abarnathy.BlazorClient/Client/Pages/Patient/Single.razor.cs" />
+        <option value="$PROJECT_DIR$/Abarnathy.BlazorClient/Client/Models/AddressInputModel.cs" />
+        <option value="$PROJECT_DIR$/Abarnathy.BlazorClient/Client/Pages/Patient/Single.razor" />
+        <option value="$PROJECT_DIR$/Abarnathy.BlazorClient/Client/Shared/NavMenu.razor" />
+        <option value="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Program.cs" />
+        <option value="$PROJECT_DIR$/Abarnathy.BlazorClient/Client/Pages/Patient/Index.razor" />
+        <option value="$PROJECT_DIR$/Abarnathy.BlazorClient/Client/Models/SexEnum.cs" />
+        <option value="$PROJECT_DIR$/Abarnathy.BlazorClient/Client/Models/PatientInputModel.cs" />
+        <option value="$PROJECT_DIR$/Abarnathy.BlazorClient/Client/Pages/Patient/Create.razor" />
+        <option value="$PROJECT_DIR$/Abarnathy.BlazorClient/Client/Pages/Patient/Create.razor.cs" />
+        <option value="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Models/Entities/PatientPhoneNumber.cs" />
+        <option value="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Data/DemographicsDbContext.cs" />
+        <option value="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Models/Entities/Address.cs" />
+        <option value="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Models/Entities/PhoneNumber.cs" />
+        <option value="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Models/Entities/Sex.cs" />
+        <option value="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Models/InputModels/Address.cs" />
+        <option value="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Models/InputModels/Patient.cs" />
+        <option value="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Models/InputModels/PhoneNumber.cs" />
+        <option value="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Models/InputModels/Sex.cs" />
+        <option value="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Models/InputModels/AddressInputModel.cs" />
+        <option value="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Models/InputModels/PhoneNumberInputModel.cs" />
+        <option value="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Models/InputModels/SexInputModel.cs" />
+        <option value="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Models/InputModels/PatientInputModel.cs" />
+        <option value="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Infrastructure/MappingProfiles.cs" />
+        <option value="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Infrastructure/Validators/PatientInputModelValidator.cs" />
+        <option value="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Infrastructure/Validators/PhoneNumberInputModelValidator.cs" />
+        <option value="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Models/Entities/Patient.cs" />
+        <option value="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Infrastructure/Extensions/ApplicationBuilderExtensions.cs" />
+        <option value="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Startup.cs" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectId" id="1aw5qlUHDvu5YHZ0N1xoelsMslQ" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="autoscrollToSource" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="TWShift.4" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+  </component>
+  <component name="RunManager" selected="Publish to folder.Publish Abarnathy.DemographicsAPI to folder">
+    <configuration name="Publish Abarnathy.DemographicsAPI to folder" type="DotNetFolderPublish" factoryName="Publish to folder" activateToolWindowBeforeRun="false" temporary="true">
+      <riderPublish runtime="Portable" target_folder="$PROJECT_DIR$/../asd" target_framework="netcoreapp3.1" uuid_high="-7205413325948368675" uuid_low="-7709179699679184850" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Abarnathy.BlazorClient.Client: Abarnathy.BlazorClient" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
+      <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/Abarnathy.BlazorClient/Client/Abarnathy.BlazorClient.Client.csproj" />
+      <option name="LAUNCH_PROFILE_TFM" value=".NETStandard,Version=v2.1" />
+      <option name="LAUNCH_PROFILE_NAME" value="Abarnathy.BlazorClient" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <option name="USE_MONO" value="0" />
+      <option name="RUNTIME_ARGUMENTS" value="" />
+      <option name="GENERATE_APPLICATIONHOST_CONFIG" value="1" />
+      <option name="SHOW_IIS_EXPRESS_OUTPUT" value="0" />
+      <option name="SEND_DEBUG_REQUEST" value="1" />
+      <option name="ADDITIONAL_IIS_EXPRESS_ARGUMENTS" value="" />
+      <method v="2">
+        <option name="Build" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Abarnathy.BlazorClient.Client: IIS Express" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
+      <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/Abarnathy.BlazorClient/Client/Abarnathy.BlazorClient.Client.csproj" />
+      <option name="LAUNCH_PROFILE_TFM" value=".NETStandard,Version=v2.1" />
+      <option name="LAUNCH_PROFILE_NAME" value="IIS Express" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <option name="USE_MONO" value="0" />
+      <option name="RUNTIME_ARGUMENTS" value="" />
+      <option name="GENERATE_APPLICATIONHOST_CONFIG" value="1" />
+      <option name="SHOW_IIS_EXPRESS_OUTPUT" value="0" />
+      <option name="SEND_DEBUG_REQUEST" value="1" />
+      <option name="ADDITIONAL_IIS_EXPRESS_ARGUMENTS" value="" />
+      <method v="2">
+        <option name="Build" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Abarnathy.BlazorClient.Server" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
+      <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/Abarnathy.BlazorClient/Server/Abarnathy.BlazorClient.Server.csproj" />
+      <option name="LAUNCH_PROFILE_TFM" value=".NETCoreApp,Version=v3.1" />
+      <option name="LAUNCH_PROFILE_NAME" value="Abarnathy.BlazorClient.Server" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <option name="USE_MONO" value="0" />
+      <option name="RUNTIME_ARGUMENTS" value="" />
+      <option name="GENERATE_APPLICATIONHOST_CONFIG" value="1" />
+      <option name="SHOW_IIS_EXPRESS_OUTPUT" value="0" />
+      <option name="SEND_DEBUG_REQUEST" value="1" />
+      <option name="ADDITIONAL_IIS_EXPRESS_ARGUMENTS" value="" />
+      <method v="2">
+        <option name="Build" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Abarnathy.BlazorClient.Server: IIS Express" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
+      <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/Abarnathy.BlazorClient/Server/Abarnathy.BlazorClient.Server.csproj" />
+      <option name="LAUNCH_PROFILE_TFM" value=".NETCoreApp,Version=v3.1" />
+      <option name="LAUNCH_PROFILE_NAME" value="IIS Express" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <option name="USE_MONO" value="0" />
+      <option name="RUNTIME_ARGUMENTS" value="" />
+      <option name="GENERATE_APPLICATIONHOST_CONFIG" value="1" />
+      <option name="SHOW_IIS_EXPRESS_OUTPUT" value="0" />
+      <option name="SEND_DEBUG_REQUEST" value="1" />
+      <option name="ADDITIONAL_IIS_EXPRESS_ARGUMENTS" value="" />
+      <method v="2">
+        <option name="Build" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Abarnathy.DemographicsAPI" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
+      <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/Abarnathy.DemographicsAPI/Abarnathy.DemographicsAPI.csproj" />
+      <option name="LAUNCH_PROFILE_TFM" value=".NETCoreApp,Version=v3.1" />
+      <option name="LAUNCH_PROFILE_NAME" value="Abarnathy.DemographicsAPI" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <option name="USE_MONO" value="0" />
+      <option name="RUNTIME_ARGUMENTS" value="" />
+      <option name="GENERATE_APPLICATIONHOST_CONFIG" value="1" />
+      <option name="SHOW_IIS_EXPRESS_OUTPUT" value="0" />
+      <option name="SEND_DEBUG_REQUEST" value="1" />
+      <option name="ADDITIONAL_IIS_EXPRESS_ARGUMENTS" value="" />
+      <method v="2">
+        <option name="Build" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Abarnathy.DemographicsAPI: IIS Express" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
+      <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/Abarnathy.DemographicsAPI/Abarnathy.DemographicsAPI.csproj" />
+      <option name="LAUNCH_PROFILE_TFM" value=".NETCoreApp,Version=v3.1" />
+      <option name="LAUNCH_PROFILE_NAME" value="IIS Express" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <option name="USE_MONO" value="0" />
+      <option name="RUNTIME_ARGUMENTS" value="" />
+      <option name="GENERATE_APPLICATIONHOST_CONFIG" value="1" />
+      <option name="SHOW_IIS_EXPRESS_OUTPUT" value="0" />
+      <option name="SEND_DEBUG_REQUEST" value="1" />
+      <option name="ADDITIONAL_IIS_EXPRESS_ARGUMENTS" value="" />
+      <method v="2">
+        <option name="Build" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Abarnathy.DemographicsAPI: Kestrel" type="LaunchSettings" factoryName=".NET Launch Settings Profile" temporary="true">
+      <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Abarnathy.DemographicsAPI.csproj" />
+      <option name="LAUNCH_PROFILE_TFM" value=".NETCoreApp,Version=v3.1" />
+      <option name="LAUNCH_PROFILE_NAME" value="Abarnathy.DemographicsAPI" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <option name="USE_MONO" value="0" />
+      <option name="RUNTIME_ARGUMENTS" value="" />
+      <option name="GENERATE_APPLICATIONHOST_CONFIG" value="1" />
+      <option name="SHOW_IIS_EXPRESS_OUTPUT" value="0" />
+      <option name="SEND_DEBUG_REQUEST" value="1" />
+      <option name="ADDITIONAL_IIS_EXPRESS_ARGUMENTS" value="" />
+      <method v="2">
+        <option name="Build" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Publish to folder.Publish Abarnathy.DemographicsAPI to folder" />
+        <item itemvalue=".NET Launch Settings Profile.Abarnathy.DemographicsAPI: Kestrel" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="2994f7a6-3214-4763-940e-3378cfe700da" name="Default Changelist" comment="" />
+      <created>1587634008504</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1587634008504</updated>
+      <workItem from="1587634011245" duration="5514000" />
+      <workItem from="1587717198343" duration="25558000" />
+      <workItem from="1587817180292" duration="14518000" />
+      <workItem from="1587922564483" duration="3584000" />
+      <workItem from="1587927506515" duration="4523000" />
+      <workItem from="1587977605751" duration="23496000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="UnitTestsCoverage.Settings">
+    <option name="coveragePercentColumnWidth" value="150" />
+    <option name="sortOrder" value="DESCENDING" />
+    <option name="sortedColumn" value="1" />
+    <option name="symbolColumnWidth" value="168" />
+    <coverage-tree-state>
+      <expand>
+        <path>
+          <item name="rootNode" type="c53c71d1:RiderDotCoverCoverageTreeModel$RootNode" />
+          <item name="1" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+        </path>
+      </expand>
+      <select />
+    </coverage-tree-state>
+  </component>
+  <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
+  <component name="UnityUnitTestConfiguration" currentTestLauncher="NUnit" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="0" y="0" width="669" height="800" key="#Abarnathy.DemographicsAPI:_IIS_Express_(1)" timestamp="1587978289123">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="0" y="0" width="669" height="800" key="#Abarnathy.DemographicsAPI:_IIS_Express_(1)/0.0.1280.800@0.0.1280.800" timestamp="1587978289123" />
+    <state x="384" y="131" key="#Publish_Abarnathy.DemographicsAPI_to_folder" timestamp="1587980199901">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="384" y="131" key="#Publish_Abarnathy.DemographicsAPI_to_folder/0.0.1280.800@0.0.1280.800" timestamp="1587980199901" />
+    <state width="415" height="618" key="DebuggerActiveHint" timestamp="1587893783945">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state width="415" height="618" key="DebuggerActiveHint/0.0.1280.800@0.0.1280.800" timestamp="1587893783945" />
+    <state width="1238" height="213" key="GridCell.Tab.0.bottom" timestamp="1588104314981">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state width="1238" height="213" key="GridCell.Tab.0.bottom/0.0.1280.800@0.0.1280.800" timestamp="1588104314981" />
+    <state width="1238" height="266" key="GridCell.Tab.0.bottom/0.23.1280.777@0.23.1280.777" timestamp="1587895159555" />
+    <state width="1238" height="213" key="GridCell.Tab.0.center" timestamp="1588104314977">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state width="1238" height="213" key="GridCell.Tab.0.center/0.0.1280.800@0.0.1280.800" timestamp="1588104314977" />
+    <state width="1238" height="266" key="GridCell.Tab.0.center/0.23.1280.777@0.23.1280.777" timestamp="1587895159550" />
+    <state width="1238" height="213" key="GridCell.Tab.0.left" timestamp="1588104314966">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state width="1238" height="213" key="GridCell.Tab.0.left/0.0.1280.800@0.0.1280.800" timestamp="1588104314966" />
+    <state width="1238" height="266" key="GridCell.Tab.0.left/0.23.1280.777@0.23.1280.777" timestamp="1587895159543" />
+    <state width="1238" height="213" key="GridCell.Tab.0.right" timestamp="1588104314978">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state width="1238" height="213" key="GridCell.Tab.0.right/0.0.1280.800@0.0.1280.800" timestamp="1588104314978" />
+    <state width="1238" height="266" key="GridCell.Tab.0.right/0.23.1280.777@0.23.1280.777" timestamp="1587895159554" />
+    <state width="1238" height="266" key="GridCell.Tab.1.bottom" timestamp="1587977525466">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state width="1238" height="266" key="GridCell.Tab.1.bottom/0.0.1280.800@0.0.1280.800" timestamp="1587977525466" />
+    <state width="1238" height="266" key="GridCell.Tab.1.bottom/0.23.1280.777@0.23.1280.777" timestamp="1587895159564" />
+    <state width="1238" height="266" key="GridCell.Tab.1.center" timestamp="1587977525465">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state width="1238" height="266" key="GridCell.Tab.1.center/0.0.1280.800@0.0.1280.800" timestamp="1587977525465" />
+    <state width="1238" height="266" key="GridCell.Tab.1.center/0.23.1280.777@0.23.1280.777" timestamp="1587895159558" />
+    <state width="1238" height="266" key="GridCell.Tab.1.left" timestamp="1587977525464">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state width="1238" height="266" key="GridCell.Tab.1.left/0.0.1280.800@0.0.1280.800" timestamp="1587977525464" />
+    <state width="1238" height="266" key="GridCell.Tab.1.left/0.23.1280.777@0.23.1280.777" timestamp="1587895159556" />
+    <state width="1238" height="266" key="GridCell.Tab.1.right" timestamp="1587977525466">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state width="1238" height="266" key="GridCell.Tab.1.right/0.0.1280.800@0.0.1280.800" timestamp="1587977525466" />
+    <state width="1238" height="266" key="GridCell.Tab.1.right/0.23.1280.777@0.23.1280.777" timestamp="1587895159563" />
+    <state width="1238" height="266" key="GridCell.Tab.2.bottom" timestamp="1587977525469">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state width="1238" height="266" key="GridCell.Tab.2.bottom/0.0.1280.800@0.0.1280.800" timestamp="1587977525469" />
+    <state width="1238" height="266" key="GridCell.Tab.2.bottom/0.23.1280.777@0.23.1280.777" timestamp="1587895159569" />
+    <state width="1238" height="266" key="GridCell.Tab.2.center" timestamp="1587977525468">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state width="1238" height="266" key="GridCell.Tab.2.center/0.0.1280.800@0.0.1280.800" timestamp="1587977525468" />
+    <state width="1238" height="266" key="GridCell.Tab.2.center/0.23.1280.777@0.23.1280.777" timestamp="1587895159566" />
+    <state width="1238" height="266" key="GridCell.Tab.2.left" timestamp="1587977525467">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state width="1238" height="266" key="GridCell.Tab.2.left/0.0.1280.800@0.0.1280.800" timestamp="1587977525467" />
+    <state width="1238" height="266" key="GridCell.Tab.2.left/0.23.1280.777@0.23.1280.777" timestamp="1587895159565" />
+    <state width="1238" height="266" key="GridCell.Tab.2.right" timestamp="1587977525469">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state width="1238" height="266" key="GridCell.Tab.2.right/0.0.1280.800@0.0.1280.800" timestamp="1587977525469" />
+    <state width="1238" height="266" key="GridCell.Tab.2.right/0.23.1280.777@0.23.1280.777" timestamp="1587895159567" />
+    <state width="1238" height="266" key="GridCell.Tab.3.bottom" timestamp="1587977525472">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state width="1238" height="266" key="GridCell.Tab.3.bottom/0.0.1280.800@0.0.1280.800" timestamp="1587977525472" />
+    <state width="1238" height="266" key="GridCell.Tab.3.bottom/0.23.1280.777@0.23.1280.777" timestamp="1587895159573" />
+    <state width="1238" height="266" key="GridCell.Tab.3.center" timestamp="1587977525471">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state width="1238" height="266" key="GridCell.Tab.3.center/0.0.1280.800@0.0.1280.800" timestamp="1587977525471" />
+    <state width="1238" height="266" key="GridCell.Tab.3.center/0.23.1280.777@0.23.1280.777" timestamp="1587895159571" />
+    <state width="1238" height="266" key="GridCell.Tab.3.left" timestamp="1587977525470">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state width="1238" height="266" key="GridCell.Tab.3.left/0.0.1280.800@0.0.1280.800" timestamp="1587977525470" />
+    <state width="1238" height="266" key="GridCell.Tab.3.left/0.23.1280.777@0.23.1280.777" timestamp="1587895159570" />
+    <state width="1238" height="266" key="GridCell.Tab.3.right" timestamp="1587977525471">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state width="1238" height="266" key="GridCell.Tab.3.right/0.0.1280.800@0.0.1280.800" timestamp="1587977525471" />
+    <state width="1238" height="266" key="GridCell.Tab.3.right/0.23.1280.777@0.23.1280.777" timestamp="1587895159572" />
+    <state width="1238" height="266" key="GridCell.Tab.4.bottom" timestamp="1587977525474">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state width="1238" height="266" key="GridCell.Tab.4.bottom/0.0.1280.800@0.0.1280.800" timestamp="1587977525474" />
+    <state width="1238" height="266" key="GridCell.Tab.4.bottom/0.23.1280.777@0.23.1280.777" timestamp="1587895159577" />
+    <state width="1238" height="266" key="GridCell.Tab.4.center" timestamp="1587977525473">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state width="1238" height="266" key="GridCell.Tab.4.center/0.0.1280.800@0.0.1280.800" timestamp="1587977525473" />
+    <state width="1238" height="266" key="GridCell.Tab.4.center/0.23.1280.777@0.23.1280.777" timestamp="1587895159575" />
+    <state width="1238" height="266" key="GridCell.Tab.4.left" timestamp="1587977525472">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state width="1238" height="266" key="GridCell.Tab.4.left/0.0.1280.800@0.0.1280.800" timestamp="1587977525472" />
+    <state width="1238" height="266" key="GridCell.Tab.4.left/0.23.1280.777@0.23.1280.777" timestamp="1587895159574" />
+    <state width="1238" height="266" key="GridCell.Tab.4.right" timestamp="1587977525474">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state width="1238" height="266" key="GridCell.Tab.4.right/0.0.1280.800@0.0.1280.800" timestamp="1587977525474" />
+    <state width="1238" height="266" key="GridCell.Tab.4.right/0.23.1280.777@0.23.1280.777" timestamp="1587895159576" />
+    <state x="240" y="139" key="Rider.ProjectTemplateDialog.Size" timestamp="1587977087646">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="240" y="139" key="Rider.ProjectTemplateDialog.Size/0.0.1280.800@0.0.1280.800" timestamp="1587977087646" />
+    <state x="433" y="0" width="430" height="800" key="RiderGenerateDialog" timestamp="1587803344020">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="433" y="0" width="430" height="800" key="RiderGenerateDialog/0.0.1280.800@0.0.1280.800" timestamp="1587803344020" />
+    <state x="156" y="39" key="SettingsEditor" timestamp="1588061604537">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="156" y="39" key="SettingsEditor/0.0.1280.800@0.0.1280.800" timestamp="1588061604537" />
+    <state x="240" y="136" key="Vcs.Push.Dialog.v2" timestamp="1588009203106">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="240" y="136" key="Vcs.Push.Dialog.v2/0.0.1280.800@0.0.1280.800" timestamp="1588009203106" />
+    <state x="263" y="118" width="754" height="564" key="find.popup" timestamp="1587727026889">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="263" y="118" width="754" height="564" key="find.popup/0.0.1280.800@0.0.1280.800" timestamp="1587727026889" />
+    <state x="305" y="124" width="670" height="676" key="search.everywhere.popup" timestamp="1588060092884">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="305" y="124" width="670" height="676" key="search.everywhere.popup/0.0.1280.800@0.0.1280.800" timestamp="1588060092884" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Repositories/RepositoryBase.cs</url>
+          <line>31</line>
+          <properties documentPath="$PROJECT_DIR$/Abarnathy.DemographicsAPI/src/Repositories/RepositoryBase.cs" initialLine="31">
+            <startOffsets>
+              <option value="981" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1101" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
