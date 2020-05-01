@@ -4,8 +4,6 @@ namespace Abarnathy.DemographicsAPI.Infrastructure
 {
     public static class EntityExtensions
     {
-        // TODO: better method names
-
         /// <summary>
         /// Determines value equivalence between two <see cref="Patient"/> entities 
         /// by comparing the GivenName, FamilyName, SexId, and DateOfBirth properties.
@@ -73,7 +71,7 @@ namespace Abarnathy.DemographicsAPI.Infrastructure
                 (NormaliseString(entity.HouseNumber) == NormaliseString(@object.HouseNumber)) &&
                 (NormaliseString(entity.Town) == NormaliseString(@object.Town)) &&
                 (NormaliseString(entity.State) == NormaliseString(@object.State)) &&
-                (NormaliseString(entity.Zipcode) == NormaliseString(@object.Zipcode));
+                (NormaliseString(entity.ZipCode) == NormaliseString(@object.ZipCode));
         }
 
         /// <summary>

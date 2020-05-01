@@ -13,15 +13,21 @@ namespace Abarnathy.DemographicsAPI.Repositories
         {
         }
 
+        /// <summary>
+        /// Asynchronously gets a <see cref="Patient" /> entity by its ID.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         public async Task<Patient> GetById(int id)
         {
             if (id <= 0)
             {
                 throw new ArgumentOutOfRangeException();
             }
-            
-            var result = 
-                await 
+
+            var result =
+                await
                     base.GetByCondition(p => p.Id == id)
                         .Include(p => p.PatientAddresses)
                         .ThenInclude(pa => pa.Address)
@@ -31,6 +37,10 @@ namespace Abarnathy.DemographicsAPI.Repositories
             return result;
         }
 
+        /// <summary>
+        /// Asynchronously gets all <see cref="Patient" /> entities.
+        /// </summary>
+        /// <returns></returns>
         public async Task<IEnumerable<Patient>> GetAll()
         {
             var result =
@@ -43,20 +53,55 @@ namespace Abarnathy.DemographicsAPI.Repositories
             return result;
         }
 
-        public async Task<Patient> GetByFullPersonalia(PatientDTO dto)
+        /// <summary>
+        /// Asynchronously gets a <see cref="Patient" /> entity by the minimal set
+        /// of properties that uniquely identify it: FamilyName, GivenName, DateOfBirth, and SexId. 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public async Task<Patient> GetByFullPersonalia(PatientInputModel model)
         {
-            if (dto == null)
+            if (model == null)
             {
                 throw new ArgumentNullException();
             }
 
             var result =
-                await base.GetByCondition(p => 
-                p.FamilyName.Contains(dto.FamilyName) && 
-                p.GivenName.Contains(dto.GivenName))
-                .FirstOrDefaultAsync(p => p.SexId == dto.SexId && p.DateOfBirth.Date == dto.DateOfBirth.Date);
+                await base.GetByCondition(p =>
+                        p.FamilyName.Contains(model.FamilyName) &&
+                        p.GivenName.Contains(model.GivenName))
+                    .FirstOrDefaultAsync(p => p.SexId == model.SexId && p.DateOfBirth.Date == model.DateOfBirth.Date);
 
             return result;
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="Patient" /> entity with its minimally complete set of properties
+        /// (ie. validates that the properties are not null or whitespace and begins tracking the entity
+        /// in the 'Added' state).
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
+        public new Patient Create(Patient entity)
+        {
+            if (entity == null ||
+                string.IsNullOrEmpty(entity.FamilyName) ||
+                string.IsNullOrEmpty(entity.GivenName))
+            {
+                throw new ArgumentNullException();
+            }
+
+            if (entity.SexId < 1 || entity.SexId > 2)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            base.Create(entity);
+
+            return entity;
         }
     }
 }

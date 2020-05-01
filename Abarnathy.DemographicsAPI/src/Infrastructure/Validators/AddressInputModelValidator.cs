@@ -4,7 +4,7 @@ using FluentValidation;
 
 namespace Abarnathy.DemographicsAPI.Infrastructure.Validators
 {
-    public class AddressInputModelValidator : AbstractValidator<AddressDTO>
+    public class AddressInputModelValidator : AbstractValidator<AddressInputModel>
     {
         public AddressInputModelValidator()
         {
@@ -29,7 +29,7 @@ namespace Abarnathy.DemographicsAPI.Infrastructure.Validators
                 .Matches(new Regex(@"^[^-\s][a-zA-Z ]+$"))
                 .MaximumLength(20);
 
-            RuleFor(x => x.Zipcode)
+            RuleFor(x => x.ZipCode)
                 .NotEmpty()
                 .Matches(new Regex(@"^\d{5}(?:[-\s]\d{4})?$"));
             

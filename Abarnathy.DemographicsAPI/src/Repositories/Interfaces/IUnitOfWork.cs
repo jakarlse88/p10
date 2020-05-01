@@ -1,4 +1,3 @@
-using Abarnathy.DemographicsAPI.Repositories.Interfaces;
 using System.Threading.Tasks;
 
 namespace Abarnathy.DemographicsAPI.Repositories

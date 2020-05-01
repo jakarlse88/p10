@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace Abarnathy.DemographicsAPI.Infrastructure.Validators
 {
-    public class PatientInputModelValidator : AbstractValidator<PatientDTO>
+    public class PatientInputModelValidator : AbstractValidator<PatientInputModel>
     {
         public PatientInputModelValidator()
         {

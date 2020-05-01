@@ -14,7 +14,7 @@ namespace Abarnathy.DemographicsAPI.Models
         public string HouseNumber { get; set; }
         public string Town { get; set; }
         public string State { get; set; }
-        public string Zipcode { get; set; }
+        public string ZipCode { get; set; }
 
         public ICollection<PatientAddress> PatientAddresses { get; set; }
     }

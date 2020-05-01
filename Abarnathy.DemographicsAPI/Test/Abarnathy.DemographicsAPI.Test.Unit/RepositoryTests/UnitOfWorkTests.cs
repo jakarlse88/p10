@@ -9,6 +9,12 @@ namespace Abarnathy.DemographicsAPI.Test.Unit.RepositoryTests
 {
     public class UnitOfWorkTests
     {
+        /**
+         * ===============================================================
+         * PatientRepository()
+         * ===============================================================
+         */
+        
         [Fact]
         public void TestPatientRepository()
         {
@@ -23,6 +29,52 @@ namespace Abarnathy.DemographicsAPI.Test.Unit.RepositoryTests
             Assert.IsAssignableFrom<IPatientRepository>(patientRepository);
         }
 
+        /**
+         * ===============================================================
+         * AddressRepository()
+         * ===============================================================
+         */
+        
+        [Fact]
+        public void TestAddressRepository()
+        {
+            // Arrange
+            var unitOfWork = new UnitOfWork(Mock.Of<DemographicsDbContext>());
+
+            // Act
+            var addressRepository = unitOfWork.AddressRepository;
+
+            // Assert
+            Assert.NotNull(addressRepository);
+            Assert.IsAssignableFrom<IAddressRepository>(addressRepository);
+        }
+        
+        /**
+         * ===============================================================
+         * PhoneNumberRepository
+         * ===============================================================
+         */
+        
+        [Fact]
+        public void TestPhoneNumberRepository()
+        {
+            // Arrange
+            var unitOfWork = new UnitOfWork(Mock.Of<DemographicsDbContext>());
+
+            // Act
+            var phoneNumberRepository = unitOfWork.PhoneNumberRepository;
+
+            // Assert
+            Assert.NotNull(phoneNumberRepository);
+            Assert.IsAssignableFrom<IPhoneNumberRepository>(phoneNumberRepository);
+        }
+        
+        /**
+         * ===============================================================
+         * CommitAsync()
+         * ===============================================================
+         */
+        
         [Fact]
         public async Task TestCommitAsync()
         {
@@ -46,6 +98,12 @@ namespace Abarnathy.DemographicsAPI.Test.Unit.RepositoryTests
                 );
         }
 
+        /**
+         * ===============================================================
+         * RollbackAsync()
+         * ===============================================================
+         */
+        
         [Fact]
         public async Task TestRollbackAsync()
         {

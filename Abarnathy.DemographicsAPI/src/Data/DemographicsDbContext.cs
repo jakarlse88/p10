@@ -56,7 +56,7 @@ namespace Abarnathy.DemographicsAPI.Data
                     .IsRequired()
                     .HasMaxLength(40);
 
-                entity.Property(e => e.Zipcode)
+                entity.Property(e => e.ZipCode)
                     .IsRequired()
                     .HasColumnName("ZIPCode")
                     .HasMaxLength(10);

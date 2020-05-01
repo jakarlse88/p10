@@ -28,7 +28,7 @@ namespace Abarnathy.DemographicsAPI.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<ActionResult<IEnumerable<PatientDTO>>> Get()
+        public async Task<ActionResult<IEnumerable<PatientInputModel>>> Get()
         {
             var result = await _patientService.GetInputModelsAll();
 
@@ -45,12 +45,14 @@ namespace Abarnathy.DemographicsAPI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        /// <response code="200">Request OK, return result.</response>
+        /// <response code="200">Request OK, entity found.</response>
+        /// <response code="204">Request OK, no entity found.</response>
         /// <response code="400">Malformed request (bad ID).</response>
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<PatientDTO>> Get(int id)
+        public async Task<ActionResult<PatientInputModel>> Get(int id)
         {
             if (id <= 0)
             {
@@ -58,6 +60,11 @@ namespace Abarnathy.DemographicsAPI.Controllers
             }
 
             var result = await _patientService.GetInputModelById(id);
+
+            if (result == null)
+            {
+                return NoContent();
+            }
 
             return Ok(result);
         }
@@ -72,7 +79,7 @@ namespace Abarnathy.DemographicsAPI.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Post(PatientDTO model)
+        public async Task<IActionResult> Post(PatientInputModel model)
         {
             if (model == null)
             {

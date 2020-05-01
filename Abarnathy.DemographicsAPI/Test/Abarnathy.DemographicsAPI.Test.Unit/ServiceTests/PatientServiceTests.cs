@@ -25,6 +25,12 @@ namespace Abarnathy.DemographicsAPI.Test.Unit.ServiceTests
             _mapper = config.CreateMapper();
         }
 
+        /**
+         * ===============================================================
+         * GetInputModelById()
+         * ===============================================================
+         */
+        
         [Fact]
         public async Task TestGetInputModelByIdArgumentBad()
         {
@@ -32,7 +38,7 @@ namespace Abarnathy.DemographicsAPI.Test.Unit.ServiceTests
             var service = new PatientService(null, null);
 
             // Act
-            async Task<PatientDTO> TestAction() => await service.GetInputModelById(0);
+            async Task<PatientInputModel> TestAction() => await service.GetInputModelById(0);
 
             // Assert
             await Assert.ThrowsAsync<ArgumentOutOfRangeException>(TestAction);
@@ -72,10 +78,16 @@ namespace Abarnathy.DemographicsAPI.Test.Unit.ServiceTests
 
             // Assert
             Assert.NotNull(result);
-            Assert.IsAssignableFrom<PatientDTO>(result);
+            Assert.IsAssignableFrom<PatientInputModel>(result);
             Assert.Equal(5, result.Id);
         }
 
+        /**
+         * ===============================================================
+         * GetInputModelsAll()
+         * ===============================================================
+         */
+        
         [Fact]
         public async Task TestGetInputModelsAll()
         {
@@ -94,8 +106,14 @@ namespace Abarnathy.DemographicsAPI.Test.Unit.ServiceTests
 
             // Assert
             Assert.Equal(5, result.Count());
-            Assert.IsAssignableFrom<IEnumerable<PatientDTO>>(result);
+            Assert.IsAssignableFrom<IEnumerable<PatientInputModel>>(result);
         }
+        
+        /**
+         * ===============================================================
+         * Create()
+         * ===============================================================
+         */
 
         [Fact]
         public async Task TestCreateModelNull()
@@ -127,7 +145,7 @@ namespace Abarnathy.DemographicsAPI.Test.Unit.ServiceTests
             var service = new PatientService(mockUnitOfWork.Object, _mapper);
 
             // Act
-            var result = await service.Create(new PatientDTO
+            var result = await service.Create(new PatientInputModel
             {
                 FamilyName = "Test",
             });
@@ -162,7 +180,7 @@ namespace Abarnathy.DemographicsAPI.Test.Unit.ServiceTests
             var service = new PatientService(mockUnitOfWork.Object, _mapper);
 
             // Act
-            async Task<int> TestAction() => await service.Create(new PatientDTO
+            async Task<int> TestAction() => await service.Create(new PatientInputModel
             {
                 FamilyName = "Test",
             });
@@ -179,10 +197,90 @@ namespace Abarnathy.DemographicsAPI.Test.Unit.ServiceTests
                 .Verify(x => x.RollbackAsync(), Times.Once());
         }
 
+        [Fact]
+        public async Task TestCreatePatientEntityAlreadyExists()
+        {
+            // Arrange
+            var testDTO = new PatientInputModel();
+            
+            var mockUnitOfWork = new Mock<IUnitOfWork>();
+            
+            mockUnitOfWork
+                .Setup(x => x.PatientRepository.GetByFullPersonalia(It.IsAny<PatientInputModel>()))
+                .ReturnsAsync(new Patient())
+                .Verifiable();
 
+            var service = new PatientService(mockUnitOfWork.Object, null);
+            
+            // Act
+            async Task TestAction() => await service.Create(testDTO);
+
+            // Assert
+            var ex = await Assert.ThrowsAsync<Exception>(TestAction);
+            Assert.Equal("Error: a Patient entity already exists that matches the supplied personalia.", ex.Message);
+        }
+
+        [Fact]
+        public async Task TestCreateDTOAddressesNull()
+        {
+            // Arrange
+            var testDTO = new PatientInputModel { Addresses = null };
+
+            var service = new PatientService(null, null);
+            
+            // Act
+            async Task TestAction() => await service.Create(testDTO);
+
+            // Assert
+            await Assert.ThrowsAsync<ArgumentNullException>(TestAction);
+        }
+        
+        [Fact]
+        public async Task TestCreateDTOPhoneNumbersNull()
+        {
+            // Arrange
+            var testDTO = new PatientInputModel { PhoneNumbers = null };
+
+            var service = new PatientService(null, null);
+            
+            // Act
+            async Task TestAction() => await service.Create(testDTO);
+
+            // Assert
+            await Assert.ThrowsAsync<ArgumentNullException>(TestAction);
+        }
+
+        [Fact]
+        public async Task TestCreateLinkAddressesDTOAddressesNull()
+        {
+            // Arrange
+            var mockUnitOfWork = new Mock<IUnitOfWork>();
+
+            mockUnitOfWork
+                .Setup(x => x.PatientRepository.Create(It.IsAny<Patient>()))
+                .Verifiable();
+
+            mockUnitOfWork
+                .Setup(x => x.CommitAsync())
+                .Verifiable();
+
+            var service = new PatientService(mockUnitOfWork.Object, _mapper);
+
+            // Act
+            var result = await service.Create(new PatientInputModel
+            {
+                FamilyName = "Test",
+            });
+
+            // Assert
+        }
+
+        
+        
         /**
+         * ===============================================================
          * Internal helper methods
-         * 
+         * ===============================================================
          */
         private static IEnumerable<Patient> GeneratePatientEntityList()
         {

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Abarnathy.DemographicsAPI.Infrastructure.Validators;
 
 namespace Abarnathy.DemographicsAPI.Services
 {
@@ -31,7 +32,7 @@ namespace Abarnathy.DemographicsAPI.Services
         /// <param name="id"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentOutOfRangeException"></exception>
-        public async Task<PatientDTO> GetInputModelById(int id)
+        public async Task<PatientInputModel> GetInputModelById(int id)
         {
             if (id <= 0)
             {
@@ -45,7 +46,7 @@ namespace Abarnathy.DemographicsAPI.Services
                 return null;
             }
 
-            var result = _mapper.Map<PatientDTO>(entity);
+            var result = _mapper.Map<PatientInputModel>(entity);
 
             return result;
         }
@@ -55,11 +56,11 @@ namespace Abarnathy.DemographicsAPI.Services
         /// and returns it as an InputModel.
         /// </summary>
         /// <returns></returns>
-        public async Task<IEnumerable<PatientDTO>> GetInputModelsAll()
+        public async Task<IEnumerable<PatientInputModel>> GetInputModelsAll()
         {
             var entities = await _unitOfWork.PatientRepository.GetAll();
 
-            var result = _mapper.Map<IEnumerable<PatientDTO>>(entities);
+            var result = _mapper.Map<IEnumerable<PatientInputModel>>(entities);
 
             return result;
         }
@@ -70,9 +71,9 @@ namespace Abarnathy.DemographicsAPI.Services
         /// <param name="model"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
-        public async Task<int> Create(PatientDTO model)
+        public async Task<int> Create(PatientInputModel model)
         {
-            if (model == null)
+            if (model?.Addresses == null || model.PhoneNumbers == null)
             {
                 throw new ArgumentNullException();
             }
@@ -107,7 +108,7 @@ namespace Abarnathy.DemographicsAPI.Services
         /// </summary>
         /// <param name="id"></param>
         /// <param name="model"></param>
-        public async Task Update(int id, PatientDTO model)
+        public async Task Update(int id, PatientInputModel model)
         {
             if (id <= 0)
             {
@@ -143,8 +144,9 @@ namespace Abarnathy.DemographicsAPI.Services
         }
         
         /**
+         * ====================================================
          * Private helper methods
-         * 
+         * ==================================================== 
          */
         
         /// <summary>
@@ -153,15 +155,16 @@ namespace Abarnathy.DemographicsAPI.Services
         /// <param name="models"></param>
         /// <param name="entity"></param>
         /// <returns></returns>
-        private async Task LinkAddresses(IEnumerable<AddressDTO> models, Patient entity)
+        /// <exception cref="ArgumentNullException"></exception>
+        private async Task LinkAddresses(IEnumerable<AddressInputModel> models, Patient entity)
         {
             if (models == null || entity == null)
             {
                 throw new ArgumentNullException();
             }
 
-            // Avoid multiple enumration
-            var addressArray = models as AddressDTO[] ?? models.ToArray();
+            // Avoid multiple enumeration
+            var addressArray = models as AddressInputModel[] ?? models.ToArray();
             
             if (addressArray.Any())
             {
@@ -201,7 +204,8 @@ namespace Abarnathy.DemographicsAPI.Services
         /// <param name="models"></param>
         /// <param name="entity"></param>
         /// <returns></returns>
-        private async Task LinkPhoneNumbers(IEnumerable<PhoneNumberDTO> models, Patient entity)
+        /// <exception cref="ArgumentNullException"></exception>
+        private async Task LinkPhoneNumbers(IEnumerable<PhoneNumberInputModel> models, Patient entity)
         {
             if (models == null || entity == null)
             {
@@ -209,7 +213,7 @@ namespace Abarnathy.DemographicsAPI.Services
             }
 
             // Avoid multiple enumeration
-            var phoneNumberDTOArray = models as PhoneNumberDTO[] ?? models.ToArray();
+            var phoneNumberDTOArray = models as PhoneNumberInputModel[] ?? models.ToArray();
 
             if (phoneNumberDTOArray.Any())
             {

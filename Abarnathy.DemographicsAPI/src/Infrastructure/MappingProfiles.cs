@@ -17,7 +17,7 @@ namespace Abarnathy.DemographicsAPI.Infrastructure
         public MappingProfiles()
         {
             // To DTO
-            CreateMap<Patient, PatientDTO>()
+            CreateMap<Patient, PatientInputModel>()
                 .ForMember(
                     dest => dest.Addresses,
                     cfg => cfg.MapFrom(src =>
@@ -31,18 +31,18 @@ namespace Abarnathy.DemographicsAPI.Infrastructure
                         pn.PhoneNumber).ToList())
                 );
 
-            CreateMap<Address, AddressDTO>();
+            CreateMap<Address, AddressInputModel>();
 
-            CreateMap<PhoneNumber, PhoneNumberDTO>();
+            CreateMap<PhoneNumber, PhoneNumberInputModel>();
 
             // To entity
-            CreateMap<PatientDTO, Patient>()
+            CreateMap<PatientInputModel, Patient>()
                 .ForMember(dest => dest.PatientAddresses, action => action.Ignore())
                 .ForMember(dest => dest.PatientPhoneNumbers, action => action.Ignore());
 
-            CreateMap<AddressDTO, Address>();
+            CreateMap<AddressInputModel, Address>();
 
-            CreateMap<PhoneNumberDTO, PhoneNumber>();
+            CreateMap<PhoneNumberInputModel, PhoneNumber>();
         }
     }
 }

@@ -7,12 +7,12 @@ namespace Abarnathy.DemographicsAPI.Repositories
     /// <summary>
     /// Provides generic base repository functionality.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public interface IRepositoryBase<T>
+    /// <typeparam name="TEntity"></typeparam>
+    public interface IRepositoryBase<TEntity>
     {
-        IQueryable<T> GetByCondition(Expression<Func<T, bool>> predicate);
-        void Create(T entity);
-        void Update(T entity);
-        void Delete(T entity);
+        IQueryable<TEntity> GetByCondition(Expression<Func<TEntity, bool>> predicate);
+        void Create(TEntity entity);
+        void Update(TEntity entity);
+        void Delete(TEntity entity);
     }
 }

@@ -29,7 +29,7 @@ namespace Abarnathy.DemographicsAPI.Test.Integration
             httpResponse.EnsureSuccessStatusCode();
 
             var stringResponse = await httpResponse.Content.ReadAsStringAsync();
-            var patients = JsonConvert.DeserializeObject<IEnumerable<PatientDTO>>(stringResponse);
+            var patients = JsonConvert.DeserializeObject<IEnumerable<PatientInputModel>>(stringResponse);
             
             Assert.Equal(2, patients.Count());
             Assert.Contains(patients, p => p.GivenName == "Jane");
