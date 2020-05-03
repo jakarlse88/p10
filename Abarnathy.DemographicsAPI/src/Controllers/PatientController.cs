@@ -8,12 +8,19 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Abarnathy.DemographicsAPI.Controllers
 {
+    /// <summary>
+    /// Patient route controller.
+    /// </summary>
     [ApiController]
     [Route("api/[controller]")]
     public class PatientController : ControllerBase
     {
         private readonly IPatientService _patientService;
 
+        /// <summary>
+        /// <see cref="PatientController" /> class constructor.
+        /// </summary>
+        /// <param name="patientService"></param>
         public PatientController(IPatientService patientService)
         {
             _patientService = patientService;

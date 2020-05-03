@@ -1,8 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Abarnathy.BlazorClient.Client.Models;
 using Abarnathy.BlazorClient.Client.Shared;
@@ -14,19 +12,25 @@ namespace Abarnathy.BlazorClient.Client.Pages.Patient
 {
     public class IndexBase : ComponentBase
     {
-        [Inject] public HttpClient HttpClient { get; set; }
-        [Inject] public IJSRuntime JsRuntime { get; set; }
-        public IEnumerable<PatientInputModel> PatientList { get; set; }
-        protected OperationStatus Status { get; set; }
+        private OperationStatus _status;
+        [Inject] private HttpClient HttpClient { get; set; }
+        [Inject] private IJSRuntime JsRuntime { get; set; }
+        protected IEnumerable<PatientInputModel> PatientList { get; set; }
+
+        protected OperationStatus Status
+        {
+            get => _status;
+            set => _status = value;
+        }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            if (firstRender)
-            {
-                await JsRuntime.InvokeAsync<object>("InitDataTable");
-                StateHasChanged();
-            }
-            
+            // if (firstRender)
+            // {
+            //     await JsRuntime.InvokeAsync<object>("InitDataTable");
+            //     StateHasChanged();
+            // }
+            //
             await base.OnAfterRenderAsync(firstRender);
         }
 
@@ -45,6 +49,9 @@ namespace Abarnathy.BlazorClient.Client.Pages.Patient
                     var content = JsonConvert.DeserializeObject<IEnumerable<PatientInputModel>>(stringContent);
 
                     PatientList = content;
+
+                    // await JsRuntime.InvokeAsync<object>("ReloadDataTable");
+                    await JsRuntime.InvokeAsync<object>("InitDataTable");
                 }
 
                 if ((int) response.StatusCode == 204)

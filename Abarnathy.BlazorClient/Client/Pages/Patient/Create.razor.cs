@@ -7,15 +7,20 @@ namespace Abarnathy.BlazorClient.Client.Pages.Patient
     public class CreateBase : ComponentBase
     {
         protected PatientInputModel Model { get; set; }
-        protected HashSet<AddressInputModel> Addresses { get; set; } 
-        protected SexEnum Sex { get; set; }
+        protected PhoneNumberInputModel PhoneNumberModel { get; set; }
 
         protected override void OnInitialized()
         {
             Model = new PatientInputModel();
-            // Addresses
+            PhoneNumberModel = new PhoneNumberInputModel();
         }
 
+        protected void AddPhoneNumber()
+        {
+            Model.PhoneNumbers.Add(PhoneNumberModel);
+            PhoneNumberModel = new PhoneNumberInputModel();
+        }
+        
         protected void Submit()
         {
             // Convert from SexEnum to Id (ie. cast to int)

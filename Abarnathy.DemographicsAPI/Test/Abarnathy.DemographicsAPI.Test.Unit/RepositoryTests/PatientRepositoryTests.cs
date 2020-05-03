@@ -55,10 +55,10 @@ namespace Abarnathy.DemographicsAPI.Test.Unit.RepositoryTests
             var repository = new PatientRepository(null);
 
             // Act
-            async Task<Patient> TestAction() => await repository.GetById(0);
+            async Task<Patient> Action() => await repository.GetById(0);
 
             // Assert
-            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(TestAction);
+            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(Action);
         }
 
         [Fact]
@@ -122,10 +122,10 @@ namespace Abarnathy.DemographicsAPI.Test.Unit.RepositoryTests
             var repository = new PatientRepository(null);
 
             // Act
-            async Task TestAction() => await repository.GetByFullPersonalia(null);
+            async Task Action() => await repository.GetByFullPersonalia(null);
 
             // Assert
-            await Assert.ThrowsAsync<ArgumentNullException>(TestAction);
+            await Assert.ThrowsAsync<ArgumentNullException>(Action);
         }
 
         [Fact]
@@ -204,10 +204,10 @@ namespace Abarnathy.DemographicsAPI.Test.Unit.RepositoryTests
             var repository = new PatientRepository(null);
 
             // Act
-            Patient TestAction() => repository.Create(null);
+            Patient Action() => repository.Create(null);
 
             // Assert
-            Assert.Throws<ArgumentNullException>(TestAction);
+            Assert.Throws<ArgumentNullException>(Action);
         }
 
         [Fact]
@@ -219,10 +219,10 @@ namespace Abarnathy.DemographicsAPI.Test.Unit.RepositoryTests
             var testObject = new Patient();
 
             // Act
-            Patient TestAction() => repository.Create(testObject);
+            Patient Action() => repository.Create(testObject);
 
             // Assert
-            Assert.Throws<ArgumentNullException>(TestAction);
+            Assert.Throws<ArgumentNullException>(Action);
         }
 
         [Fact]
@@ -237,10 +237,10 @@ namespace Abarnathy.DemographicsAPI.Test.Unit.RepositoryTests
             };
 
             // Act
-            Patient TestAction() => repository.Create(testObject);
+            Patient Action() => repository.Create(testObject);
 
             // Assert
-            Assert.Throws<ArgumentNullException>(TestAction);
+            Assert.Throws<ArgumentNullException>(Action);
         }
 
         [Theory]
@@ -259,10 +259,10 @@ namespace Abarnathy.DemographicsAPI.Test.Unit.RepositoryTests
             };
 
             // Act
-            Patient TestAction() => repository.Create(testObject);
+            Patient Action() => repository.Create(testObject);
 
             // Assert
-            Assert.Throws<ArgumentOutOfRangeException>(TestAction);
+            Assert.Throws<ArgumentOutOfRangeException>(Action);
         }
 
         [Fact]

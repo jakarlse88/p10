@@ -10,6 +10,6 @@ namespace Abarnathy.DemographicsAPI.Repositories
         Task<IEnumerable<Patient>> GetAll();
         Task<Patient> GetByFullPersonalia(PatientInputModel model);
 
-        Patient Create(Patient entity);
+        new Patient Create(Patient entity);
     }
 }
