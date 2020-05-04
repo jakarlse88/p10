@@ -1,0 +1,46 @@
+<CascadingValue Value="this">
+    <div id="@Id">
+        <ul class="nav nav-pills nav-justified mb-4">
+            @foreach (var step in _steps)
+            {
+                <li id="step-@(StepsIndex(step) + 1)" class="nav-item">
+                    <a class="nav-link @((ActiveStep == step) ? "active" : "")" href="javascript: void(0)"
+                       @onclick="@(e => SetActive(step))">
+                        @step.Name
+                    </a>
+                </li>
+            }
+        </ul>
+        <div id="container-fluid">
+            @ChildContent
+        </div>
+    </div>
+
+    <div class="row mt-2">
+
+        <div class="col-4 d-flex justify-content-start">
+            <button class="btn btn-primary" type="button"
+                    disabled="@(ActiveStepIndex == 0)" @onclick="GoBack">
+                Previous
+            </button>
+        </div>
+
+        <div class="col-4 d-flex justify-content-center">
+            <button class="@(IsLastStep ? "btn btn-success" : "btn btn-success btn-disabled")"
+                    disabled="@(!IsLastStep)" onclick="@OnClick">
+                Submit
+            </button>
+        </div>
+
+        <div class="col-4 d-flex justify-content-end">
+            <button class="btn btn-primary"
+                    disabled="@(ActiveStepIndex == _steps.Count - 1)"
+                    type="button" @onclick="GoNext">
+                Next
+            </button>
+        </div>
+
+    </div>
+
+
+</CascadingValue>

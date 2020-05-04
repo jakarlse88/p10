@@ -18,7 +18,7 @@ namespace Abarnathy.BlazorClient.Client.Pages.Patient
 
         protected override async Task OnInitializedAsync()
         {
-            Status = OperationStatus.Loading;
+            Status = OperationStatus.Pending;
 
             try
             {

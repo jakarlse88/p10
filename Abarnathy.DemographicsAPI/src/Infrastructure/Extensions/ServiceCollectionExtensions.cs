@@ -62,9 +62,14 @@ namespace Abarnathy.DemographicsAPI.Infrastructure
             {
                 options.AddDefaultPolicy(builder =>
                 {
-                    builder
+                    builder // For testing using docker-compose
                         .WithOrigins("http://localhost:8081")
-                        // .AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowCredentials();
+                    
+                    builder // For testing with non-container client
+                        .WithOrigins("http://localhost:5000")
                         .AllowAnyHeader()
                         .AllowAnyMethod()
                         .AllowCredentials();

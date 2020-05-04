@@ -4,5 +4,5 @@ window.InitDataTable = () =>
         $('#patients-table').DataTable()
     );
 
-window.ReloadDataTable = () => 
-    $("#patients-table").DataTable().ajax.Reload();
+window.DestroyDataTable = () =>
+    $('#patients-table').DataTable().destroy(true);

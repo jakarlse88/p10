@@ -12,31 +12,20 @@ namespace Abarnathy.BlazorClient.Client.Pages.Patient
 {
     public class IndexBase : ComponentBase
     {
-        private OperationStatus _status;
         [Inject] private HttpClient HttpClient { get; set; }
         [Inject] private IJSRuntime JsRuntime { get; set; }
-        protected IEnumerable<PatientInputModel> PatientList { get; set; }
+        protected IEnumerable<PatientInputModel> PatientList { get; private set; }
 
-        protected OperationStatus Status
-        {
-            get => _status;
-            set => _status = value;
-        }
+        protected OperationStatus Status { get; private set; }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            // if (firstRender)
-            // {
-            //     await JsRuntime.InvokeAsync<object>("InitDataTable");
-            //     StateHasChanged();
-            // }
-            //
             await base.OnAfterRenderAsync(firstRender);
         }
 
         protected override async Task OnInitializedAsync()
         {
-            Status = OperationStatus.Loading;
+            Status = OperationStatus.Pending;
 
             try
             {
@@ -50,7 +39,6 @@ namespace Abarnathy.BlazorClient.Client.Pages.Patient
 
                     PatientList = content;
 
-                    // await JsRuntime.InvokeAsync<object>("ReloadDataTable");
                     await JsRuntime.InvokeAsync<object>("InitDataTable");
                 }
 
@@ -69,5 +57,11 @@ namespace Abarnathy.BlazorClient.Client.Pages.Patient
                 StateHasChanged();
             }
         }
+
+        // public void Dispose()
+        // {
+        //     var runTime = JsRuntime as IJSInProcessRuntime;
+        //     runTime?.Invoke<object>("DestroyDataTable");
+        // }
     }
 }

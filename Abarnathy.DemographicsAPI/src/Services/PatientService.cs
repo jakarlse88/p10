@@ -71,7 +71,7 @@ namespace Abarnathy.DemographicsAPI.Services
         /// <param name="model"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
-        public async Task<int> Create(PatientInputModel model)
+        public async Task<Patient> Create(PatientInputModel model)
         {
             if (model?.Addresses == null || model.PhoneNumbers == null)
             {
@@ -94,7 +94,7 @@ namespace Abarnathy.DemographicsAPI.Services
             {
                 _unitOfWork.PatientRepository.Create(entity);
                 await _unitOfWork.CommitAsync();
-                return entity.Id;
+                return entity;
             }
             catch (Exception)
             {

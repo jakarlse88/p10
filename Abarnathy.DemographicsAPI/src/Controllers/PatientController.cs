@@ -93,9 +93,9 @@ namespace Abarnathy.DemographicsAPI.Controllers
                 return BadRequest();
             }
 
-            var resultId = await _patientService.Create(model);
+            var createdEntity = await _patientService.Create(model);
             
-            return CreatedAtAction("Get", new { Id = resultId });
+            return CreatedAtAction("Get", new { createdEntity.Id }, createdEntity);
         }
     }
 }
