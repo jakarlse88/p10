@@ -1,0 +1,32 @@
+version: '3.4'
+
+networks:
+  app-network:
+    driver: bridge
+
+services:
+
+  sql_server:
+    container_name: sql_server
+    build: 
+        context: Abarnathy.SQLServer/
+    networks:
+      - app-network
+
+  blazor_server:
+    container_name: blazor_server
+    build:
+      context: .
+      dockerfile: Abarnathy.BlazorClient/Server/Dockerfile
+    networks:
+      - app-network
+
+  demographics_api:
+    container_name: demographics_api
+    build:
+      context: .
+      dockerfile: Abarnathy.DemographicsAPI/src/Dockerfile
+    depends_on:
+      - sql_server
+    networks:
+      - app-network

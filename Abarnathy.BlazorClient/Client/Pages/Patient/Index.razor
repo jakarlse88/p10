@@ -1,0 +1,76 @@
+@using Abarnathy.BlazorClient.Client.Models
+@inherits IndexBase
+
+@page "/patient"
+
+<h2>Patient Demographics</h2>
+
+@if (Status == OperationStatus.Pending)
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-12 d-flex justify-content-center mb-2">
+                <div id="loading"></div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 d-flex justify-content-center">
+                <small class="text-muted">Loading data, please wait</small>
+            </div>
+        </div>
+    </div>
+}
+
+@if (Status == OperationStatus.Error)
+{
+    <p class="d-block">There was an error loading the patient data.</p>
+}
+
+@if (Status == OperationStatus.Success)
+{
+    <body onbeforeunload="DestroyDataTable()">
+    <table id="patients-table" class="table table-striped table-hover">
+
+        <thead>
+        <tr>
+            <td>Id</td>
+            <td>Family name</td>
+            <td>Given name</td>
+            <td>Date of birth</td>
+            <td>Telephone</td>
+            <td>Address</td>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        @if (PatientList.Any())
+        {
+            @foreach (var item in PatientList)
+            {
+                var dateOfBirth = item.DateOfBirth.Date.ToString("dd/mm/yyyy");
+                var phoneNumber = item.PhoneNumbers?.FirstOrDefault()?.Number ?? "--";
+                var address = item.Addresses?.FirstOrDefault()?.ToString() ?? "--";
+
+                <tr>
+                    <th>@item.Id</th>
+                    <td>@item.GivenName</td>
+                    <td>@item.FamilyName</td>
+                    <td>@dateOfBirth</td>
+                    <td>@phoneNumber</td>
+                    <td>@address</td>
+                </tr>
+            }
+        }
+
+        </tbody>
+    </table>
+    </body>
+}
+<button class="btn btn-link">
+    <NavLink href="/patient/create">
+        Create
+    </NavLink>
+</button>
