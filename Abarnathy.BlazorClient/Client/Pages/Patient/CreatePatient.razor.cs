@@ -13,11 +13,11 @@ using Newtonsoft.Json;
 
 namespace Abarnathy.BlazorClient.Client.Pages.Patient
 {
-    public partial class Create
+    public partial class CreatePatient
     {
+        private const int RedirectDelaySeconds = 5;
         [Inject] private HttpClient HttpClient { get; set; }
         [Inject] private NavigationManager NavigationManager { get; set; }
-        private const int RedirectDelaySeconds = 5;
         private PatientInputModel PatientModel { get; set; }
         private AddressInputModel AddressModel { get; set; }
         private List<AddressInputModel> AddedAddressModels { get; set; }
@@ -28,11 +28,26 @@ namespace Abarnathy.BlazorClient.Client.Pages.Patient
         protected override void OnInitialized()
         {
             OperationStatus = OperationStatus.Initial;
+            
             PatientModel = new PatientInputModel();
             AddressModel = new AddressInputModel();
             AddedAddressModels = new List<AddressInputModel>();
             PhoneNumberModel = new PhoneNumberInputModel();
             AddedPhoneNumbers = new List<PhoneNumberInputModel>();
+        }
+
+        private void AddPhoneNumber()
+        {
+            AddedPhoneNumbers.Add(PhoneNumberModel);
+            PhoneNumberModel = new PhoneNumberInputModel();
+            StateHasChanged();
+        }
+
+        private void AddAddress()
+        {
+            AddedAddressModels.Add(AddressModel);
+            AddressModel = new AddressInputModel();
+            StateHasChanged();
         }
 
         /// <summary>
@@ -75,8 +90,7 @@ namespace Abarnathy.BlazorClient.Client.Pages.Patient
                     OperationStatus = OperationStatus.Success;
                     StateHasChanged();
                     
-                    // Thread.Sleep(RedirectDelaySeconds * 1000);
-                    await Task.Delay(5000);
+                    await Task.Delay(RedirectDelaySeconds * 1000);
                     
                     NavigationManager.NavigateTo($"/patient/{content.Id}");
                 }

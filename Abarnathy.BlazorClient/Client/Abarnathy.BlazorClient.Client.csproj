@@ -25,9 +25,6 @@
     <Content Update="Shared\Components\FormWizardStep.razor">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
     </Content>
-    <Content Update="Pages\Patient\Throwaway.razor">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-    </Content>
   </ItemGroup>
 
 </Project>

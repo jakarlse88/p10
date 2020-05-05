@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Abarnathy.BlazorClient.Client.Models;
-using Abarnathy.BlazorClient.Client.Shared;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using Newtonsoft.Json;
 
 namespace Abarnathy.BlazorClient.Client.Pages.Patient
 {
-    public class IndexBase : ComponentBase
+    public partial class PatientsAll
     {
         [Inject] private HttpClient HttpClient { get; set; }
         [Inject] private IJSRuntime JsRuntime { get; set; }
