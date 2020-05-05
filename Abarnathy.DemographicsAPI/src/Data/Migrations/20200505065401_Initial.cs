@@ -87,13 +87,13 @@ namespace Abarnathy.DemographicsAPI.Data.Migrations
                         column: x => x.AddressId,
                         principalTable: "Address",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_PatientAddress_Patient",
                         column: x => x.PatientId,
                         principalTable: "Patient",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -111,13 +111,13 @@ namespace Abarnathy.DemographicsAPI.Data.Migrations
                         column: x => x.PatientId,
                         principalTable: "Patient",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_PatientPhoneNumber_PhoneNumber",
                         column: x => x.PhoneNumberId,
                         principalTable: "PhoneNumber",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(

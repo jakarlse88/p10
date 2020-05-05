@@ -9,6 +9,7 @@ namespace Abarnathy.DemographicsAPI.Repositories
         private IPatientRepository _patientRepository;
         private IAddressRepository _addressRepository;
         private IPhoneNumberRepository _phoneNumberRepository;
+        private IPatientAddressRepository _patientAddressRepository;
 
         public UnitOfWork(DemographicsDbContext context)
         {
@@ -22,7 +23,10 @@ namespace Abarnathy.DemographicsAPI.Repositories
             _addressRepository ??= new AddressRepository(_context);
 
         public IPhoneNumberRepository PhoneNumberRepository =>
-            _phoneNumberRepository = new PhoneNumberRepository(_context);
+            _phoneNumberRepository ??= new PhoneNumberRepository(_context);
+
+        public IPatientAddressRepository PatientAddressRepository =>
+            _patientAddressRepository ??= new PatientAddressRepository(_context); 
 
         public async Task CommitAsync() =>
             await _context.SaveChangesAsync();

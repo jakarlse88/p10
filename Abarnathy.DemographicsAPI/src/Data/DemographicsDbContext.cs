@@ -89,13 +89,13 @@ namespace Abarnathy.DemographicsAPI.Data
                 entity.HasOne(d => d.Address)
                     .WithMany(p => p.PatientAddresses)
                     .HasForeignKey(d => d.AddressId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_PatientAddress_Address");
 
                 entity.HasOne(d => d.Patient)
                     .WithMany(p => p.PatientAddresses)
                     .HasForeignKey(d => d.PatientId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_PatientAddress_Patient");
             });
 
@@ -106,13 +106,13 @@ namespace Abarnathy.DemographicsAPI.Data
                 entity.HasOne(a => a.PhoneNumber)
                     .WithMany(b => b.PatientPhoneNumbers)
                     .HasForeignKey(a => a.PhoneNumberId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_PatientPhoneNumber_PhoneNumber");
 
                 entity.HasOne(a => a.Patient)
                     .WithMany(b => b.PatientPhoneNumbers)
                     .HasForeignKey(a => a.PatientId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_PatientPhoneNumber_Patient");
             });
 

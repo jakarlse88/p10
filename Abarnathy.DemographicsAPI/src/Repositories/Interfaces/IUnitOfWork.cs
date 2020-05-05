@@ -10,6 +10,7 @@ namespace Abarnathy.DemographicsAPI.Repositories
         IPatientRepository PatientRepository { get; }
         IAddressRepository AddressRepository { get; }
         IPhoneNumberRepository PhoneNumberRepository { get; }
+        IPatientAddressRepository PatientAddressRepository { get; }
 
         Task CommitAsync();
         Task RollbackAsync();

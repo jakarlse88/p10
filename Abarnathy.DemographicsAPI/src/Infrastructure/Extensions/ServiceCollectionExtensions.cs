@@ -49,6 +49,10 @@ namespace Abarnathy.DemographicsAPI.Infrastructure
                 {
                     fv.RegisterValidatorsFromAssemblyContaining<Startup>();
                     fv.ImplicitlyValidateChildProperties = true;
+                })
+                .AddNewtonsoftJson(options =>
+                {
+                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                 });
         }
 

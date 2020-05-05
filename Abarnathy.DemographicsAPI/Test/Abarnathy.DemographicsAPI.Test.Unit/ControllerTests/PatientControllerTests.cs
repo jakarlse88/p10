@@ -126,7 +126,7 @@ namespace Abarnathy.DemographicsAPI.Test.Unit.ControllerTests
             var mockService = new Mock<IPatientService>();
             mockService
                 .Setup(x => x.Create(It.IsAny<PatientInputModel>()))
-                .ReturnsAsync(4);
+                .ReturnsAsync(new Patient());
 
             var controller = new PatientController(mockService.Object);
 
@@ -138,6 +138,43 @@ namespace Abarnathy.DemographicsAPI.Test.Unit.ControllerTests
                 Assert.IsAssignableFrom<CreatedAtActionResult>(result);
 
             Assert.Equal("Get", actionResult.ActionName);
+            
+            var modelResult =
+                Assert.IsAssignableFrom<Patient>(actionResult.Value);
         }
+        
+        /**
+         * PUT()
+         */
+
+        [Theory]
+        [InlineData(0)]
+        [InlineData(-1)]
+        public async Task TestPutIdBad(int testId)
+        {
+            // Arrange
+            var controller = new PatientController(null);
+
+            // Act
+            var result = await controller.Put(testId, null);
+            
+            // Assert
+            Assert.IsAssignableFrom<BadRequestResult>(result);
+        }
+
+        [Fact]
+        public async Task TestPutModelNull()
+        {
+            // Arrange
+            var controller = new PatientController(null);
+
+            // Act
+            var result = await controller.Put(1, null);
+            
+            // Assert
+            Assert.IsAssignableFrom<BadRequestResult>(result);
+        }
+
+
     }
 }

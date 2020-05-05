@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Abarnathy.DemographicsAPI.Infrastructure.Validators;
+using Serilog;
 
 namespace Abarnathy.DemographicsAPI.Services
 {
@@ -26,8 +27,26 @@ namespace Abarnathy.DemographicsAPI.Services
         }
 
         /// <summary>
-        /// Asynchronously gets a Patient entity (including its relations) by ID
-        /// and returns it as an InputModel.
+        /// Asynchronously gets a <see cref="Patient"/> entity (including its relation) by ID.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
+        public async Task<Patient> GetEntityById(int id)
+        {
+            if (id <= 0)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            var entity = await _unitOfWork.PatientRepository.GetById(id);
+
+            return entity;
+        }
+
+        /// <summary>
+        /// Asynchronously gets a <see cref="Patient"/> entity (including its relations) by ID
+        /// and returns it as an <see cref="PatientInputModel"/>.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -106,13 +125,14 @@ namespace Abarnathy.DemographicsAPI.Services
         /// <summary>
         /// Updates a Patient entity and persists any changes made to the DB.
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="model"></param>
-        public async Task Update(int id, PatientInputModel model)
+        /// <param name="entity">The <see cref="Patient"/> entity to update.</param>
+        /// <param name="model">The <see cref="PatientInputModel"/> model containing the updated data.</param>
+        /// <exception cref="ArgumentNullException"></exception>
+        public async Task Update(Patient entity, PatientInputModel model)
         {
-            if (id <= 0)
+            if (entity == null)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentNullException();
             }
 
             if (model == null)
@@ -120,16 +140,12 @@ namespace Abarnathy.DemographicsAPI.Services
                 throw new ArgumentNullException();
             }
 
-            var entity = await _unitOfWork.PatientRepository.GetById(id);
-
-            if (entity == null)
-            {
-                throw new Exception($"No Patient entity matching the ID <{id}> was found.");
-            }
-
             try
             {
                 _mapper.Map(model, entity);
+
+                await UpdateAddresses(model.Addresses, entity);
+                await UpdatePhoneNumbers(model.PhoneNumbers, entity);
 
                 _unitOfWork
                     .PatientRepository
@@ -142,7 +158,7 @@ namespace Abarnathy.DemographicsAPI.Services
                 throw;
             }
         }
-        
+
         /**
          * ====================================================
          * Private helper methods
@@ -152,103 +168,250 @@ namespace Abarnathy.DemographicsAPI.Services
         /// <summary>
         /// Links one or more <see cref="Address"/> entities to a <see cref="Patient"/> entity.
         /// </summary>
-        /// <param name="models"></param>
+        /// <param name="modelEnumerable"></param>
         /// <param name="entity"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
-        private async Task LinkAddresses(IEnumerable<AddressInputModel> models, Patient entity)
+        private async Task LinkAddresses(IEnumerable<AddressInputModel> modelEnumerable, Patient entity)
         {
-            if (models == null || entity == null)
+            if (modelEnumerable == null || entity == null)
             {
                 throw new ArgumentNullException();
             }
 
             // Avoid multiple enumeration
-            var addressArray = models as AddressInputModel[] ?? models.ToArray();
-            
-            if (addressArray.Any())
+            var modelArray = modelEnumerable as AddressInputModel[] ?? modelEnumerable.ToArray();
+
+            if (modelArray.Any())
             {
-                foreach (var addressDTO in addressArray)
+                foreach (var model in modelArray)
                 {
-                    // Does a functionally identical entity already exist?
-                    var result = await _unitOfWork.AddressRepository.GetByCompleteAddressAsync(addressDTO);
-
-                    if (result == null) // No--create a new entity and link it up
-                    {
-                        var address = _mapper.Map<Address>(addressDTO);
-
-                        _unitOfWork.AddressRepository.Create(address);
-
-                        entity.PatientAddresses.Add(new PatientAddress
-                        {
-                            Patient = entity,
-                            Address = address
-                        });
-                    }
-                    else // Yes--link it up
-                    {
-                        entity.PatientAddresses.Add(new PatientAddress
-                        {
-                            Patient = entity,
-                            Address = result
-                        });
-                    }
-                    
+                    await HandleIncomingAddress(entity, model);
                 }
             }
         }
 
         /// <summary>
+        /// TODO:
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        private async Task HandleIncomingAddress(Patient entity, AddressInputModel model)
+        {
+            if (entity == null || model == null || AddressInputModelPropertiesNullOrWhitespace(model))
+            {
+                throw new ArgumentNullException();
+            }
+            
+            // Does a functionally identical entity already exist?
+            var result = await _unitOfWork.AddressRepository.GetByCompleteAddressAsync(model);
+
+            // No--create a new entity and link it up
+            if (result == null) 
+            {
+                var address = _mapper.Map<Address>(model);
+
+                _unitOfWork.AddressRepository.Create(address);
+
+                entity.PatientAddresses.Add(new PatientAddress
+                {
+                    Patient = entity,
+                    Address = address
+                });
+            }
+            // Yes--link it up if it isn't already linked (if it is already linked, no need to do anything)
+            else if (!entity.PatientAddresses.Any(pa => pa.PatientId == entity.Id && pa.AddressId == result.Id)) 
+            {
+                entity.PatientAddresses.Add(new PatientAddress
+                {
+                    Patient = entity,
+                    Address = result
+                });
+            }
+        }
+
+        /// <summary>
+        /// Indicates whether the properties of an <see cref="PatientInputModel"/> DTO are null or whitespace.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        private static bool AddressInputModelPropertiesNullOrWhitespace(AddressInputModel model)
+        {
+            if (model == null)
+            {
+                throw new ArgumentNullException();
+            }
+            
+            return
+                string.IsNullOrWhiteSpace(model.StreetName) ||
+                string.IsNullOrWhiteSpace(model.HouseNumber) ||
+                string.IsNullOrWhiteSpace(model.Town) ||
+                string.IsNullOrWhiteSpace(model.State) ||
+                string.IsNullOrWhiteSpace(model.ZipCode);
+        }
+
+        /// <summary>
         /// Links one or more <see cref="PhoneNumber"/> entities to a <see cref="Patient"/> entity.
         /// </summary>
-        /// <param name="models"></param>
+        /// <param name="modelEnumerable"></param>
         /// <param name="entity"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
-        private async Task LinkPhoneNumbers(IEnumerable<PhoneNumberInputModel> models, Patient entity)
+        private async Task LinkPhoneNumbers(IEnumerable<PhoneNumberInputModel> modelEnumerable, Patient entity)
         {
-            if (models == null || entity == null)
+            if (modelEnumerable == null || entity == null)
             {
                 throw new ArgumentNullException();
             }
 
             // Avoid multiple enumeration
-            var phoneNumberDTOArray = models as PhoneNumberInputModel[] ?? models.ToArray();
+            var modelArray = modelEnumerable as PhoneNumberInputModel[] ?? modelEnumerable.ToArray();
 
-            if (phoneNumberDTOArray.Any())
+            if (modelArray.Any())
             {
-                foreach (var dto in phoneNumberDTOArray)
+                foreach (var model in modelArray)
                 {
-                    // Does a functionally identical entity already exist?
-                    var result = await _unitOfWork.PhoneNumberRepository.GetByNumber(dto);
+                    await HandleIncomingPhoneNumber(entity, model);
+                }
+            }
+        }
 
-                    if (result == null) // No--create a new entity and link it up
+        /// <summary>
+        /// TODO:
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        private async Task HandleIncomingPhoneNumber(Patient entity, PhoneNumberInputModel model)
+        {
+            if (entity == null || model == null || string.IsNullOrEmpty(model.Number))
+            {
+                throw new ArgumentNullException();
+            }
+            
+            // Does a functionally identical entity already exist?
+            var result = await _unitOfWork.PhoneNumberRepository.GetByNumber(model);
+
+            if (result == null) // No--create a new entity and link it up
+            {
+                var phoneNumber = _mapper.Map<PhoneNumber>(model);
+
+                // Get rid of symbols
+                phoneNumber.Number = Regex.Replace(phoneNumber.Number, @"[- ().]", "");
+
+                _unitOfWork.PhoneNumberRepository.Create(phoneNumber);
+
+                entity.PatientPhoneNumbers.Add(new PatientPhoneNumber
+                {
+                    Patient = entity,
+                    PhoneNumber = phoneNumber
+                });
+            }
+            // Yes--link it up if it isn't already linked (if it is already linked, no need to do anything)
+            else if (!entity.PatientPhoneNumbers.Any(pa => pa.PatientId == entity.Id && pa.PhoneNumberId == result.Id))
+            {
+                entity.PatientPhoneNumbers.Add(new PatientPhoneNumber
+                {
+                    Patient = entity,
+                    PhoneNumber = result
+                });
+            }
+        }
+
+        /// <summary>
+        /// Updates the <see cref="Address"/> entities associated with
+        /// a given <see cref="Patient"/> entity.
+        /// </summary>
+        /// <param name="modelEnumerable"></param>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        private async Task UpdateAddresses(IEnumerable<AddressInputModel> modelEnumerable, Patient entity)
+        {
+            if (modelEnumerable == null || entity == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            // Avoid multiple enumeration
+            var modelArray = modelEnumerable as AddressInputModel[] ?? modelEnumerable.ToArray();
+
+            // Keep a reference to the old collection and instantiate a new one
+            var deprecatedPatientAddressCollection = entity.PatientAddresses;
+            entity.PatientAddresses = new HashSet<PatientAddress>();
+            
+            // Handle any incoming addresses
+            if (modelArray.Any())
+            {
+                foreach (var model in modelArray)
+                {
+                    await HandleIncomingAddress(entity, model);
+                }
+            }
+            // There are no incoming addresses but there are existing relations,
+            // ie. these need to be removed
+            else if (deprecatedPatientAddressCollection.Any()) 
+            {
+                foreach (var item in entity.PatientAddresses)
+                {
+                    // If there is only a single relation (ie. the current Patient), the Address entity should
+                    // be deleted. Deleting either a Patient or Address entity cascades to the junction table,
+                    // so this deletion should also serve to unlink the Address from the Patient.
+                    if (item.Address.PatientAddresses.Count == 1)
                     {
-                        var phoneNumber = _mapper.Map<PhoneNumber>(dto);
-
-                        //new Regex(@"^([- ().])+$").Replace(phoneNumber.Number, "");
-
-                        phoneNumber.Number = Regex.Replace(phoneNumber.Number, @"[- ().]", "");
-
-                        _unitOfWork.PhoneNumberRepository.Create(phoneNumber);
-
-                        entity.PatientPhoneNumbers.Add(new PatientPhoneNumber
-                        {
-                            Patient = entity,
-                            PhoneNumber = phoneNumber
-                        });
-                    }
-                    else // Yes--link it up
-                    {
-                        entity.PatientPhoneNumbers.Add(new PatientPhoneNumber
-                        {
-                            Patient = entity,
-                            PhoneNumber = result
-                        });
+                        _unitOfWork.AddressRepository.Delete(item.Address);
                     }
                 }
             }
         }
-        
+
+        /// <summary>
+        /// Updates the <see cref="PhoneNumber"/> entities associated with a given
+        /// <see cref="Patient"/> entity.
+        /// </summary>
+        /// <param name="modelEnumerable"></param>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        private async Task UpdatePhoneNumbers(IEnumerable<PhoneNumberInputModel> modelEnumerable, Patient entity)
+        {
+            if (modelEnumerable == null || entity == null)
+            {
+                throw new ArgumentNullException();
+            }
+            
+            // Avoid multiple enumeration
+            var modelArray = modelEnumerable as PhoneNumberInputModel[] ?? modelEnumerable.ToArray();
+            
+            // Keep a reference to the old collection and instantiate a new one
+            var deprecatedPatientPhoneNumberCollection = entity.PatientPhoneNumbers;
+            entity.PatientPhoneNumbers = new HashSet<PatientPhoneNumber>();
+            
+            // Handle any incoming phone numbers
+            if (modelArray.Any())
+            {
+                foreach (var model in modelArray)
+                {
+                    await HandleIncomingPhoneNumber(entity, model);
+                }
+            }
+            // There are no incoming phone numbers but there are existing relations,
+            // ie. these need to be removed
+            else if (deprecatedPatientPhoneNumberCollection.Any())
+            {
+                foreach (var item in entity.PatientPhoneNumbers)
+                {
+                    // If there is only a single relation (ie. the current Patient), the PhoneNumber entity should
+                    // be deleted. Deleting either a Patient or Address entity cascades to the junction table,
+                    // so this deletion should also serve to unlink the Address from the Patient.
+                    if (item.PhoneNumber.PatientPhoneNumbers.Count == 1)
+                    {
+                        _unitOfWork.PhoneNumberRepository.Delete(item.PhoneNumber);
+                    }
+                }
+            }
+        }
     }
 }
