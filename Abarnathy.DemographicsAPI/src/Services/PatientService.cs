@@ -130,12 +130,7 @@ namespace Abarnathy.DemographicsAPI.Services
         /// <exception cref="ArgumentNullException"></exception>
         public async Task Update(Patient entity, PatientInputModel model)
         {
-            if (entity == null)
-            {
-                throw new ArgumentNullException();
-            }
-
-            if (model == null)
+            if (entity == null || model == null)
             {
                 throw new ArgumentNullException();
             }
@@ -150,6 +145,7 @@ namespace Abarnathy.DemographicsAPI.Services
                 _unitOfWork
                     .PatientRepository
                     .Update(entity);
+                
                 await _unitOfWork.CommitAsync();
             }
             catch (Exception)
@@ -192,7 +188,7 @@ namespace Abarnathy.DemographicsAPI.Services
         }
 
         /// <summary>
-        /// TODO:
+        /// Handle an incoming <see cref="AddressInputModel"/> DTO.
         /// </summary>
         /// <param name="entity"></param>
         /// <param name="model"></param>
@@ -279,7 +275,7 @@ namespace Abarnathy.DemographicsAPI.Services
         }
 
         /// <summary>
-        /// TODO:
+        /// Handle an incoming <see cref="PhoneNumberInputModel"/> DTO.
         /// </summary>
         /// <param name="entity"></param>
         /// <param name="model"></param>

@@ -79,13 +79,12 @@ namespace Abarnathy.DemographicsAPI.Test.Unit.ServiceTests
             Assert.IsAssignableFrom<PatientInputModel>(result);
             Assert.Equal(5, result.Id);
         }
-        
+
         /**
          * ===============================================================
          * GetEntityById()
          * ===============================================================
          */
-        
         [Fact]
         public async Task TestGetByIdArgumentBad()
         {
@@ -142,7 +141,6 @@ namespace Abarnathy.DemographicsAPI.Test.Unit.ServiceTests
          * GetInputModelsAll()
          * ===============================================================
          */
-        
         [Fact]
         public async Task TestGetInputModelsAll()
         {
@@ -169,7 +167,6 @@ namespace Abarnathy.DemographicsAPI.Test.Unit.ServiceTests
          * Create()
          * ===============================================================
          */
-        
         [Fact]
         public async Task TestCreateModelNull()
         {
@@ -309,6 +306,110 @@ namespace Abarnathy.DemographicsAPI.Test.Unit.ServiceTests
 
         /**
          * ===============================================================
+         * Update()
+         * ===============================================================
+         */
+        
+        [Fact]
+        public async Task TestUpdateEntityNull()
+        {
+            // Arrange
+            var service = new PatientService(null, null);
+
+            // Act
+            async Task Action() => await service.Update(null, null);
+
+            // Assert
+            await Assert.ThrowsAsync<ArgumentNullException>(Action);
+        }
+
+        [Fact]
+        public async Task TestUpdateModelNull()
+        {
+            // Arrange
+            var service = new PatientService(null, null);
+
+            // Act
+            async Task Action() => await service.Update(new Patient(), null);
+
+            // Assert
+            await Assert.ThrowsAsync<ArgumentNullException>(Action);
+        }
+
+        [Fact]
+        public async Task TestUpdateArgumentsValid()
+        {
+            // Arrange
+            var mockUnitOfWork = new Mock<IUnitOfWork>();
+
+            mockUnitOfWork
+                .Setup(x => x.PatientRepository.Update(It.IsAny<Patient>()))
+                .Verifiable();
+
+            mockUnitOfWork
+                .Setup(x => x.CommitAsync())
+                .Verifiable();
+
+            var service = new PatientService(mockUnitOfWork.Object, _mapper);
+
+            // Act
+            await service.Update(new Patient { FamilyName = "Tset" }, new PatientInputModel
+            {
+                FamilyName = "Test"
+            });
+
+            // Assert
+            mockUnitOfWork
+                .Verify(x => x.PatientRepository.Update(It.IsAny<Patient>()), Times.Once);
+
+            mockUnitOfWork
+                .Verify(x => x.CommitAsync(), Times.Once);
+        }
+
+        [Fact]
+        public async Task TestUpdateException()
+        {
+            // Arrange
+            var mockUnitOfWork = new Mock<IUnitOfWork>();
+
+            mockUnitOfWork
+                .Setup(x => x.PatientRepository.Update(It.IsAny<Patient>()))
+                .Verifiable();
+
+            mockUnitOfWork
+                .Setup(x => x.CommitAsync())
+                .Throws<Exception>()
+                .Verifiable();
+
+            mockUnitOfWork
+                .Setup(x => x.RollbackAsync())
+                .Verifiable();
+
+            var service = new PatientService(mockUnitOfWork.Object, _mapper);
+
+            // Act
+            async Task Action() => 
+                await service.Update(
+                    new Patient { FamilyName = "Tset" }, 
+                    new PatientInputModel { FamilyName = "Test" }
+                    );
+
+            // Assert
+            await Assert.ThrowsAsync<Exception>(Action);
+            
+            mockUnitOfWork
+                .Verify(x => x.PatientRepository.Update(It.IsAny<Patient>()), Times.Once);
+
+            mockUnitOfWork
+                .Verify(x => x.CommitAsync(), Times.Once);
+
+            mockUnitOfWork
+                .Verify(x => x.RollbackAsync(), Times.Once());
+        }
+
+
+        /**
+         * ===============================================================
          * Internal helper methods
          * ===============================================================
          */
@@ -325,5 +426,90 @@ namespace Abarnathy.DemographicsAPI.Test.Unit.ServiceTests
 
             return list;
         }
+
+        private static IEnumerable<Address> GenerateAddressEntityList()
+        {
+            var list = new List<Address>
+            {
+                new Address
+                {
+                    StreetName = "Main Street",
+                    HouseNumber = "123",
+                    Town = "Townsville",
+                    State = "Washington",
+                    ZipCode = "12345"
+                },
+                new Address
+                {
+                    StreetName = "Back Street",
+                    HouseNumber = "123",
+                    Town = "Townsville",
+                    State = "Washington",
+                    ZipCode = "12345"
+                }
+            };
+
+            return list;
+        }
+        
+        private static ICollection<AddressInputModel> GenerateAddressInputModelList()
+        {
+            var list = new List<AddressInputModel>
+            {
+                new AddressInputModel
+                {
+                    StreetName = "Main Street",
+                    HouseNumber = "123",
+                    Town = "Townsville",
+                    State = "Washington",
+                    ZipCode = "12345"
+                },
+                new AddressInputModel
+                {
+                    StreetName = "Back Street",
+                    HouseNumber = "123",
+                    Town = "Townsville",
+                    State = "Washington",
+                    ZipCode = "12345"
+                }
+            };
+
+            return list;
+        }
+
+        private static IEnumerable<PhoneNumber> GeneratePhoneNumberEntityList()
+        {
+            var list = new List<PhoneNumber>
+            {
+                new PhoneNumber
+                {
+                    Number = "1234567890"
+                },
+                new PhoneNumber
+                {
+                    Number = "0987654321"
+                }
+            };
+
+            return list;
+        }
+        
+        private static ICollection<PhoneNumberInputModel> GeneratePhoneNumberInputModelList()
+        {
+            var list = new List<PhoneNumberInputModel>
+            {
+                new PhoneNumberInputModel
+                {
+                    Number = "1234567890"
+                },
+                new PhoneNumberInputModel
+                {
+                    Number = "0987654321"
+                }
+            };
+
+            return list;
+        }
+
     }
 }
