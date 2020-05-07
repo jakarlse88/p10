@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Abarnathy.BlazorClient.Client.Models;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
 using Newtonsoft.Json;
 
 namespace Abarnathy.BlazorClient.Client.Pages.Patient
@@ -23,10 +24,23 @@ namespace Abarnathy.BlazorClient.Client.Pages.Patient
         private List<AddressInputModel> AddedAddressModels { get; set; }
         private PhoneNumberInputModel PhoneNumberModel { get; set; }
         private List<PhoneNumberInputModel> AddedPhoneNumbers { get; set; }
+        private EditContext PatientEditContext { get; set; }
+        private EditContext AddressEditContext { get; set; }
+        private EditContext PhoneNumberEditContext { get; set; }
+        private bool PatientValid { get; set; }
+        private bool CurrentAddressValid { get; set; }
+        private bool CurrentPhoneNumberValid { get; set; }
         private OperationStatus OperationStatus { get; set; }
 
+        /// <summary>
+        /// Component initialisation logic.
+        /// </summary>
         protected override void OnInitialized()
         {
+            PatientValid = false;
+            CurrentAddressValid = false;
+            CurrentPhoneNumberValid = false;
+            
             OperationStatus = OperationStatus.Initial;
             
             PatientModel = new PatientInputModel();
@@ -34,19 +48,54 @@ namespace Abarnathy.BlazorClient.Client.Pages.Patient
             AddedAddressModels = new List<AddressInputModel>();
             PhoneNumberModel = new PhoneNumberInputModel();
             AddedPhoneNumbers = new List<PhoneNumberInputModel>();
+            
+            PatientEditContext = new EditContext(PatientModel);
+            PatientEditContext.OnFieldChanged += (sender, @event) =>
+            {
+                PatientValid = PatientEditContext.Validate();
+                StateHasChanged();
+            };
+            
+            AddressEditContext = new EditContext(AddressModel);
+            AddressEditContext.OnFieldChanged += (sender, @event) =>
+                CurrentAddressValid = AddressEditContext.Validate();
+            
+            PhoneNumberEditContext = new EditContext(PhoneNumberModel);
+            PhoneNumberEditContext.OnFieldChanged += (sender, @event) =>
+                CurrentPhoneNumberValid = PhoneNumberEditContext.Validate();
         }
 
+        /// <summary>
+        /// If the <see cref="PhoneNumberInputModel"/> DTO currently being edited is valid,
+        /// add it to the collection to be passed to the API.
+        /// </summary>
         private void AddPhoneNumber()
         {
-            AddedPhoneNumbers.Add(PhoneNumberModel);
-            PhoneNumberModel = new PhoneNumberInputModel();
+            if (CurrentPhoneNumberValid)
+            {
+                AddedPhoneNumbers.Add(PhoneNumberModel);
+                PhoneNumberModel = new PhoneNumberInputModel();                
+            }
+
+            CurrentPhoneNumberValid = false;
+
             StateHasChanged();
         }
 
+        /// <summary>
+        /// If the <see cref="AddressInputModel"/> DTO currently being edited is valid,
+        /// add it to the collection to be passed to the API.
+        /// </summary>
         private void AddAddress()
         {
-            AddedAddressModels.Add(AddressModel);
-            AddressModel = new AddressInputModel();
+            if (CurrentAddressValid)
+            {
+                AddedAddressModels.Add(AddressModel);
+                AddressModel = new AddressInputModel();                
+            }
+
+            CurrentAddressValid = false;
+
             StateHasChanged();
         }
 
@@ -106,6 +155,14 @@ namespace Abarnathy.BlazorClient.Client.Pages.Patient
                 StateHasChanged();
                 Console.WriteLine(e);
             }
+        }
+
+        /// <summary>
+        /// Cancels user creation and navigates back to the overview.
+        /// </summary>
+        private void Cancel()
+        {
+            NavigationManager.NavigateTo("/patient");
         }
     }
 }

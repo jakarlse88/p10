@@ -9,7 +9,8 @@ using Microsoft.Extensions.Logging;
 
 namespace Abarnathy.DemographicsAPI.Test.Integration
 {
-    public class CustomWebApplicationFactory<TStartup> : WebApplicationFactory<Startup>
+    public class CustomWebApplicationFactory<TStartup>
+        : WebApplicationFactory<TStartup> where TStartup: class
     {
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
@@ -49,7 +50,7 @@ namespace Abarnathy.DemographicsAPI.Test.Integration
                     try
                     {
                         // Seed the database with test data.
-                        SeedData.PopulateTestData(db);
+                        Utilities.InitializeDbForTests(db);
                     }
                     catch (Exception ex)
                     {

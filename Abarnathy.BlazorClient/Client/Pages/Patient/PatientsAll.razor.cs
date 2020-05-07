@@ -44,6 +44,7 @@ namespace Abarnathy.BlazorClient.Client.Pages.Patient
                 if ((int) response.StatusCode == 204)
                 {
                     PatientList = new List<PatientInputModel>();
+                    await JsRuntime.InvokeAsync<object>("InitDataTable");
                 }
 
                 Status = OperationStatus.Success;

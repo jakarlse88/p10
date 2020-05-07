@@ -40,6 +40,7 @@
             <td>Date of birth</td>
             <td>Telephone</td>
             <td>Address</td>
+            <td>Actions</td>
         </tr>
         </thead>
 
@@ -49,7 +50,7 @@
         {
             @foreach (var item in PatientList)
             {
-                var dateOfBirth = item.DateOfBirth.Date.ToString("dd/mm/yyyy");
+                var dateOfBirth = item.DateOfBirth.Date.ToString("dd/MM/yyyy");
                 var phoneNumber = item.PhoneNumbers?.FirstOrDefault()?.Number ?? "--";
                 var address = item.Addresses?.FirstOrDefault()?.ToString() ?? "--";
 
@@ -60,6 +61,7 @@
                     <td>@dateOfBirth</td>
                     <td>@phoneNumber</td>
                     <td>@address</td>
+                    <td><NavLink href="@($"/patient/{item.Id}")"><i class="fas fa-lg fa-info-circle"></i></NavLink></td>
                 </tr>
             }
         }
@@ -68,8 +70,6 @@
     </table>
     </body>
 }
-<button class="btn btn-link">
-    <NavLink href="/patient/create">
+    <NavLink href="/patient/create" class="btn btn-small btn-dark">
         Create
     </NavLink>
-</button>
