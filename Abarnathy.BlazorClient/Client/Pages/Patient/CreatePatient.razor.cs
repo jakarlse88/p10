@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Abarnathy.BlazorClient.Client.Models;
@@ -21,7 +22,7 @@ namespace Abarnathy.BlazorClient.Client.Pages.Patient
         [Inject] private NavigationManager NavigationManager { get; set; }
         private PatientInputModel PatientModel { get; set; }
         private AddressInputModel AddressModel { get; set; }
-        private List<AddressInputModel> AddedAddressModels { get; set; }
+        private List<AddressInputModel> AddedAddresses { get; set; }
         private PhoneNumberInputModel PhoneNumberModel { get; set; }
         private List<PhoneNumberInputModel> AddedPhoneNumbers { get; set; }
         private EditContext PatientEditContext { get; set; }
@@ -30,7 +31,7 @@ namespace Abarnathy.BlazorClient.Client.Pages.Patient
         private bool PatientValid { get; set; }
         private bool CurrentAddressValid { get; set; }
         private bool CurrentPhoneNumberValid { get; set; }
-        private OperationStatus OperationStatus { get; set; }
+        private PatientsAllOperationStatusEnum PatientsAllOperationStatusEnum { get; set; }
 
         /// <summary>
         /// Component initialisation logic.
@@ -41,20 +42,17 @@ namespace Abarnathy.BlazorClient.Client.Pages.Patient
             CurrentAddressValid = false;
             CurrentPhoneNumberValid = false;
             
-            OperationStatus = OperationStatus.Initial;
+            PatientsAllOperationStatusEnum = PatientsAllOperationStatusEnum.Initial;
             
             PatientModel = new PatientInputModel();
             AddressModel = new AddressInputModel();
-            AddedAddressModels = new List<AddressInputModel>();
+            AddedAddresses = new List<AddressInputModel>();
             PhoneNumberModel = new PhoneNumberInputModel();
             AddedPhoneNumbers = new List<PhoneNumberInputModel>();
             
             PatientEditContext = new EditContext(PatientModel);
             PatientEditContext.OnFieldChanged += (sender, @event) =>
-            {
                 PatientValid = PatientEditContext.Validate();
-                StateHasChanged();
-            };
             
             AddressEditContext = new EditContext(AddressModel);
             AddressEditContext.OnFieldChanged += (sender, @event) =>
@@ -81,6 +79,26 @@ namespace Abarnathy.BlazorClient.Client.Pages.Patient
 
             StateHasChanged();
         }
+        
+        /// <summary>
+        /// Removes a PhoneNumber from the collection to be passed to the API.
+        /// </summary>
+        /// <param name="number"></param>
+        private void RemovePhoneNumber(string number)
+        {
+            var newList = new List<PhoneNumberInputModel>();
+
+            foreach (var item in AddedPhoneNumbers)
+            {
+                if (Regex.Replace(item.Number, @"[- ().]", "") != Regex.Replace(number, @"[- ().]", ""))
+                {
+                    newList.Add(item);
+                }
+            }
+
+            AddedPhoneNumbers = newList;
+            StateHasChanged();
+        }
 
         /// <summary>
         /// If the <see cref="AddressInputModel"/> DTO currently being edited is valid,
@@ -90,12 +108,36 @@ namespace Abarnathy.BlazorClient.Client.Pages.Patient
         {
             if (CurrentAddressValid)
             {
-                AddedAddressModels.Add(AddressModel);
+                AddedAddresses.Add(AddressModel);
                 AddressModel = new AddressInputModel();                
             }
 
             CurrentAddressValid = false;
 
+            StateHasChanged();
+        }
+        
+        /// <summary>
+        /// Removes an address from the collection to be passed to the API.
+        /// </summary>
+        /// <param name="model"></param>
+        private void RemoveAddress(AddressInputModel model)
+        {
+            var newList = new List<AddressInputModel>();
+
+            foreach (var item in AddedAddresses)
+            {
+                if ((!string.Equals(item.StreetName, model.StreetName, StringComparison.CurrentCultureIgnoreCase)) &&
+                    (!string.Equals(item.HouseNumber, model.HouseNumber, StringComparison.CurrentCultureIgnoreCase)) &&
+                    (!string.Equals(item.Town, model.Town, StringComparison.CurrentCultureIgnoreCase)) &&
+                    (!string.Equals(item.State, model.State, StringComparison.CurrentCultureIgnoreCase)) &&
+                    (!string.Equals(item.ZipCode, model.ZipCode, StringComparison.CurrentCultureIgnoreCase)))
+                {
+                    newList.Add(item);
+                }
+            }
+
+            AddedAddresses = newList;
             StateHasChanged();
         }
 
@@ -105,12 +147,12 @@ namespace Abarnathy.BlazorClient.Client.Pages.Patient
         /// <returns></returns>
         private async Task Submit()
         {
-            OperationStatus = OperationStatus.Pending;
+            PatientsAllOperationStatusEnum = PatientsAllOperationStatusEnum.Pending;
             StateHasChanged();
 
-            if (AddedAddressModels.Any())
+            if (AddedAddresses.Any())
             {
-                foreach (var item in AddedAddressModels)
+                foreach (var item in AddedAddresses)
                 {
                     PatientModel.Addresses.Add(item);
                 }
@@ -136,7 +178,7 @@ namespace Abarnathy.BlazorClient.Client.Pages.Patient
 
                     var content = JsonConvert.DeserializeObject<PatientViewModel>(stringContent);
                     
-                    OperationStatus = OperationStatus.Success;
+                    PatientsAllOperationStatusEnum = PatientsAllOperationStatusEnum.Success;
                     StateHasChanged();
                     
                     await Task.Delay(RedirectDelaySeconds * 1000);
@@ -145,13 +187,13 @@ namespace Abarnathy.BlazorClient.Client.Pages.Patient
                 }
                 else
                 {
-                    OperationStatus = OperationStatus.Error;
+                    PatientsAllOperationStatusEnum = PatientsAllOperationStatusEnum.Error;
                     StateHasChanged();
                 }
             }
             catch (Exception e)
             {
-                OperationStatus = OperationStatus.Error;
+                PatientsAllOperationStatusEnum = PatientsAllOperationStatusEnum.Error;
                 StateHasChanged();
                 Console.WriteLine(e);
             }

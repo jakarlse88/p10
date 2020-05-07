@@ -15,7 +15,7 @@ namespace Abarnathy.BlazorClient.Client.Pages.Patient
         [Inject] private IJSRuntime JsRuntime { get; set; }
         protected IEnumerable<PatientInputModel> PatientList { get; private set; }
 
-        protected OperationStatus Status { get; private set; }
+        protected PatientsAllOperationStatusEnum StatusEnum { get; private set; }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
@@ -24,7 +24,7 @@ namespace Abarnathy.BlazorClient.Client.Pages.Patient
 
         protected override async Task OnInitializedAsync()
         {
-            Status = OperationStatus.Pending;
+            StatusEnum = PatientsAllOperationStatusEnum.Pending;
 
             try
             {
@@ -47,13 +47,13 @@ namespace Abarnathy.BlazorClient.Client.Pages.Patient
                     await JsRuntime.InvokeAsync<object>("InitDataTable");
                 }
 
-                Status = OperationStatus.Success;
+                StatusEnum = PatientsAllOperationStatusEnum.Success;
                 StateHasChanged();
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                Status = OperationStatus.Error;
+                StatusEnum = PatientsAllOperationStatusEnum.Error;
                 StateHasChanged();
             }
         }

@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Abarnathy.BlazorClient.Client.Models;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.JSInterop;
 using Newtonsoft.Json;
 
 namespace Abarnathy.BlazorClient.Client.Pages.Patient
@@ -16,42 +19,45 @@ namespace Abarnathy.BlazorClient.Client.Pages.Patient
         [Parameter] public int Id { get; set; }
         [Inject] private HttpClient HttpClient { get; set; }
         [Inject] private NavigationManager NavigationManager { get; set; }
-        private PatientInputModel Model { get; set; }
+        [Inject] private IJSRuntime JSRunTime { get; set; }
+        private PatientInputModel PatientModel { get; set; }
         private AddressInputModel AddressModel { get; set; }
-        private List<AddressInputModel> AddedAddressModels { get; set; }
+        private List<AddressInputModel> AddedAddresses { get; set; }
         private PhoneNumberInputModel PhoneNumberModel { get; set; }
         private List<PhoneNumberInputModel> AddedPhoneNumbers { get; set; }
-        private OperationStatus OperationStatus { get; set; }
+        private EditContext PatientEditContext { get; set; }
+        private EditContext AddressEditContext { get; set; }
+        private EditContext PhoneNumberEditContext { get; set; }
+        private bool PatientValid { get; set; }
+        private bool CurrentAddressValid { get; set; }
+        private bool CurrentPhoneNumberValid { get; set; }
         private bool EnableEdit { get; set; }
+        private PatientSingleOperationStatusEnum OperationStatus { get; set; }
 
-        private void ToggleEdit()
-        {
-            EnableEdit = !EnableEdit;
-            StateHasChanged();
-        }
-
-        private void AddPhoneNumber()
-        {
-            AddedPhoneNumbers.Add(PhoneNumberModel);
-            PhoneNumberModel = new PhoneNumberInputModel();
-            StateHasChanged();
-        }
-
-        private void AddAddress()
-        {
-            AddedAddressModels.Add(AddressModel);
-            AddressModel = new AddressInputModel();
-            StateHasChanged();
-        }
-
+        /// <summary>
+        /// Component initialisation logic.
+        /// </summary>
+        /// <returns></returns>
         protected override async Task OnInitializedAsync()
         {
+            PatientModel = new PatientInputModel();
             AddressModel = new AddressInputModel();
-            AddedAddressModels = new List<AddressInputModel>();
+            AddedAddresses = new List<AddressInputModel>();
             PhoneNumberModel = new PhoneNumberInputModel();
             AddedPhoneNumbers = new List<PhoneNumberInputModel>();
             
-            OperationStatus = OperationStatus.Pending;
+            CurrentAddressValid = false;
+            CurrentPhoneNumberValid = false;
+            
+            AddressEditContext = new EditContext(AddressModel);
+            AddressEditContext.OnFieldChanged += (sender, @event) =>
+                CurrentAddressValid = AddressEditContext.Validate();
+            
+            PhoneNumberEditContext = new EditContext(PhoneNumberModel);
+            PhoneNumberEditContext.OnFieldChanged += (sender, @event) =>
+                CurrentPhoneNumberValid = PhoneNumberEditContext.Validate();
+            
+            OperationStatus = PatientSingleOperationStatusEnum.GET;
 
             try
             {
@@ -63,40 +69,135 @@ namespace Abarnathy.BlazorClient.Client.Pages.Patient
 
                     var content = JsonConvert.DeserializeObject<PatientInputModel>(stringContent);
 
-                    Model = content;
+                    PatientModel = content;
 
-                    if (!Model.Addresses.Any())
+                    PatientModel.Sex = content.SexId == 1 ? SexEnum.Male : SexEnum.Female;
+                    
+                    PatientEditContext = new EditContext(PatientModel);
+                    PatientEditContext.OnFieldChanged += (sender, @event) =>
                     {
-                        AddedAddressModels = new List<AddressInputModel>();
-                        AddressModel = new AddressInputModel();
+                        PatientValid = PatientEditContext.Validate();
+                        Console.WriteLine("Something changed");
+                        StateHasChanged();
+                    };
+                    
+                    PatientValid = PatientEditContext.Validate();
+                    
+                    if (PatientModel.Addresses.Any())
+                    {
+                        AddedAddresses = PatientModel.Addresses.ToList();
                     }
-                    else
-                    {
 
-                        AddedAddressModels = Model.Addresses.ToList();
-
-                    }
-
-                    if (!Model.PhoneNumbers.Any())
+                    if (PatientModel.PhoneNumbers.Any())
                     {
-                        AddedPhoneNumbers = new List<PhoneNumberInputModel>();
-                        PhoneNumberModel = new PhoneNumberInputModel();
-                    }
-                    else
-                    {
-                        AddedPhoneNumbers = Model.PhoneNumbers.ToList();
+                        AddedPhoneNumbers = PatientModel.PhoneNumbers.ToList();
                     }
                 }
 
-                OperationStatus = OperationStatus.Success;
+                OperationStatus = PatientSingleOperationStatusEnum.GETSuccess;
                 StateHasChanged();
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                OperationStatus = OperationStatus.Error;
+                OperationStatus = PatientSingleOperationStatusEnum.GETError;
                 StateHasChanged();
             }
+        }
+        
+        /// <summary>
+        /// Toggle fields readonly/editable.
+        /// </summary>
+        private void ToggleEdit()
+        {
+            EnableEdit = !EnableEdit;
+            StateHasChanged();
+        }
+
+        /// <summary>
+        /// Cancels the operation and returns to the Patient overview.
+        /// </summary>
+        private void Cancel()
+        {
+         NavigationManager.NavigateTo("/patient");   
+        }
+
+        /// <summary>
+        /// If the <see cref="PhoneNumberInputModel"/> DTO currently being edited is valid,
+        /// add it to the collection to be passed to the API.
+        /// </summary>
+        private void AddPhoneNumber()
+        {
+            if (CurrentPhoneNumberValid)
+            {
+                AddedPhoneNumbers.Add(PhoneNumberModel);
+                PhoneNumberModel = new PhoneNumberInputModel();                
+            }
+
+            CurrentPhoneNumberValid = false;
+
+            StateHasChanged();
+        }
+
+        /// <summary>
+        /// Removes a PhoneNumber from the collection to be passed to the API.
+        /// </summary>
+        /// <param name="number"></param>
+        private void RemovePhoneNumber(string number)
+        {
+            var newList = new List<PhoneNumberInputModel>();
+
+            foreach (var item in AddedPhoneNumbers)
+            {
+                if (Regex.Replace(item.Number, @"[- ().]", "") != Regex.Replace(number, @"[- ().]", ""))
+                {
+                    newList.Add(item);
+                }
+            }
+
+            AddedPhoneNumbers = newList;
+            StateHasChanged();
+        }
+
+        /// <summary>
+        /// If the <see cref="AddressInputModel"/> DTO currently being edited is valid,
+        /// add it to the collection to be passed to the API.
+        /// </summary>
+        private void AddAddress()
+        {
+            if (CurrentAddressValid)
+            {
+                AddedAddresses.Add(AddressModel);
+                AddressModel = new AddressInputModel();                
+            }
+
+            CurrentAddressValid = false;
+
+            StateHasChanged();
+        }
+
+        /// <summary>
+        /// Removes an address from the collection to be passed to the API.
+        /// </summary>
+        /// <param name="model"></param>
+        private void RemoveAddress(AddressInputModel model)
+        {
+            var newList = new List<AddressInputModel>();
+
+            foreach (var item in AddedAddresses)
+            {
+                if ((!string.Equals(item.StreetName, model.StreetName, StringComparison.CurrentCultureIgnoreCase)) &&
+                    (!string.Equals(item.HouseNumber, model.HouseNumber, StringComparison.CurrentCultureIgnoreCase)) &&
+                    (!string.Equals(item.Town, model.Town, StringComparison.CurrentCultureIgnoreCase)) &&
+                    (!string.Equals(item.State, model.State, StringComparison.CurrentCultureIgnoreCase)) &&
+                    (!string.Equals(item.ZipCode, model.ZipCode, StringComparison.CurrentCultureIgnoreCase)))
+                {
+                    newList.Add(item);
+                }
+            }
+
+            AddedAddresses = newList;
+            StateHasChanged();
         }
 
         /// <summary>
@@ -105,49 +206,36 @@ namespace Abarnathy.BlazorClient.Client.Pages.Patient
         /// <returns></returns>
         private async Task Submit()
         {
-            OperationStatus = OperationStatus.Pending;
+            OperationStatus = PatientSingleOperationStatusEnum.PUT;
+            
             StateHasChanged();
 
-            if (AddedAddressModels.Any())
-            {
-                foreach (var item in AddedAddressModels)
-                {
-                    Model.Addresses.Add(item);
-                }
-            }
-
-            if (AddedPhoneNumbers.Any())
-            {
-                foreach (var item in AddedPhoneNumbers)
-                {
-                    Model.PhoneNumbers.Add(item);
-                }
-            }
-
-            Model.SexId = (int) Model.Sex;
+            PatientModel.Addresses = AddedAddresses;
+            PatientModel.PhoneNumbers = AddedPhoneNumbers;
+            PatientModel.SexId = (int) PatientModel.Sex;
 
             try
             {
-                var response = await HttpClient.PostAsJsonAsync("http://localhost:8080/api/patient", Model);
+                var response = await HttpClient.PutAsJsonAsync($"http://localhost:8080/api/patient/{Id}", PatientModel);
 
                 if (response.IsSuccessStatusCode)
                 {
-                    OperationStatus = OperationStatus.Success;
+                    OperationStatus = PatientSingleOperationStatusEnum.PUTSuccess;
                     StateHasChanged();
 
                     await Task.Delay(RedirectDelaySeconds * 1000);
 
-                    NavigationManager.NavigateTo($"/patient/{Id}");
+                    await JSRunTime.InvokeVoidAsync("ForceReload");
                 }
                 else
                 {
-                    OperationStatus = OperationStatus.Error;
+                    OperationStatus = PatientSingleOperationStatusEnum.PUTError;
                     StateHasChanged();
                 }
             }
             catch (Exception e)
             {
-                OperationStatus = OperationStatus.Error;
+                OperationStatus = PatientSingleOperationStatusEnum.PUTError;
                 StateHasChanged();
                 Console.WriteLine(e);
             }

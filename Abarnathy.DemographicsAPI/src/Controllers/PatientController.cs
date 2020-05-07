@@ -107,7 +107,7 @@ namespace Abarnathy.DemographicsAPI.Controllers
         /// <returns></returns>
         /// <response code="204">The <see cref="Patient"/> entity was successfully updated.</response>
         /// <response code="400">Malformed request.</response>
-        [HttpPut]
+        [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Put(int id, PatientInputModel model)

@@ -4,7 +4,7 @@
 
 <h2>Patient Demographics</h2>
 
-@if (Status == OperationStatus.Pending)
+@if (StatusEnum == PatientsAllOperationStatusEnum.Pending)
 {
     <div class="container">
         <div class="row">
@@ -22,12 +22,12 @@
     </div>
 }
 
-@if (Status == OperationStatus.Error)
+@if (StatusEnum == PatientsAllOperationStatusEnum.Error)
 {
     <p class="d-block">There was an error loading the patient data.</p>
 }
 
-@if (Status == OperationStatus.Success)
+@if (StatusEnum == PatientsAllOperationStatusEnum.Success)
 {
     <body onbeforeunload="DestroyDataTable()">
     <table id="patients-table" class="table table-striped table-hover">
