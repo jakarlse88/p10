@@ -29,8 +29,8 @@ namespace Abarnathy.DemographicsAPI.Repositories
             var result =
                 await
                     base.GetByCondition(p => p.Id == id)
-                        .Include(p => p.PatientAddresses)
-                        .ThenInclude(pa => pa.Address)
+                        .Include(p => p.PatientAddresses).ThenInclude(pa => pa.Address)
+                        .Include(p => p.PatientPhoneNumbers).ThenInclude(pp => pp.PhoneNumber)
                         .Include(p => p.Sex)
                         .FirstOrDefaultAsync();
 
@@ -45,8 +45,8 @@ namespace Abarnathy.DemographicsAPI.Repositories
         {
             var result =
                 await base.GetByCondition(p => true)
-                    .Include(p => p.PatientAddresses)
-                    .ThenInclude(pa => pa.Address)
+                    .Include(p => p.PatientAddresses).ThenInclude(pa => pa.Address)
+                    .Include(p => p.PatientPhoneNumbers).ThenInclude(pp => pp.PhoneNumber)
                     .Include(p => p.Sex)
                     .ToListAsync();
 

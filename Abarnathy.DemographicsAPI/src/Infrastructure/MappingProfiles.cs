@@ -37,12 +37,15 @@ namespace Abarnathy.DemographicsAPI.Infrastructure
 
             // To entity
             CreateMap<PatientInputModel, Patient>()
+                .ForMember(dest => dest.Id, action => action.Ignore())
                 .ForMember(dest => dest.PatientAddresses, action => action.Ignore())
                 .ForMember(dest => dest.PatientPhoneNumbers, action => action.Ignore());
 
-            CreateMap<AddressInputModel, Address>();
+            CreateMap<AddressInputModel, Address>()
+                .ForMember(dest => dest.Id, action => action.Ignore());
 
-            CreateMap<PhoneNumberInputModel, PhoneNumber>();
+            CreateMap<PhoneNumberInputModel, PhoneNumber>()
+                .ForMember(dest => dest.Id, action => action.Ignore());
         }
     }
 }

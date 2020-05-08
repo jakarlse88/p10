@@ -97,5 +97,36 @@ namespace Abarnathy.DemographicsAPI.Controllers
             
             return CreatedAtAction("Get", new { createdEntity.Id }, createdEntity);
         }
+
+        
+        /// <summary>
+        /// Updates a pre-existing <see cref="Patient"/> entity.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        /// <response code="204">The <see cref="Patient"/> entity was successfully updated.</response>
+        /// <response code="400">Malformed request.</response>
+        [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Put(int id, PatientInputModel model)
+        {
+            if (id <= 0 || model == null)
+            {
+                return BadRequest();
+            }
+
+            var entity = await _patientService.GetEntityById(id);
+
+            if (entity == null)
+            {
+                return NotFound();
+            }
+
+            await _patientService.Update(entity, model);
+
+            return NoContent();
+        }
     }
 }

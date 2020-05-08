@@ -10,13 +10,12 @@ namespace Abarnathy.DemographicsAPI.Infrastructure.Validators
         {
             RuleFor(x => x.StreetName)
                 .NotEmpty()
-                .Matches(new Regex(@"^[^-\s][a-zA-Z ]+$"))
+                .Matches(new Regex(@"^[^-\s][a-zA-Z. ]+$"))
                 .MaximumLength(40);
 
             RuleFor(x => x.HouseNumber)
                 .NotEmpty()
-                .Matches(new Regex("^[0-9]*$"))
-                .WithMessage("House number can only contain numeric characters.")
+                .Matches(new Regex("^[0-9a-zA-Z ]*$"))
                 .MaximumLength(6);
             
             RuleFor(x => x.Town)

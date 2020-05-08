@@ -12,7 +12,9 @@ namespace Abarnathy.BlazorClient.Client.Shared.Components
         [Parameter] public RenderFragment ChildContent { get; set; }
         [Parameter] public FormWizardStep ActiveStep { get; set; }
         [Parameter] public int ActiveStepIndex { get; set; }
-        [Parameter] public EventCallback OnClick { get; set; }
+        [Parameter] public EventCallback OnClickSubmit { get; set; }
+        [Parameter] public EventCallback OnClickCancel { get; set; }
+        [Parameter] public bool EnableSubmit { get; set; }
 
         private bool IsLastStep { get; set; }
 

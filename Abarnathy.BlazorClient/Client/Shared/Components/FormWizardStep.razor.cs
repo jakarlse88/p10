@@ -1,9 +1,4 @@
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.AspNetCore.Components.Routing;
-using Microsoft.AspNetCore.Components.Web;
 
 namespace Abarnathy.BlazorClient.Client.Shared.Components
 {

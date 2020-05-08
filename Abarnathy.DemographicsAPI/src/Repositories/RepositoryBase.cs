@@ -6,7 +6,7 @@ using Abarnathy.DemographicsAPI.Models;
 
 namespace Abarnathy.DemographicsAPI.Repositories
 {
-    public class RepositoryBase<TEntity> : IRepositoryBase<TEntity> where TEntity : EntityBase
+    public class RepositoryBase<TEntity> : IRepositoryBase<TEntity> where TEntity : class
     {
         private readonly DemographicsDbContext _context;
 

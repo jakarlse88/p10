@@ -1,6 +1,6 @@
 namespace Abarnathy.BlazorClient.Client.Models
 {
-    public enum OperationStatus
+    public enum PatientsAllOperationStatusEnum
     {
         Initial,
         Pending,

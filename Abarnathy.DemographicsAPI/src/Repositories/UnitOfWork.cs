@@ -22,7 +22,7 @@ namespace Abarnathy.DemographicsAPI.Repositories
             _addressRepository ??= new AddressRepository(_context);
 
         public IPhoneNumberRepository PhoneNumberRepository =>
-            _phoneNumberRepository = new PhoneNumberRepository(_context);
+            _phoneNumberRepository ??= new PhoneNumberRepository(_context);
 
         public async Task CommitAsync() =>
             await _context.SaveChangesAsync();

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Abarnathy.DemographicsAPI.Data.Migrations
 {
     [DbContext(typeof(DemographicsDbContext))]
-    [Migration("20200428114508_Initial")]
+    [Migration("20200505065401_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -48,7 +48,7 @@ namespace Abarnathy.DemographicsAPI.Data.Migrations
                         .HasColumnType("nvarchar(40)")
                         .HasMaxLength(40);
 
-                    b.Property<string>("Zipcode")
+                    b.Property<string>("ZipCode")
                         .IsRequired()
                         .HasColumnName("ZIPCode")
                         .HasColumnType("nvarchar(10)")
@@ -180,12 +180,14 @@ namespace Abarnathy.DemographicsAPI.Data.Migrations
                         .WithMany("PatientAddresses")
                         .HasForeignKey("AddressId")
                         .HasConstraintName("FK_PatientAddress_Address")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Abarnathy.DemographicsAPI.Models.Patient", "Patient")
                         .WithMany("PatientAddresses")
                         .HasForeignKey("PatientId")
                         .HasConstraintName("FK_PatientAddress_Patient")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -195,12 +197,14 @@ namespace Abarnathy.DemographicsAPI.Data.Migrations
                         .WithMany("PatientPhoneNumbers")
                         .HasForeignKey("PatientId")
                         .HasConstraintName("FK_PatientPhoneNumber_Patient")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Abarnathy.DemographicsAPI.Models.PhoneNumber", "PhoneNumber")
                         .WithMany("PatientPhoneNumbers")
                         .HasForeignKey("PhoneNumberId")
                         .HasConstraintName("FK_PatientPhoneNumber_PhoneNumber")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

@@ -341,3 +341,13 @@ div.spinner i:nth-child(8) {
 @-webkit-keyframes spin {
     to { -webkit-transform: rotate(360deg); }
 }
+
+.delete-icon{
+    color: red;
+    cursor: pointer;
+}
+
+.delete-icon:hover {
+    color: darkred;
+    transform: scale(1.1);
+}
