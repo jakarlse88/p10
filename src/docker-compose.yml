@@ -6,10 +6,18 @@ networks:
 
 services:
 
+  mongo:
+    image: mongo
+    restart: always
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+
   sql_server:
-    container_name: sql_server
-    build: 
-        context: Abarnathy.SQLServer/
+    image: "mcr.microsoft.com/mssql/server"
+    build:
+      context: Abarnathy.SQLServer/
     networks:
       - app-network
 
