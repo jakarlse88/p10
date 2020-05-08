@@ -1,3 +1,0 @@
-FROM mcr.microsoft.com/mssql/server:2017-latest
-
-EXPOSE 1433

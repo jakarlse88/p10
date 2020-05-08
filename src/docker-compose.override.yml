@@ -2,18 +2,27 @@ version: '3.4'
 
 services:
 
-  sql_server:
-    environment: 
-        - ACCEPT_EULA=Y
-        - SA_PASSWORD=${SA_PASSWORD_SEED}
-        - MSSQL_PID=Express
-    healthcheck:
-        test: ["CMD", "/opt/mssql-tools/bin/sqlcmd", "-USA", "-P${SA_PASSWORD_SEED}", "-Q", "SELECT 1"]
+  mongo:
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
+
+  mongo-express:
     ports:
-        - "${SQL_SERVER_PORT_EXT}:${SQL_SERVER_PORT_INT}"
+      - "${ME_CONFIG_PORT_EXT}:${ME_CONFIG_PORT_INTERNAL}" # Inconsistent naming because ME_CONFIG_PORT_INT renders the compose invalid. I've no idea, don't ask.
+
+  sql_server:
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=${SA_PASSWORD_SEED}
+      - MSSQL_PID=Express
+    healthcheck:
+      test: ["CMD", "/opt/mssql-tools/bin/sqlcmd", "-USA", "-P${SA_PASSWORD_SEED}", "-Q", "SELECT 1"]
+    ports:
+      - "${SQL_SERVER_PORT_EXT}:${SQL_SERVER_PORT_INT}"
     volumes:
-        - abarnathy-sqldata:/var/opt/mssql
-        - abarnathy-sqluser:/var/opt/sql
+      - abarnathy-sqldata:/var/opt/mssql
+      - abarnathy-sqluser:/var/opt/sql
 
   blazor_server:
     ports:
@@ -30,4 +39,6 @@ volumes:
   abarnathy-sqldata:
     external: false
   abarnathy-sqluser:
+    external: false
+  abarnathy-mongo:
     external: false
