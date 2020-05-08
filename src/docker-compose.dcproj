@@ -4,8 +4,8 @@
     <ProjectVersion>2.1</ProjectVersion>
     <DockerTargetOS>Linux</DockerTargetOS>
     <ProjectGuid>891dadd1-1e08-4a0f-859f-cb54b37be850</ProjectGuid>
-    <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
-    <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/weatherforecast</DockerServiceUrl>
+    <DockerLaunchAction>None</DockerLaunchAction>
+    <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/</DockerServiceUrl>
     <DockerServiceName>abarnathy.demographicsapi</DockerServiceName>
     <Configurations>Debug;Release</Configurations>
     <Platforms>AnyCPU</Platforms>
