@@ -7,8 +7,15 @@ networks:
 services:
 
   mongo:
+    container_name: mongo
     image: mongo
     restart: always
+    ports:
+      - "27017:27017"
+    networks:
+      - app-network
+    volumes: 
+      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
 
   mongo-express:
     image: mongo-express
@@ -16,8 +23,6 @@ services:
 
   sql_server:
     image: "mcr.microsoft.com/mssql/server"
-    build:
-      context: Abarnathy.SQLServer/
     networks:
       - app-network
 
@@ -36,5 +41,15 @@ services:
       dockerfile: Abarnathy.DemographicsAPI/src/Dockerfile
     depends_on:
       - sql_server
+    networks:
+      - app-network
+    
+  history_api:
+    container_name: history_api
+    build:
+      context: .
+      dockerfile: Abarnathy.HistoryAPI/src/Dockerfile
+    depends_on:
+      - mongo
     networks:
       - app-network

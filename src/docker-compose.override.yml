@@ -6,6 +6,7 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
+      - MONGO_INITDB_DATABASE=${MONGO_INITDB_DB}
 
   mongo-express:
     ports:
@@ -34,6 +35,10 @@ services:
       - "ConnectionStrings__DefaultConnection=Server=${SQL_SERVER_SERVER_NAME},${SQL_SERVER_PORT_INT};Initial Catalog=${DEMOGRAPHICS_API_DB_INITIAL_CATALOG};User Id=${DEMOGRAPHICS_API_DB_USER_ID};Password=${DEMOGRAPHICS_API_DB_PASSWORD}"
     ports:
       - "${DEMOGRAPHICS_API_PORT_EXT}:${DEMOGRAPHICS_API_PORT_INT}"
+        
+  history_api:
+    ports:
+      - "${HISTORY_API_PORT_EXT}:${HISTORY_API_PORT_INT}"
 
 volumes:
   abarnathy-sqldata:
