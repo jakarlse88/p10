@@ -8,8 +8,8 @@ namespace Abarnathy.HistoryAPI.Models
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
-        
-        [BsonElement("Contens")]
+
+        [BsonElement("Contents")]
         public string Contents { get; set; }
     }
 }
