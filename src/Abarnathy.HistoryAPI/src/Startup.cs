@@ -38,16 +38,14 @@ namespace Abarnathy.HistoryAPI
         {
             ConventionRegistry.Register("CamelCase", new ConventionPack { new CamelCaseElementNameConvention() }, _ => true);
 
-
-
             services.AddSingleton<IMongoClient>(s =>
                 new MongoClient(Configuration["PatientHistoryDatabaseSettings:ConnectionString"]));
 
             services.AddScoped(s => new PatientHistoryDbContext(s.GetRequiredService<IMongoClient>(),
                 Configuration["PatientHistoryDatabaseSettings:DatabaseName"]));
-            
+
             services.AddTransient<NoteService>();
-            
+
             services.ConfigureControllers();
             // services.ConfigureDbContext(Configuration);
             // services.ConfigureLocalServices();
@@ -55,7 +53,7 @@ namespace Abarnathy.HistoryAPI
             services.ConfigureCors();
             services.AddAuthorization();
         }
-        
+
         /// <summary>
         /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         /// </summary>

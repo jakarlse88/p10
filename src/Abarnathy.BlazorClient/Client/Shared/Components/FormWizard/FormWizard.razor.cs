@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Components;
 
-namespace Abarnathy.BlazorClient.Client.Shared.Components
+namespace Abarnathy.BlazorClient.Client.Shared.Components.FormWizard
 {
     public partial class FormWizard
     {

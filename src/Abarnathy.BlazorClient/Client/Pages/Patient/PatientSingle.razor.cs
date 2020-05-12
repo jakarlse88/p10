@@ -19,7 +19,7 @@ namespace Abarnathy.BlazorClient.Client.Pages.Patient
         [Parameter] public int Id { get; set; }
         [Inject] private HttpClient HttpClient { get; set; }
         [Inject] private NavigationManager NavigationManager { get; set; }
-        [Inject] private IJSRuntime JSRunTime { get; set; }
+        [Inject] private IJSRuntime JsRunTime { get; set; }
         private PatientInputModel PatientModel { get; set; }
         private AddressInputModel AddressModel { get; set; }
         private List<AddressInputModel> AddedAddresses { get; set; }
@@ -31,15 +31,16 @@ namespace Abarnathy.BlazorClient.Client.Pages.Patient
         private bool PatientValid { get; set; }
         private bool CurrentAddressValid { get; set; }
         private bool CurrentPhoneNumberValid { get; set; }
-        private bool EnableEdit { get; set; }
         private PatientSingleOperationStatusEnum OperationStatus { get; set; }
-
+        private bool Readonly { get; set; }
+        
         /// <summary>
         /// Component initialisation logic.
         /// </summary>
         /// <returns></returns>
         protected override async Task OnInitializedAsync()
         {
+            Readonly = true;
             PatientModel = new PatientInputModel();
             AddressModel = new AddressInputModel();
             AddedAddresses = new List<AddressInputModel>();
@@ -108,9 +109,9 @@ namespace Abarnathy.BlazorClient.Client.Pages.Patient
         /// <summary>
         /// Toggle fields readonly/editable.
         /// </summary>
-        private void ToggleEdit()
+        private void ToggleReadonly()
         {
-            EnableEdit = !EnableEdit;
+            Readonly = !Readonly;
             StateHasChanged();
         }
 
@@ -225,7 +226,7 @@ namespace Abarnathy.BlazorClient.Client.Pages.Patient
 
                     await Task.Delay(RedirectDelaySeconds * 1000);
 
-                    await JSRunTime.InvokeVoidAsync("ForceReload");
+                    await JsRunTime.InvokeVoidAsync("ForceReload");
                 }
                 else
                 {

@@ -1,16 +1,33 @@
 @using Abarnathy.BlazorClient.Client.Shared.Components
+@using Abarnathy.BlazorClient.Client.Shared.Components.FormWizard
 @using Abarnathy.BlazorClient.Client.Models
 @page "/patient/{Id:int}"
 
 <div class="container">
 
-<div class="col-12">
-
 <div class="row d-flex justify-content-center">
+
     <h2 class="mb-4 mt-4">View/Edit</h2>
 </div>
 
-@if (OperationStatus == PatientSingleOperationStatusEnum.GETSuccess)
+@if ((OperationStatus == PatientSingleOperationStatusEnum.GETSuccess && Readonly == false) ||
+     (OperationStatus == PatientSingleOperationStatusEnum.GETSuccess &&
+      Readonly == true))
+{
+    <div class="col-12">
+        <p class="text-dark">
+            Readonly
+            <label class="switch">
+                <input type="checkbox" @onclick="@ToggleReadonly" checked>
+                <span class="slider round"></span>
+            </label>
+        </p>
+    </div>
+}
+
+
+@if (OperationStatus == PatientSingleOperationStatusEnum.GETSuccess &&
+     Readonly == false)
 {
     <FormWizard Id="PatientCreateForm" OnClickSubmit="@Submit" OnClickCancel="@Cancel" EnableSubmit="@PatientValid">
         <FormWizardStep Name="Personal Details">
@@ -158,13 +175,103 @@
     </FormWizard>
 }
 
+@if (OperationStatus == PatientSingleOperationStatusEnum.GETSuccess &&
+     Readonly == true)
+{
+    <h4>Personal Details</h4>
+    <table class="table table-hover table-bordered">
+        <thead>
+        <tr>
+            <td>Given Name</td>
+            <td>Family Name</td>
+            <td>Date of Birth</td>
+            <td>Sex</td>
+        </tr>
+        </thead>
+
+        <tbody>
+        @if (PatientModel != null)
+        {
+            var sex = PatientModel.SexId == 1 ? "Male" : "Female";
+
+            <tr>
+                <td>@PatientModel.GivenName</td>
+                <td>@PatientModel.FamilyName</td>
+                <td>@PatientModel.DateOfBirth.Date.ToString("dd/MM/yyyy")</td>
+                <td>@sex</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+
+    <h4>Phone Numbers</h4>
+
+    @if (PatientModel != null && PatientModel.Addresses.Any())
+    {
+        <table class="table table-hover table-bordered">
+            <thead>
+            <tr>
+                <td>Number</td>
+            </tr>
+            </thead>
+
+
+            <tbody>
+            @foreach (var number in PatientModel.PhoneNumbers)
+            {
+                <tr>
+                    <td>@number.Number</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>There are no phone numbers recorded for this patient.</p>
+    }
+
+
+    <h4>Addresses</h4>
+    @if (PatientModel != null && PatientModel.Addresses.Any())
+    {
+        <table class="table table-hover table-bordered">
+            <thead>
+            <tr>
+                <td>Street Name</td>
+                <td>House Number</td>
+                <td>Town</td>
+                <td>State</td>
+                <td>ZIP Code</td>
+            </tr>
+            </thead>
+
+            <tbody>
+            @foreach (var address in PatientModel.Addresses)
+            {
+                <tr>
+                    <td>@address.StreetName</td>
+                    <td>@address.HouseNumber</td>
+                    <td>@address.Town</td>
+                    <td>@address.State</td>
+                    <td>@address.ZipCode</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>There are no addresss recorded for this patient.</p>
+    }
+}
+
 @if (OperationStatus == PatientSingleOperationStatusEnum.GET ||
      OperationStatus == PatientSingleOperationStatusEnum.PUT)
 {
     <div class="row">
         <div class="col-12 d-flex justify-content-center mb-2">
             <div id="loading"></div>
-
         </div>
     </div>
 
@@ -206,5 +313,4 @@
     </div>
 }
 
-</div>
 </div>

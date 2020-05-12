@@ -1,0 +1,40 @@
+﻿@using Abarnathy.BlazorClient.Client.Shared.Components.CustomRichTextInput
+
+@page "/History"
+
+<h3>Index</h3>
+
+<EditForm Model="@InputModel" OnValidSubmit="@Submit">
+    <div class="form-group">
+        <label for="content-input"></label>
+        <CustomRichTextInput @bind-Value="@InputModel.Content" id="content-input" class="form-control"/>
+    </div>
+
+    <button class="btn btn-success">
+        Submit
+    </button>
+
+</EditForm>
+
+@code {
+
+    private NoteInputModel InputModel { get; set; }
+
+    protected override void OnInitialized()
+    {
+        InputModel = new NoteInputModel();
+    }
+
+    private class NoteInputModel
+    {
+        public string Content { get; set; }
+        public DateTime TimeCreated { get; set; }
+        public DateTime TimeLastUpdated { get; set; }
+    }
+
+    private async Task Submit()
+    {
+        Console.WriteLine(InputModel.Content);
+    }
+
+}
