@@ -1,22 +1,23 @@
 @using Abarnathy.BlazorClient.Client.Shared.Components
 @using Abarnathy.BlazorClient.Client.Shared.Components.FormWizard
+@using Abarnathy.BlazorClient.Client.Shared.Components.NoteDisplay
 @using Abarnathy.BlazorClient.Client.Models
-@page "/patient/{Id:int}"
+@page "/Patient/{Id:int}"
 
-<div class="container">
+<div class="container mb-5">
 
 <div class="row d-flex justify-content-center">
 
     <h2 class="mb-4 mt-4">View/Edit</h2>
 </div>
 
-@if ((OperationStatus == PatientSingleOperationStatusEnum.GETSuccess && Readonly == false) ||
-     (OperationStatus == PatientSingleOperationStatusEnum.GETSuccess &&
-      Readonly == true))
+@if ((OperationStatus == PatientSingleOperationStatusEnum.GET_Success && Readonly == false) ||
+     (OperationStatus == PatientSingleOperationStatusEnum.GET_Success &&
+      Readonly))
 {
     <div class="col-12">
         <p class="text-dark">
-            Readonly
+            <b>Readonly</b>
             <label class="switch">
                 <input type="checkbox" @onclick="@ToggleReadonly" checked>
                 <span class="slider round"></span>
@@ -26,7 +27,7 @@
 }
 
 
-@if (OperationStatus == PatientSingleOperationStatusEnum.GETSuccess &&
+@if (OperationStatus == PatientSingleOperationStatusEnum.GET_Success &&
      Readonly == false)
 {
     <FormWizard Id="PatientCreateForm" OnClickSubmit="@Submit" OnClickCancel="@Cancel" EnableSubmit="@PatientValid">
@@ -175,17 +176,24 @@
     </FormWizard>
 }
 
-@if (OperationStatus == PatientSingleOperationStatusEnum.GETSuccess &&
-     Readonly == true)
+@if (OperationStatus == PatientSingleOperationStatusEnum.GET_Success && Readonly)
 {
-    <h4>Personal Details</h4>
-    <table class="table table-hover table-bordered">
+    <h4 class="pt-4 pb-2">Personal Details</h4>
+    <table class="table table-sm table-hover table-striped">
         <thead>
         <tr>
-            <td>Given Name</td>
-            <td>Family Name</td>
-            <td>Date of Birth</td>
-            <td>Sex</td>
+            <th scope="col">
+                Given Name
+            </th>
+            <th scope="col">
+                Family Name
+            </th>
+            <th scope="col">
+                Date of Birth
+            </th>
+            <th scope="col">
+                Sex
+            </th>
         </tr>
         </thead>
 
@@ -204,14 +212,16 @@
         </tbody>
     </table>
 
-    <h4>Phone Numbers</h4>
+    <h4 class="pt-4 pb-2">Phone Numbers</h4>
 
     @if (PatientModel != null && PatientModel.Addresses.Any())
     {
-        <table class="table table-hover table-bordered">
+        <table class="table table-sm table-hover table-striped">
             <thead>
             <tr>
-                <td>Number</td>
+                <th scope="col">
+                    Number
+                </th>
             </tr>
             </thead>
 
@@ -231,18 +241,28 @@
         <p>There are no phone numbers recorded for this patient.</p>
     }
 
+    <h4 class="pt-4 pb-2">Addresses</h4>
 
-    <h4>Addresses</h4>
     @if (PatientModel != null && PatientModel.Addresses.Any())
     {
-        <table class="table table-hover table-bordered">
+        <table class="table table-sm table-hover table-striped">
             <thead>
             <tr>
-                <td>Street Name</td>
-                <td>House Number</td>
-                <td>Town</td>
-                <td>State</td>
-                <td>ZIP Code</td>
+                <th scope="col">
+                    Street Name
+                </th>
+                <th scope="col">
+                    House Number
+                </th>
+                <th scope="col">
+                    Town
+                </th>
+                <th scope="col">
+                    State
+                </th>
+                <th scope="col">
+                    ZIP Code
+                </th>
             </tr>
             </thead>
 
@@ -264,10 +284,24 @@
     {
         <p>There are no addresss recorded for this patient.</p>
     }
+
+    <hr/>
+
+
+        <h3 class="mt-4 mb-2">History</h3>
+
+        <NavLink href=@($"/Patient/{Id}/History/Note/Create")>
+            <button class="btn btn-success btn-sm text-white mt-1 mb-3">
+                New Note <i class="fas fa-file-medical"></i>
+            </button>
+        </NavLink>
+
+
+    <NoteDisplay PatientId="@Id"/>
 }
 
-@if (OperationStatus == PatientSingleOperationStatusEnum.GET ||
-     OperationStatus == PatientSingleOperationStatusEnum.PUT)
+@if (OperationStatus == PatientSingleOperationStatusEnum.GET_Pending ||
+     OperationStatus == PatientSingleOperationStatusEnum.PUT_Pending)
 {
     <div class="row">
         <div class="col-12 d-flex justify-content-center mb-2">
@@ -282,7 +316,7 @@
     </div>
 }
 
-@if (OperationStatus == PatientSingleOperationStatusEnum.PUTSuccess)
+@if (OperationStatus == PatientSingleOperationStatusEnum.PUT_Success)
 {
     <div class="row">
         <div class="col-12 d-flex justify-content-center mb-2">
@@ -297,8 +331,8 @@
     </div>
 }
 
-@if (OperationStatus == PatientSingleOperationStatusEnum.PUTError ||
-     OperationStatus == PatientSingleOperationStatusEnum.GETError)
+@if (OperationStatus == PatientSingleOperationStatusEnum.PUT_Error ||
+     OperationStatus == PatientSingleOperationStatusEnum.GET_Error)
 {
     <div class="row">
         <div class="col-12 d-flex justify-content-center mb-2">

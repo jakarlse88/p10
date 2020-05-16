@@ -6,7 +6,6 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Abarnathy.DemographicsAPI.Infrastructure.ActionFilters;
 using Abarnathy.DemographicsAPI.Services;
 using Abarnathy.DemographicsAPI.Services.Interfaces;
 using FluentValidation.AspNetCore;
@@ -35,8 +34,6 @@ namespace Abarnathy.DemographicsAPI.Infrastructure
         {
             services.AddControllers(options =>
                 {
-                    options.Filters.Add(new ModelValidationActionFilter());
-
                     var noContentFormatter =
                         options.OutputFormatters.OfType<HttpNoContentOutputFormatter>().FirstOrDefault();
 

@@ -8,6 +8,7 @@ using Microsoft.JSInterop;
 
 namespace Abarnathy.BlazorClient.Client.Shared.Components.CustomRichTextInput
 {
+    // Source: https://cpratt.co/blazor-rich-text-editor-using-ckeditor/
     public partial class CustomRichTextInput : InputTextArea
     {
         [Inject] public IJSRuntime JSRuntime { get; set; }

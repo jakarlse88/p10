@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.RegularExpressions;
@@ -13,7 +14,7 @@ using Newtonsoft.Json;
 
 namespace Abarnathy.BlazorClient.Client.Pages.Patient
 {
-    public partial class PatientSingle
+    public partial class Patient
     {
         private const int RedirectDelaySeconds = 5;
         [Parameter] public int Id { get; set; }
@@ -58,7 +59,7 @@ namespace Abarnathy.BlazorClient.Client.Pages.Patient
             PhoneNumberEditContext.OnFieldChanged += (sender, @event) =>
                 CurrentPhoneNumberValid = PhoneNumberEditContext.Validate();
             
-            OperationStatus = PatientSingleOperationStatusEnum.GET;
+            OperationStatus = PatientSingleOperationStatusEnum.GET_Pending;
 
             try
             {
@@ -78,7 +79,6 @@ namespace Abarnathy.BlazorClient.Client.Pages.Patient
                     PatientEditContext.OnFieldChanged += (sender, @event) =>
                     {
                         PatientValid = PatientEditContext.Validate();
-                        Console.WriteLine("Something changed");
                         StateHasChanged();
                     };
                     
@@ -95,13 +95,13 @@ namespace Abarnathy.BlazorClient.Client.Pages.Patient
                     }
                 }
 
-                OperationStatus = PatientSingleOperationStatusEnum.GETSuccess;
+                OperationStatus = PatientSingleOperationStatusEnum.GET_Success;
                 StateHasChanged();
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                OperationStatus = PatientSingleOperationStatusEnum.GETError;
+                OperationStatus = PatientSingleOperationStatusEnum.GET_Error;
                 StateHasChanged();
             }
         }
@@ -116,11 +116,11 @@ namespace Abarnathy.BlazorClient.Client.Pages.Patient
         }
 
         /// <summary>
-        /// Cancels the operation and returns to the Patient overview.
+        /// Cancels the operation and returns to the Patient details page.
         /// </summary>
         private void Cancel()
         {
-         NavigationManager.NavigateTo("/patient");   
+            ToggleReadonly();
         }
 
         /// <summary>
@@ -207,7 +207,7 @@ namespace Abarnathy.BlazorClient.Client.Pages.Patient
         /// <returns></returns>
         private async Task Submit()
         {
-            OperationStatus = PatientSingleOperationStatusEnum.PUT;
+            OperationStatus = PatientSingleOperationStatusEnum.PUT_Pending;
             
             StateHasChanged();
 
@@ -221,7 +221,7 @@ namespace Abarnathy.BlazorClient.Client.Pages.Patient
 
                 if (response.IsSuccessStatusCode)
                 {
-                    OperationStatus = PatientSingleOperationStatusEnum.PUTSuccess;
+                    OperationStatus = PatientSingleOperationStatusEnum.PUT_Success;
                     StateHasChanged();
 
                     await Task.Delay(RedirectDelaySeconds * 1000);
@@ -230,13 +230,13 @@ namespace Abarnathy.BlazorClient.Client.Pages.Patient
                 }
                 else
                 {
-                    OperationStatus = PatientSingleOperationStatusEnum.PUTError;
+                    OperationStatus = PatientSingleOperationStatusEnum.PUT_Error;
                     StateHasChanged();
                 }
             }
             catch (Exception e)
             {
-                OperationStatus = PatientSingleOperationStatusEnum.PUTError;
+                OperationStatus = PatientSingleOperationStatusEnum.PUT_Error;
                 StateHasChanged();
                 Console.WriteLine(e);
             }

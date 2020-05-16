@@ -7,7 +7,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Abarnathy.HistoryAPI.Infrastructure;
+using Abarnathy.HistoryAPI.Repositories;
 using Abarnathy.HistoryAPI.Services;
+using AutoMapper;
 using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Driver;
 using Serilog;
@@ -36,22 +38,13 @@ namespace Abarnathy.HistoryAPI
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
-            ConventionRegistry.Register("CamelCase", new ConventionPack { new CamelCaseElementNameConvention() }, _ => true);
-
-            services.AddSingleton<IMongoClient>(s =>
-                new MongoClient(Configuration["PatientHistoryDatabaseSettings:ConnectionString"]));
-
-            services.AddScoped(s => new PatientHistoryDbContext(s.GetRequiredService<IMongoClient>(),
-                Configuration["PatientHistoryDatabaseSettings:DatabaseName"]));
-
-            services.AddTransient<NoteService>();
-
             services.ConfigureControllers();
-            // services.ConfigureDbContext(Configuration);
-            // services.ConfigureLocalServices();
+            services.ConfigureDbContext(Configuration);
+            services.ConfigureLocalServices();
             services.ConfigureSwagger();
             services.ConfigureCors();
-            services.AddAuthorization();
+            services.AddAutoMapper(typeof(Startup));
+            // services.AddAuthorization();
         }
 
         /// <summary>
@@ -68,9 +61,9 @@ namespace Abarnathy.HistoryAPI
             app.UseCustomExceptionHandlerExtension();
             app.UseSwaggerUI();
             app.UseHttpsRedirection();
+            app.UseCors();
             app.UseRouting();
             app.UseAuthorization();
-            app.UseCors();
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
     }

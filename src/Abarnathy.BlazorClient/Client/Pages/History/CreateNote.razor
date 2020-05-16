@@ -1,0 +1,58 @@
+﻿@using Abarnathy.BlazorClient.Client.Shared.Components.CustomRichTextInput
+@using Abarnathy.BlazorClient.Client.Shared.Components.NoteEditForm
+@using Abarnathy.BlazorClient.Client.Models
+
+@page "/Patient/{PatientId:int}/History/Note/Create"
+@page "/Patient/{PatientId:int}/History/Note/Edit/{NoteId}"
+
+<div class="container">
+
+    <div class="row d-flex h-100 justify-content-center align-content-center">
+        <h3 class="text-center">Create/Edit Note</h3>
+    </div>
+
+    @if (OperationStatus == APIOperationStatus.Initial ||
+         OperationStatus == APIOperationStatus.GET_Success || 
+         OperationStatus == APIOperationStatus.POST_Pending || 
+         OperationStatus == APIOperationStatus.PUT_Pending)
+    {
+        <NoteEditForm
+            InputModel="@InputModel"
+            EventCallback="@Submit"
+            OperationStatus="@OperationStatus"
+            />
+    }
+
+    @if (OperationStatus == APIOperationStatus.POST_Success ||
+         OperationStatus == APIOperationStatus.PUT_Success)
+    {
+        <div class="row">
+            <div class="col-12 d-flex justify-content-center mt-5 mb-2">
+                <h3 class="text-success">Success!</h3>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 d-flex justify-content-center">
+                <p class="text-info">We'll redirect you in a second.</p>
+            </div>
+        </div>
+    }
+    
+        @if (OperationStatus == APIOperationStatus.GET_Error ||
+            OperationStatus == APIOperationStatus.POST_Error ||
+             OperationStatus == APIOperationStatus.PUT_Error)
+        {
+            <div class="row">
+                <div class="col-12 d-flex justify-content-center mt-5 mb-2">
+                    <h3 class="text-danger">Error</h3>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 d-flex justify-content-center">
+                    <p class="text-info">Oops! Something went wrong.</p>
+                </div>
+            </div>
+        }
+</div>

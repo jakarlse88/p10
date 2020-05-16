@@ -1,10 +1,17 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
+using Abarnathy.HistoryAPI.Data;
+using Abarnathy.HistoryAPI.Repositories;
+using Abarnathy.HistoryAPI.Services;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.OpenApi.Models;
+using MongoDB.Bson.Serialization.Conventions;
+using MongoDB.Driver;
 
 namespace Abarnathy.HistoryAPI.Infrastructure
 {
@@ -19,37 +26,26 @@ namespace Abarnathy.HistoryAPI.Infrastructure
         /// <param name="services"></param>
         internal static void ConfigureLocalServices(this IServiceCollection services)
         {
+            services.AddTransient<INoteService, NoteService>();
+            services.AddScoped<INoteRepository, NoteRepository>();
         }
 
         /// <summary>
-        /// Configures controllers with action filters,
-        /// and configures and adds FluentValidation.
+        /// Configures controllers with action filters.
         /// </summary>
         /// <param name="services"></param>
         internal static void ConfigureControllers(this IServiceCollection services)
         {
-            services.AddControllers();
-            // services.AddControllers(options =>
-            // {
-            //     options.Filters.Add(new ModelValidationActionFilter());
-            //
-            //     var noContentFormatter =
-            //         options.OutputFormatters.OfType<HttpNoContentOutputFormatter>().FirstOrDefault();
-            //
-            //     if (noContentFormatter != null)
-            //     {
-            //         noContentFormatter.TreatNullValueAsNoContent = false;
-            //     }
-            // })
-            // .AddFluentValidation(fv =>
-            // {
-            //     fv.RegisterValidatorsFromAssemblyContaining<Startup>();
-            //     fv.ImplicitlyValidateChildProperties = true;
-            // })
-            // .AddNewtonsoftJson(options =>
-            // {
-            //     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-            // });
+            services.AddControllers(options =>
+            {
+                var noContentFormatter =
+                    options.OutputFormatters.OfType<HttpNoContentOutputFormatter>().FirstOrDefault();
+
+                if (noContentFormatter != null)
+                {
+                    noContentFormatter.TreatNullValueAsNoContent = false;
+                }
+            });
         }
 
         /// <summary>
@@ -84,19 +80,13 @@ namespace Abarnathy.HistoryAPI.Infrastructure
         /// <param name="configuration"></param>
         internal static void ConfigureDbContext(this IServiceCollection services, IConfiguration configuration)
         {
-            // services.AddDbContext<DemographicsDbContext>(options =>
-            // {
-            //     options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
-            //         sqlServerOptionsAction: sqlOptions =>
-            //         {
-            //             sqlOptions
-            //                 .MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name);
-            //
-            //             sqlOptions
-            //                 .EnableRetryOnFailure(maxRetryCount: 15, maxRetryDelay: TimeSpan.FromSeconds(30),
-            //                     errorNumbersToAdd: null);
-            //         });
-            // });
+            ConventionRegistry.Register("CamelCase", new ConventionPack { new CamelCaseElementNameConvention() }, _ => true);
+
+            services.AddSingleton<IMongoClient>(s =>
+                new MongoClient(configuration["PatientHistoryDatabaseSettings:ConnectionString"]));
+
+            services.AddScoped(s => new PatientHistoryDbContext(s.GetRequiredService<IMongoClient>(),
+                configuration["PatientHistoryDatabaseSettings:DatabaseName"]));
         }
 
         /// <summary>

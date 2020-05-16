@@ -20,6 +20,8 @@ services:
   mongo-express:
     image: mongo-express
     restart: always
+    links:
+      - mongo:mongo
 
   sql_server:
     image: "mcr.microsoft.com/mssql/server"

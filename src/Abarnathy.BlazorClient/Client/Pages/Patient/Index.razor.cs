@@ -9,18 +9,12 @@ using Newtonsoft.Json;
 
 namespace Abarnathy.BlazorClient.Client.Pages.Patient
 {
-    public partial class PatientsAll
+    public partial class Index
     {
         [Inject] private HttpClient HttpClient { get; set; }
         [Inject] private IJSRuntime JsRuntime { get; set; }
         protected IEnumerable<PatientInputModel> PatientList { get; private set; }
-
         protected PatientsAllOperationStatusEnum StatusEnum { get; private set; }
-
-        protected override async Task OnAfterRenderAsync(bool firstRender)
-        {
-            await base.OnAfterRenderAsync(firstRender);
-        }
 
         protected override async Task OnInitializedAsync()
         {
@@ -38,13 +32,13 @@ namespace Abarnathy.BlazorClient.Client.Pages.Patient
 
                     PatientList = content;
 
-                    await JsRuntime.InvokeAsync<object>("InitDataTable");
+                    await JsRuntime.InvokeAsync<object>("InitDataTable", "patients-table");
                 }
 
                 if ((int) response.StatusCode == 204)
                 {
                     PatientList = new List<PatientInputModel>();
-                    await JsRuntime.InvokeAsync<object>("InitDataTable");
+                    await JsRuntime.InvokeAsync<object>("InitDataTable", "patients-table");
                 }
 
                 StatusEnum = PatientsAllOperationStatusEnum.Success;
@@ -57,11 +51,5 @@ namespace Abarnathy.BlazorClient.Client.Pages.Patient
                 StateHasChanged();
             }
         }
-
-        // public void Dispose()
-        // {
-        //     var runTime = JsRuntime as IJSInProcessRuntime;
-        //     runTime?.Invoke<object>("DestroyDataTable");
-        // }
     }
 }

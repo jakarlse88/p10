@@ -1,0 +1,44 @@
+﻿<body onbeforeunload="DestroyNoteTable()">
+
+<table id="@TableName" class="table table-hover table-sm table-striped mb-4 mt-2">
+    <thead>
+    <tr>
+        <th scope="col">
+            Date Created
+        </th>
+        <th scope="col">
+            Last Updated
+        </th>
+        <th scope="col">
+            Title
+        </th>
+        <th scope="col">
+        </th>
+    </tr>
+    </thead>
+
+    <tbody>
+    @if (Notes.Any())
+    {
+        @foreach (var item in Notes)
+        {
+            <tr>
+                <td>@item.TimeCreated.Date.ToString("dd/MM/yyyy")</td>
+                <td>@item.TimeLastUpdated.Date.ToString("dd/MM/yyyy")</td>
+                <td>@item.Title</td>
+                <td>
+                    <NavLink href="@($"/patient/{PatientId}/history/note/{item.Id}")">
+                        <i class="fas fa-lg fa-info-circle"></i>
+                    </NavLink>
+                </td>
+            </tr>
+        }
+    }
+    </tbody>
+</table>
+</body>
+
+@if (!Notes.Any())
+{
+    <small class="text-muted">There are no notes registered in this patient's history.</small>
+}

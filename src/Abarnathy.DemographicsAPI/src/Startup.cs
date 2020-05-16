@@ -22,17 +22,11 @@ namespace Abarnathy.DemographicsAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.ConfigureControllers();
-
             services.ConfigureDbContext(Configuration);
-
             services.ConfigureSwagger();
-
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            
             services.ConfigureLocalServices();
-            
             services.AddAutoMapper(typeof(Startup));
-
             services.ConfigureCors();
         }
 
@@ -46,17 +40,11 @@ namespace Abarnathy.DemographicsAPI
             }
             
             app.UseCustomExceptionHandler();
-
             app.ApplyMigrations();
-
             app.UseSwaggerUI();
-
             app.UseRouting();
-
             app.UseAuthorization();
-
             app.UseCors();
-
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
     }
