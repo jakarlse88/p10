@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Abarnathy.HistoryAPI.Models;
+using MongoDB.Driver;
 
 namespace Abarnathy.HistoryAPI.Repositories
 {
@@ -31,5 +32,12 @@ namespace Abarnathy.HistoryAPI.Repositories
         /// <param name="entity"></param>
         /// <returns></returns>
         public Task Insert(Note entity);
+
+        /// <summary>
+        /// Updates a <see cref="Note"/> entity.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="bookIn"></param>
+        public Task Update(string id, Note bookIn);
     }
 }

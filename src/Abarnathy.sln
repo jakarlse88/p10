@@ -23,6 +23,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{491F72
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abarnathy.HistoryAPI", "Abarnathy.HistoryAPI\src\Abarnathy.HistoryAPI.csproj", "{0CD537E5-6A3B-4D25-97E9-5D46780262EF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abarnathy.HistoryAPI.Test", "Abarnathy.HistoryAPI\Test\Abarnathy.HistoryAPI.Test\Abarnathy.HistoryAPI.Test.csproj", "{51890BCC-638C-4740-911F-C86A9B5E8ACB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -56,6 +58,10 @@ Global
 		{0CD537E5-6A3B-4D25-97E9-5D46780262EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0CD537E5-6A3B-4D25-97E9-5D46780262EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0CD537E5-6A3B-4D25-97E9-5D46780262EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51890BCC-638C-4740-911F-C86A9B5E8ACB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51890BCC-638C-4740-911F-C86A9B5E8ACB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51890BCC-638C-4740-911F-C86A9B5E8ACB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51890BCC-638C-4740-911F-C86A9B5E8ACB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -67,6 +73,7 @@ Global
 		{46787498-BB13-4393-879D-4EEF54DC0CAA} = {41577B56-3321-4CDB-ABDF-6C791A74E55B}
 		{C2D944EC-037E-4A6E-B05E-FE25FCEC3037} = {41577B56-3321-4CDB-ABDF-6C791A74E55B}
 		{0CD537E5-6A3B-4D25-97E9-5D46780262EF} = {93F5489A-7C33-45AD-9197-BDCB1A2CD9B0}
+		{51890BCC-638C-4740-911F-C86A9B5E8ACB} = {41577B56-3321-4CDB-ABDF-6C791A74E55B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {835E535C-1F98-48D8-81F3-8304DEEDEA64}

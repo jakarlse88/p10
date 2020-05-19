@@ -12,15 +12,23 @@
     </div>
 
     @if (OperationStatus == APIOperationStatus.Initial ||
-         OperationStatus == APIOperationStatus.GET_Success || 
-         OperationStatus == APIOperationStatus.POST_Pending || 
+         OperationStatus == APIOperationStatus.GET_Pending)
+    {
+        <div class="row">
+            <div class="col-12 d-flex justify-content-center mt-5 mb-2">
+                <i class="fas fa-spinner fa-spin fa-3x"></i>
+            </div>
+        </div>
+    }
+
+    @if (OperationStatus == APIOperationStatus.GET_Success ||
+         OperationStatus == APIOperationStatus.POST_Pending ||
          OperationStatus == APIOperationStatus.PUT_Pending)
     {
         <NoteEditForm
             InputModel="@InputModel"
             EventCallback="@Submit"
-            OperationStatus="@OperationStatus"
-            />
+            OperationStatus="@OperationStatus"/>
     }
 
     @if (OperationStatus == APIOperationStatus.POST_Success ||
@@ -38,21 +46,21 @@
             </div>
         </div>
     }
-    
-        @if (OperationStatus == APIOperationStatus.GET_Error ||
-            OperationStatus == APIOperationStatus.POST_Error ||
-             OperationStatus == APIOperationStatus.PUT_Error)
-        {
-            <div class="row">
-                <div class="col-12 d-flex justify-content-center mt-5 mb-2">
-                    <h3 class="text-danger">Error</h3>
-                </div>
-            </div>
 
-            <div class="row">
-                <div class="col-12 d-flex justify-content-center">
-                    <p class="text-info">Oops! Something went wrong.</p>
-                </div>
+    @if (OperationStatus == APIOperationStatus.GET_Error ||
+         OperationStatus == APIOperationStatus.POST_Error ||
+         OperationStatus == APIOperationStatus.PUT_Error)
+    {
+        <div class="row">
+            <div class="col-12 d-flex justify-content-center mt-5 mb-2">
+                <h3 class="text-danger">Error</h3>
             </div>
-        }
+        </div>
+
+        <div class="row">
+            <div class="col-12 d-flex justify-content-center">
+                <p class="text-info">Oops! Something went wrong.</p>
+            </div>
+        </div>
+    }
 </div>

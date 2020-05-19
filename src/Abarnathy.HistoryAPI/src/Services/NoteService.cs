@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Abarnathy.HistoryAPI.Data;
 using Abarnathy.HistoryAPI.Models;
 using Abarnathy.HistoryAPI.Models.InputModels;
 using Abarnathy.HistoryAPI.Repositories;
 using AutoMapper;
-using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using Serilog;
 
@@ -38,7 +36,8 @@ namespace Abarnathy.HistoryAPI.Services
         /// </summary>
         /// <param name="patientId">ID of the Patient to search by.</param>
         /// <returns></returns>
-        public async Task<IEnumerable<NoteInputModel>> GetByPatientIdAsync(int patientId)
+        /// <exception cref="ArgumentNullException"></exception>
+        public async Task<IEnumerable<NoteInputModel>> GetByPatientIdAsInputModelAsync(int patientId)
         {
             var tempResult = 
                 await _noteRepository.GetByConditionAsync(n => n.PatientId == patientId);
@@ -59,7 +58,8 @@ namespace Abarnathy.HistoryAPI.Services
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<NoteInputModel?> GetByIdAsync(string id)
+        /// <exception cref="ArgumentNullException"></exception>
+        public async Task<NoteInputModel> GetByIdAsInputModelAsync(string id)
         {
             if (string.IsNullOrEmpty(id))
             {
@@ -80,11 +80,31 @@ namespace Abarnathy.HistoryAPI.Services
         }
 
         /// <summary>
+        /// Asynchronously get a single <see cref="Note"/> entity by its ID.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public async Task<Note> GetByIdAsync(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                throw new ArgumentNullException();
+            }
+            
+            var entity =
+                await _noteRepository.GetSingleByIdAsync(id);
+
+            return entity;
+        }
+
+        /// <summary>
         /// Create a new <see cref="Note"/> entity.
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public Note Create(NoteInputModel model)
+        /// <exception cref="ArgumentNullException"></exception>
+        public Note Create(NoteCreateModel model)
         {
             if (model == null)
             {
@@ -106,13 +126,29 @@ namespace Abarnathy.HistoryAPI.Services
             return entity;
         }
 
-        // public void Update(string id, Note bookIn) =>
-        //     _books.ReplaceOne(note => note.Id == id, bookIn);
+        /// <summary>
+        /// Updates a Note entity and persists any changes made to the DB.
+        /// </summary>
+        /// <param name="entity">The <see cref="Note"/> entity to update.</param>
+        /// <param name="model">The <see cref="NoteInputModel"/> model containing the updated data.</param>
+        /// <exception cref="ArgumentNullException"></exception>
+        public async Task Update(Note entity, NoteInputModel model)
+        {
+            if (entity == null || model == null)
+            {
+                throw new ArgumentNullException();
+            }
 
-        // public void Remove(Note bookIn) =>
-        //     _books.DeleteOne(note => note.Id == bookIn.Id);
-
-        // public void Remove(string id) =>
-        //     _books.DeleteOne(note => note.Id == id);
+            try
+            {
+                var newEntity = _mapper.Map<Note>(model);
+                await _noteRepository.Update(entity.Id, newEntity);
+            }
+            catch (Exception e)
+            {
+                Log.Error("An error occurred updating an entity: {0}", e.Message);
+                throw;
+            }
+        }
     }
 }

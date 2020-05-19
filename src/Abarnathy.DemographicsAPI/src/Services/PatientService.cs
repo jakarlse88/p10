@@ -154,6 +154,30 @@ namespace Abarnathy.DemographicsAPI.Services
                 throw;
             }
         }
+        
+        /// <summary>
+        /// Verifies whether a <see cref="Patient"/> entity identified by the specified
+        /// ID exists in the database.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
+        public async Task<bool> Exists(int id)
+        {
+            if (id <= 0)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            var result = await _unitOfWork.PatientRepository.GetById(id);
+
+            if (result == null)
+            {
+                return false;
+            }
+
+            return true;
+        }
 
         /**
          * ====================================================

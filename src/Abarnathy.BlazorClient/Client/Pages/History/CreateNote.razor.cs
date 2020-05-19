@@ -16,7 +16,7 @@ namespace Abarnathy.BlazorClient.Client.Pages.History
         [Parameter] public int PatientId { get; set; }
         [Parameter] public string NoteId { get; set; }
         private NoteInputModel InputModel { get; set; }
-        private APIOperationStatus OperationStatus { get; set; }
+        private APIOperationStatus OperationStatus { get; set; } = APIOperationStatus.Initial;
         private ComponentMode Mode { get; set; }
 
         /// <summary>
@@ -26,11 +26,13 @@ namespace Abarnathy.BlazorClient.Client.Pages.History
         protected override async Task OnInitializedAsync()
         {
             SetComponentMode();
-            OperationStatus = APIOperationStatus.Initial;
             
             if (Mode == ComponentMode.Create)
             {
                 InputModel = new NoteInputModel { PatientId = PatientId };
+                
+                OperationStatus = APIOperationStatus.GET_Success;
+                StateHasChanged();                
             }
             else
             {
@@ -38,8 +40,9 @@ namespace Abarnathy.BlazorClient.Client.Pages.History
                 StateHasChanged();
                 
                 await GetNote();
+         
                 OperationStatus = APIOperationStatus.GET_Success;
-                StateHasChanged();                
+                StateHasChanged();      
             }
         }
 
@@ -120,7 +123,7 @@ namespace Abarnathy.BlazorClient.Client.Pages.History
             OperationStatus = APIOperationStatus.PUT_Pending;
             StateHasChanged();
 
-            var response = await HttpClient.PutAsJsonAsync("http://localhost:8082/api/history/note", InputModel);
+            var response = await HttpClient.PutAsJsonAsync($"http://localhost:8082/api/history/note/{NoteId}", InputModel);
 
             if (response.IsSuccessStatusCode)
             {

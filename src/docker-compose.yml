@@ -1,9 +1,5 @@
 version: '3.4'
 
-networks:
-  app-network:
-    driver: bridge
-
 services:
 
   mongo:
@@ -13,7 +9,7 @@ services:
     ports:
       - "27017:27017"
     networks:
-      - app-network
+      - local
     volumes: 
       - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
 
@@ -26,7 +22,7 @@ services:
   sql_server:
     image: "mcr.microsoft.com/mssql/server"
     networks:
-      - app-network
+      - local
 
   blazor_server:
     container_name: blazor_server
@@ -34,7 +30,7 @@ services:
       context: .
       dockerfile: Abarnathy.BlazorClient/Server/Dockerfile
     networks:
-      - app-network
+      - local
 
   demographics_api:
     container_name: demographics_api
@@ -44,7 +40,7 @@ services:
     depends_on:
       - sql_server
     networks:
-      - app-network
+      - local
     
   history_api:
     container_name: history_api
@@ -54,4 +50,8 @@ services:
     depends_on:
       - mongo
     networks:
-      - app-network
+      - local
+
+networks:
+  local:
+

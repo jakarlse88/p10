@@ -42,9 +42,9 @@ namespace Abarnathy.DemographicsAPI
             app.UseCustomExceptionHandler();
             app.ApplyMigrations();
             app.UseSwaggerUI();
+            app.UseCors();
             app.UseRouting();
             app.UseAuthorization();
-            app.UseCors();
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
     }

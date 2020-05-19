@@ -50,3 +50,8 @@ volumes:
     external: false
   abarnathy-mongo:
     external: false
+
+networks:
+  local:
+    driver: bridge
+

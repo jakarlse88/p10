@@ -22,7 +22,7 @@ namespace Abarnathy.DemographicsAPI.Controllers
         /// </summary>
         /// <param name="patientService"></param>
         public PatientController(IPatientService patientService)
-        {
+        { 
             _patientService = patientService;
         }
 
@@ -97,7 +97,6 @@ namespace Abarnathy.DemographicsAPI.Controllers
             
             return CreatedAtAction("Get", new { createdEntity.Id }, createdEntity);
         }
-
         
         /// <summary>
         /// Updates a pre-existing <see cref="Patient"/> entity.
@@ -127,6 +126,29 @@ namespace Abarnathy.DemographicsAPI.Controllers
             await _patientService.Update(entity, model);
 
             return NoContent();
+        }
+
+        /// <summary>
+        /// Verifies whether a <see cref="Patient"/> entity identified by the specified
+        /// ID exists in the database.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <response code="200">Request OK.</response>
+        /// <response code="400">Invalid ID.</response>
+        [HttpGet("Exists/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<bool>> PatientExists(int id)
+        {
+            if (id <= 0)
+            {
+                return BadRequest();
+            }
+
+            var result = await _patientService.Exists(id);
+
+            return Ok(result);
         }
     }
 }

@@ -16,8 +16,10 @@ namespace Abarnathy.HistoryAPI.Infrastructure
         {
             CreateMap<Note, NoteInputModel>();
 
-            CreateMap<NoteInputModel, Note>()
-                .ForMember(dest => dest.Id, action => action.Ignore());
+            CreateMap<NoteInputModel, Note>();
+            // .ForMember(dest => dest.Id, action => action.Ignore());
+
+            CreateMap<NoteCreateModel, Note>();
         }
     }
 }

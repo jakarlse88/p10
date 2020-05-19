@@ -29,6 +29,7 @@ namespace Abarnathy.HistoryAPI.Repositories
         /// </summary>
         /// <param name="predicate"></param>
         /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public async Task<IEnumerable<Note>> GetByConditionAsync(Expression<Func<Note, bool>> predicate)
         {
             if (predicate == null)
@@ -48,6 +49,7 @@ namespace Abarnathy.HistoryAPI.Repositories
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public async Task<Note> GetSingleByIdAsync(string id)
         {
             if (string.IsNullOrWhiteSpace(id))
@@ -65,6 +67,7 @@ namespace Abarnathy.HistoryAPI.Repositories
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public async Task Insert(Note entity)
         {
             if (entity == null)
@@ -73,6 +76,22 @@ namespace Abarnathy.HistoryAPI.Repositories
             }
             
             await _context.Notes.InsertOneAsync(entity);
+        }
+
+        /// <summary>
+        /// Updates a <see cref="Note"/> entity.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="bookIn"></param>
+        /// <exception cref="ArgumentNullException"></exception>
+        public async Task Update(string id, Note bookIn)
+        {
+            if (string.IsNullOrWhiteSpace(id) || bookIn == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            await _context.Notes.FindOneAndReplaceAsync(note => note.Id == id, bookIn);
         }
     }
 }
