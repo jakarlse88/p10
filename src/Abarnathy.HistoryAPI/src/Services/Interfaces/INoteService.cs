@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Abarnathy.HistoryAPI.Models;
 using Abarnathy.HistoryAPI.Models.InputModels;
-using MongoDB.Driver;
 
 namespace Abarnathy.HistoryAPI.Services
 {

@@ -134,21 +134,28 @@ namespace Abarnathy.DemographicsAPI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        /// <response code="200">Request OK.</response>
+        /// <response code="200">Request OK, Patient exists.</response>
+        /// <response code="204">Request OK, Patient does not exist.</response>
         /// <response code="400">Invalid ID.</response>
         [HttpGet("Exists/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<bool>> PatientExists(int id)
+        public async Task<ActionResult> PatientExists(int id)
         {
             if (id <= 0)
             {
                 return BadRequest();
             }
 
-            var result = await _patientService.Exists(id);
+            var exists = await _patientService.Exists(id);
 
-            return Ok(result);
+            if (!exists)
+            {
+                return NoContent();
+            }
+            
+            return Ok();
         }
     }
 }

@@ -6,7 +6,6 @@ using Abarnathy.HistoryAPI.Models;
 using Abarnathy.HistoryAPI.Models.InputModels;
 using Abarnathy.HistoryAPI.Repositories;
 using AutoMapper;
-using MongoDB.Driver;
 using Serilog;
 
 namespace Abarnathy.HistoryAPI.Services

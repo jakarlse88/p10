@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Abarnathy.HistoryAPI.Models;
-using MongoDB.Driver;
 
 namespace Abarnathy.HistoryAPI.Repositories
 {

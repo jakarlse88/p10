@@ -1,18 +1,10 @@
-using System;
-using Abarnathy.HistoryAPI.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
 using Abarnathy.HistoryAPI.Infrastructure;
-using Abarnathy.HistoryAPI.Repositories;
-using Abarnathy.HistoryAPI.Services;
 using AutoMapper;
-using MongoDB.Bson.Serialization.Conventions;
-using MongoDB.Driver;
-using Serilog;
 
 namespace Abarnathy.HistoryAPI
 {

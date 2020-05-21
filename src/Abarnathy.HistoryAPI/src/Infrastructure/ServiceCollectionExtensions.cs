@@ -8,7 +8,6 @@ using Abarnathy.HistoryAPI.Services;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.OpenApi.Models;
 using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Driver;
@@ -27,6 +26,8 @@ namespace Abarnathy.HistoryAPI.Infrastructure
         internal static void ConfigureLocalServices(this IServiceCollection services)
         {
             services.AddTransient<INoteService, NoteService>();
+            services.AddTransient<IExternalService, ExternalService>();
+            
             services.AddScoped<INoteRepository, NoteRepository>();
         }
 
