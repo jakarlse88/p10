@@ -1,0 +1,43 @@
+{
+  "ReRoutes": [
+    { 
+      "DownstreamPathTemplate": "api/patient/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "demographics_api",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "api/{everything}",
+      "UpstreamHttpMethod": ["GET", "POST", "PUT"],
+      "Key": "Demographics"
+    },
+    {
+      "DownstreamPathTemplate": "api/history/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "history_api",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "api/everything",
+      "UpstreamHttpMethod": ["GET", "POST", "PUT"],
+      "Key": "History"
+    }
+  ],
+  "Aggregates": [
+    {
+      "ReRouteKeys": [
+        "Demographics",
+        "History"
+      ],
+      "UpstreamPathTemplate": "/aggregated"
+    }
+  ],
+  "GlobalConfiguration": {
+    "RequestIdKey": "OcRequestId",
+    "AdministrationPath": "/administration"
+  }
+}

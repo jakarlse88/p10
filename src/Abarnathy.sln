@@ -31,6 +31,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demographics API", "Demogra
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "History API", "History API", "{39B6658B-C342-4BD2-A3DB-CE3093E06CB6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIGateway", "APIGateway\APIGateway.csproj", "{ED5A4D86-34D7-4402-B019-98ABF3433317}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -72,6 +74,10 @@ Global
 		{4DAFA50D-9F8C-4DB4-ABD9-E85617EC9D89}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4DAFA50D-9F8C-4DB4-ABD9-E85617EC9D89}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4DAFA50D-9F8C-4DB4-ABD9-E85617EC9D89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED5A4D86-34D7-4402-B019-98ABF3433317}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED5A4D86-34D7-4402-B019-98ABF3433317}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED5A4D86-34D7-4402-B019-98ABF3433317}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED5A4D86-34D7-4402-B019-98ABF3433317}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
