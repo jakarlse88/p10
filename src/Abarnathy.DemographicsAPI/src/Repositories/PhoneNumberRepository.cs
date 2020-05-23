@@ -2,6 +2,7 @@
 using Abarnathy.DemographicsAPI.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Abarnathy.DemographicsAPI.Repositories
@@ -32,9 +33,11 @@ namespace Abarnathy.DemographicsAPI.Repositories
                 throw new ArgumentNullException();
             }
 
+            var numberToCompare = Regex.Replace(model.Number, @"[- ().]", "");
+            
             var result =
                 await base.GetByCondition(pn =>
-                    pn.Number.Contains(model.Number))
+                    pn.Number.Contains(numberToCompare))
                 .FirstOrDefaultAsync();
 
             return result;

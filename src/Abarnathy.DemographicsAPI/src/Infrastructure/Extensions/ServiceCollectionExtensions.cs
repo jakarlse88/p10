@@ -6,11 +6,12 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Abarnathy.DemographicsAPI.Infrastructure.ActionFilters;
 using Abarnathy.DemographicsAPI.Services;
 using Abarnathy.DemographicsAPI.Services.Interfaces;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 
 namespace Abarnathy.DemographicsAPI.Infrastructure
@@ -35,8 +36,6 @@ namespace Abarnathy.DemographicsAPI.Infrastructure
         {
             services.AddControllers(options =>
                 {
-                    options.Filters.Add(new ModelValidationActionFilter());
-
                     var noContentFormatter =
                         options.OutputFormatters.OfType<HttpNoContentOutputFormatter>().FirstOrDefault();
 
@@ -86,20 +85,28 @@ namespace Abarnathy.DemographicsAPI.Infrastructure
         /// </summary>
         /// <param name="services"></param>
         /// <param name="configuration"></param>
-        public static void ConfigureDbContext(this IServiceCollection services, IConfiguration configuration)
+        /// <param name="environment"></param>
+        public static void ConfigureDbContext(this IServiceCollection services, IConfiguration configuration, IWebHostEnvironment environment)
         {
             services.AddDbContext<DemographicsDbContext>(options =>
             {
-                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
-                    sqlServerOptionsAction: sqlOptions =>
-                    {
-                        sqlOptions
-                            .MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name);
+                if (environment.IsEnvironment("Test"))
+                {
+                    options.UseInMemoryDatabase("InMemoryDbForTesting");
+                }
+                else
+                {
+                    options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
+                        sqlServerOptionsAction: sqlOptions =>
+                        {
+                            sqlOptions
+                                .MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name);
 
-                        sqlOptions
-                            .EnableRetryOnFailure(maxRetryCount: 15, maxRetryDelay: TimeSpan.FromSeconds(30),
-                                errorNumbersToAdd: null);
-                    });
+                            sqlOptions
+                                .EnableRetryOnFailure(maxRetryCount: 15, maxRetryDelay: TimeSpan.FromSeconds(30),
+                                    errorNumbersToAdd: null);
+                        });
+                }
             });
         }
 

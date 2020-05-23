@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Abarnathy.DemographicsAPI.Models;
@@ -45,7 +44,9 @@ namespace Abarnathy.DemographicsAPI.Infrastructure
                 .ForMember(dest => dest.Id, action => action.Ignore());
 
             CreateMap<PhoneNumberInputModel, PhoneNumber>()
-                .ForMember(dest => dest.Id, action => action.Ignore());
+                .ForMember(dest => dest.Id, action => action.Ignore())
+                .ForMember(dest => dest.Number, action => action.MapFrom(src =>
+                    Regex.Replace(src.Number, @"[- ().]", "")));
         }
     }
 }

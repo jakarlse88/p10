@@ -22,7 +22,7 @@ namespace Abarnathy.DemographicsAPI.Controllers
         /// </summary>
         /// <param name="patientService"></param>
         public PatientController(IPatientService patientService)
-        {
+        { 
             _patientService = patientService;
         }
 
@@ -97,7 +97,6 @@ namespace Abarnathy.DemographicsAPI.Controllers
             
             return CreatedAtAction("Get", new { createdEntity.Id }, createdEntity);
         }
-
         
         /// <summary>
         /// Updates a pre-existing <see cref="Patient"/> entity.
@@ -107,9 +106,11 @@ namespace Abarnathy.DemographicsAPI.Controllers
         /// <returns></returns>
         /// <response code="204">The <see cref="Patient"/> entity was successfully updated.</response>
         /// <response code="400">Malformed request.</response>
+        /// <response code="404">The specified entity could not be found.</response>
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Put(int id, PatientInputModel model)
         {
             if (id <= 0 || model == null)
@@ -126,6 +127,34 @@ namespace Abarnathy.DemographicsAPI.Controllers
 
             await _patientService.Update(entity, model);
 
+            return NoContent();
+        }
+
+        /// <summary>
+        /// Verifies whether a <see cref="Patient"/> entity identified by the specified
+        /// ID exists in the database.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <response code="204">Entity exists.</response>
+        /// <response code="404">Entity not found.</response>
+        [HttpGet("Exists/{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult> PatientExists(int id)
+        {
+            if (id <= 0)
+            {
+                return BadRequest();
+            }
+
+            var exists = await _patientService.Exists(id);
+
+            if (!exists)
+            {
+                return NotFound();
+            }
+            
             return NoContent();
         }
     }

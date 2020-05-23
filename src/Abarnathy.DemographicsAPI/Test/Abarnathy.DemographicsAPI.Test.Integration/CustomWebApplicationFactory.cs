@@ -16,7 +16,7 @@ namespace Abarnathy.DemographicsAPI.Test.Integration
         {
             builder.ConfigureServices(services =>
             {
-                // Remove the app's DemographicsDbContext registration.
+                // Remove the app's ApplicationDbContext registration.
                 var descriptor = services.SingleOrDefault(
                     d => d.ServiceType ==
                          typeof(DbContextOptions<DemographicsDbContext>));
@@ -26,7 +26,7 @@ namespace Abarnathy.DemographicsAPI.Test.Integration
                     services.Remove(descriptor);
                 }
 
-                // Add DemographicsDbContext using an in-memory database for testing.
+                // Add ApplicationDbContext using an in-memory database for testing.
                 services.AddDbContext<DemographicsDbContext>(options =>
                 {
                     options.UseInMemoryDatabase("InMemoryDbForTesting");
@@ -36,7 +36,7 @@ namespace Abarnathy.DemographicsAPI.Test.Integration
                 var sp = services.BuildServiceProvider();
 
                 // Create a scope to obtain a reference to the database
-                // context (DemographicsDbContext).
+                // context (ApplicationDbContext).
                 using (var scope = sp.CreateScope())
                 {
                     var scopedServices = scope.ServiceProvider;

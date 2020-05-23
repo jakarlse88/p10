@@ -407,6 +407,64 @@ namespace Abarnathy.DemographicsAPI.Test.Unit.ServiceTests
                 .Verify(x => x.RollbackAsync(), Times.Once());
         }
 
+        
+        /**
+         * ===============================================================
+         * Exists()
+         * ===============================================================
+         */
+
+        [Theory]
+        [InlineData(0)]
+        [InlineData(-1)]
+        public async Task TestExistsIdOutOfRange(int testId)
+        {
+            // Arrange
+            var service = new PatientService(null, null);
+            
+            // Act
+            async Task<bool> TestAction() => await service.Exists(testId);
+
+            // Assert
+            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(TestAction);
+        }
+
+        [Fact]
+        public async Task TestExistsIdInvalid()
+        {
+            // Arrange
+            var mockUnitOfWork = new Mock<IUnitOfWork>();
+            mockUnitOfWork
+                .Setup(x => x.PatientRepository.GetById(1))
+                .ReturnsAsync(new Patient { Id = 1 });
+
+            var service = new PatientService(mockUnitOfWork.Object, null);
+            
+            // Act
+            var result = await service.Exists(2);
+
+            // Assert
+            Assert.False(result);
+        }
+
+        [Fact]
+        public async Task TestExistsIdValid()
+        {
+            // Arrange
+            var mockUnitOfWork = new Mock<IUnitOfWork>();
+            mockUnitOfWork
+                .Setup(x => x.PatientRepository.GetById(1))
+                .ReturnsAsync(new Patient { Id = 1 });
+
+            var service = new PatientService(mockUnitOfWork.Object, null);
+            
+            // Act
+            var result = await service.Exists(1);
+
+            // Assert
+            Assert.True(result);
+        }
+
 
         /**
          * ===============================================================

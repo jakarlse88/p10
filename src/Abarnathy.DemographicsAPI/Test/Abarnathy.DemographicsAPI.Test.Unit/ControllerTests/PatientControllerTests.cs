@@ -235,5 +235,65 @@ namespace Abarnathy.DemographicsAPI.Test.Unit.ControllerTests
             mockService
                 .Verify(x => x.Update(It.IsAny<Patient>(), It.IsAny<PatientInputModel>()), Times.Once);
         }
+        
+        /**
+         * PatientExists()
+         */
+
+        [Theory]
+        [InlineData(0)]
+        [InlineData(-1)]
+        public async Task TestPatientExistsIdBad(int testId)
+        {
+            // Arrange
+            var controller = new PatientController(null);
+
+            // Assert
+            var result =
+                await controller.PatientExists(testId);
+            
+            Assert.IsAssignableFrom<BadRequestResult>(result);
+        }
+
+        [Fact]
+        public async Task TestPatientExistsIdInvalid()
+        {
+            // Arrange
+            var mockService = new Mock<IPatientService>();
+
+            mockService
+                .Setup(x => x.Exists(1))
+                .ReturnsAsync(true);
+
+            var controller = new PatientController(mockService.Object);
+
+            // Act
+            var result = await controller.PatientExists(2);
+            
+            // Assert
+            Assert.IsAssignableFrom<NotFoundResult>(result);
+        }
+
+        [Fact]
+        public async Task TestPatientExistsIdValid()
+        {
+            // Arrange
+            var mockService = new Mock<IPatientService>();
+
+            mockService
+                .Setup(x => x.Exists(1))
+                .ReturnsAsync(true);
+
+            var controller = new PatientController(mockService.Object);
+
+            // Act
+            var result = await controller.PatientExists(1);
+            
+            // Assert
+            Assert.IsAssignableFrom<NoContentResult>(result);
+        }
+
+
+
     }
 }

@@ -27,6 +27,8 @@ namespace Abarnathy.DemographicsAPI.Data
             if (!optionsBuilder.IsConfigured)
             {
             }
+            
+            base.OnConfiguring(optionsBuilder);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

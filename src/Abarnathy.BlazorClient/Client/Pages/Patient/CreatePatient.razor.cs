@@ -204,7 +204,7 @@ namespace Abarnathy.BlazorClient.Client.Pages.Patient
         /// </summary>
         private void Cancel()
         {
-            NavigationManager.NavigateTo("/patient");
+            NavigationManager.NavigateTo("/");
         }
     }
 }

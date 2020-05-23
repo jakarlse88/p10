@@ -6,10 +6,14 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
+      - MONGO_INITDB_DATABASE=${MONGO_INITDB_DB}
 
   mongo-express:
     ports:
       - "${ME_CONFIG_PORT_EXT}:${ME_CONFIG_PORT_INTERNAL}" # Inconsistent naming because ME_CONFIG_PORT_INT renders the compose invalid. I've no idea, don't ask.
+    environment:
+      - "ME_CONFIG_BASICAUTH_USERNAME=${ME_CONFIG_MONGODB_ADMINUSERNAME}"
+      - "ME_CONFIG_BASICAUTH_PASSWORD=${ME_CONFIG_MONGODB_ADMINPASSWORD}"
 
   sql_server:
     environment:
@@ -34,6 +38,12 @@ services:
       - "ConnectionStrings__DefaultConnection=Server=${SQL_SERVER_SERVER_NAME},${SQL_SERVER_PORT_INT};Initial Catalog=${DEMOGRAPHICS_API_DB_INITIAL_CATALOG};User Id=${DEMOGRAPHICS_API_DB_USER_ID};Password=${DEMOGRAPHICS_API_DB_PASSWORD}"
     ports:
       - "${DEMOGRAPHICS_API_PORT_EXT}:${DEMOGRAPHICS_API_PORT_INT}"
+        
+  history_api:
+    ports:
+      - "${HISTORY_API_PORT_EXT}:${HISTORY_API_PORT_INT}"
+    environment:
+      - "DEMOGRAPHICS_API_BASE_ADDRESS=http://demographics_api:${DEMOGRAPHICS_API_PORT_INT}/"
 
 volumes:
   abarnathy-sqldata:
@@ -42,3 +52,8 @@ volumes:
     external: false
   abarnathy-mongo:
     external: false
+
+networks:
+  local:
+    driver: bridge
+

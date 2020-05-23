@@ -12,27 +12,24 @@ namespace Abarnathy.DemographicsAPI
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private readonly IWebHostEnvironment _environment;
+        
+        public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
             Configuration = configuration;
+            _environment = environment;
         }
 
         private IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
-        {
+        { 
+            services.ConfigureDbContext(Configuration, _environment);
             services.ConfigureControllers();
-
-            services.ConfigureDbContext(Configuration);
-
             services.ConfigureSwagger();
-
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            
             services.ConfigureLocalServices();
-            
             services.AddAutoMapper(typeof(Startup));
-
             services.ConfigureCors();
         }
 
@@ -44,19 +41,17 @@ namespace Abarnathy.DemographicsAPI
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            if (env.EnvironmentName != "Test")
+            {
+                app.ApplyMigrations();
+            }
             
             app.UseCustomExceptionHandler();
-
-            app.ApplyMigrations();
-
             app.UseSwaggerUI();
-
-            app.UseRouting();
-
-            app.UseAuthorization();
-
             app.UseCors();
-
+            app.UseRouting();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
     }

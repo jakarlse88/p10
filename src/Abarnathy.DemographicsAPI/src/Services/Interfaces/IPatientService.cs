@@ -11,5 +11,6 @@ namespace Abarnathy.DemographicsAPI.Services.Interfaces
         Task<IEnumerable<PatientInputModel>> GetInputModelsAll();
         Task<Patient> Create(PatientInputModel model);
         Task Update(Patient entity, PatientInputModel model);
+        Task<bool> Exists(int id);
     }
 }
