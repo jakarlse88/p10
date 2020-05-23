@@ -23,12 +23,25 @@ namespace Abarnathy.HistoryAPI.Infrastructure
         /// Configures the app's local services.
         /// </summary>
         /// <param name="services"></param>
-        internal static void ConfigureLocalServices(this IServiceCollection services)
+        /// <param name="configuration"></param>
+        internal static void ConfigureLocalServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddTransient<INoteService, NoteService>();
-            services.AddTransient<IExternalService, ExternalService>();
+            services.AddExternalAPIService<ExternalAPIService>(configuration["DEMOGRAPHICS_API_BASE_ADDRESS"]);
             
             services.AddScoped<INoteRepository, NoteRepository>();
+        }
+
+        private static IServiceCollection AddExternalAPIService<TImplementation>(this IServiceCollection services,
+            string baseAddress)
+            where TImplementation : class, IExternalAPIService
+        {
+            services.AddHttpClient<IExternalAPIService, TImplementation>(cfg =>
+            {
+                cfg.BaseAddress = new Uri(baseAddress);
+            });
+
+            return services;
         }
 
         /// <summary>

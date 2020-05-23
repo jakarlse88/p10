@@ -1,16 +1,27 @@
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using Polly;
+using Serilog;
 
 namespace Abarnathy.HistoryAPI.Services
 {
     /// <summary>
     /// 
     /// </summary>
-    public class ExternalService : IExternalService
+    public class ExternalAPIService : IExternalAPIService
     {
+        private readonly HttpClient _httpClient;
+        
+        /// <summary>
+        /// Class constructor.
+        /// </summary>
+        /// <param name="httpClient"></param>
+        public ExternalAPIService(HttpClient httpClient)
+        {
+            _httpClient = httpClient;
+        }
+
         /// <summary>
         /// Call the DemographicsAPI to ensure that the Patient entity exists.
         /// </summary>
@@ -29,17 +40,11 @@ namespace Abarnathy.HistoryAPI.Services
                     TimeSpan.FromSeconds(5)
                 });
 
-            using var client = new HttpClient();
-
             await retry.Execute(async () =>
             {
-                var response = await client.GetAsync($"http://demographics_api:80/api/Patient/Exists/{id}");
+                var response = await _httpClient.GetAsync($"/api/Patient/Exists/{id}");
 
-                response.EnsureSuccessStatusCode();
-
-                var responseBody = await response.Content.ReadAsStringAsync();
-
-                patientExists = JsonConvert.DeserializeObject<bool>(responseBody);
+                patientExists = response.IsSuccessStatusCode;
             });
 
             return patientExists;

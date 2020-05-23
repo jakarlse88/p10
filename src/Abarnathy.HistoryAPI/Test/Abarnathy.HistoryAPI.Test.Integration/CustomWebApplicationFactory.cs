@@ -1,29 +1,37 @@
 using System;
 using System.Linq;
-using Abarnathy.DemographicsAPI.Data;
+using Abarnathy.HistoryAPI.Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using MongoDB.Driver;
 
-namespace Abarnathy.DemographicsAPI.Test.Integration
+namespace Abarnathy.HistoryAPI.Test.Integration
 {
-    public class CustomWebApplicationFactory<TStartup>
-        : WebApplicationFactory<TStartup> where TStartup: class
+    public class CustomWebApplicationFactory<TStartup> 
+        : WebApplicationFactory<TStartup> where TStartup : class
     {
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
             builder.ConfigureServices(services =>
             {
-                // Remove the app's ApplicationDbContext registration.
-                var descriptor = services.SingleOrDefault(
+                var clientDescriptor = services.SingleOrDefault(
                     d => d.ServiceType ==
-                         typeof(DbContextOptions<DemographicsDbContext>));
+                         typeof(IMongoClient));
 
-                if (descriptor != null)
+                if (clientDescriptor != null)
                 {
-                    services.Remove(descriptor);
+                    services.Remove(clientDescriptor);
+                }
+
+                var contextDescriptor = services.SingleOrDefault(
+                    d => d.ServiceType ==
+                         typeof(PatientHistoryDbContext));
+
+                if (contextDescriptor != null)
+                {
+                    services.Remove(contextDescriptor);
                 }
 
                 // Add ApplicationDbContext using an in-memory database for testing.

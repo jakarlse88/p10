@@ -271,7 +271,7 @@ namespace Abarnathy.DemographicsAPI.Test.Unit.ControllerTests
             var result = await controller.PatientExists(2);
             
             // Assert
-            Assert.IsAssignableFrom<NoContentResult>(result);
+            Assert.IsAssignableFrom<NotFoundResult>(result);
         }
 
         [Fact]
@@ -290,7 +290,7 @@ namespace Abarnathy.DemographicsAPI.Test.Unit.ControllerTests
             var result = await controller.PatientExists(1);
             
             // Assert
-            Assert.IsAssignableFrom<OkResult>(result);
+            Assert.IsAssignableFrom<NoContentResult>(result);
         }
 
 

@@ -2,7 +2,6 @@ using System;
 using System.Linq;
 using System.Linq.Expressions;
 using Abarnathy.DemographicsAPI.Data;
-using Abarnathy.DemographicsAPI.Models;
 
 namespace Abarnathy.DemographicsAPI.Repositories
 {

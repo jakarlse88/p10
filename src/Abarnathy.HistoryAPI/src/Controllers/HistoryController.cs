@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
+using Abarnathy.HistoryAPI.Infrastructure;
 using Abarnathy.HistoryAPI.Models;
 using Abarnathy.HistoryAPI.Models.InputModels;
 using Abarnathy.HistoryAPI.Services;
@@ -18,17 +18,17 @@ namespace Abarnathy.HistoryAPI.Controllers
     public class HistoryController : ControllerBase
     {
         private readonly INoteService _noteService;
-        private readonly IExternalService _externalService;
+        private readonly IExternalAPIService _externalApiService;
 
         /// <summary>
         /// Class constructor.
         /// </summary>
         /// <param name="noteService"></param>
-        /// <param name="externalService"></param>
-        public HistoryController(INoteService noteService, IExternalService externalService)
+        /// <param name="externalApiService"></param>
+        public HistoryController(INoteService noteService, IExternalAPIService externalApiService)
         {
             _noteService = noteService;
-            _externalService = externalService;
+            _externalApiService = externalApiService;
         }
 
         /// <summary>
@@ -50,14 +50,14 @@ namespace Abarnathy.HistoryAPI.Controllers
                 return BadRequest();
             }
 
-            var result = await _noteService.GetByIdAsInputModelAsync(noteId);
+            var result = await _noteService.GetByIdAsync(noteId);
 
             if (result == null)
             {
                 return NoContent();
             }
 
-            return Ok(result);
+            return Ok(result.ToInputModel());
         }
 
         /// <summary>
@@ -73,19 +73,21 @@ namespace Abarnathy.HistoryAPI.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<ActionResult<IEnumerable<NoteInputModel>>> GetByPatientId(int patientId)
         {
-            if (!await _externalService.PatientExists(patientId))
+            if (!await _externalApiService.PatientExists(patientId))
             {
                 return BadRequest();
             }
 
-            var result = await _noteService.GetByPatientIdAsInputModelAsync(patientId);
+            var result = await _noteService.GetByPatientIdAsync(patientId);
 
-            if (!result.Any())
+            var enumerable = result as Note[] ?? result.ToArray();
+            
+            if (!enumerable.Any())
             {
                 return NoContent();
             }
 
-            return Ok(result);
+            return Ok(enumerable.ToInputModel());
         }
 
         /// <summary>
@@ -105,9 +107,9 @@ namespace Abarnathy.HistoryAPI.Controllers
                 return BadRequest();
             }
 
-            await _externalService.PatientExists(model.PatientId);
+            await _externalApiService.PatientExists(model.PatientId);
 
-            var result = _noteService.Create(model);
+            var result = await _noteService.Create(model);
 
             return CreatedAtAction(nameof(GetByNoteId), new { noteId = result.Id }, result);
         }
@@ -125,7 +127,7 @@ namespace Abarnathy.HistoryAPI.Controllers
         {
             if (string.IsNullOrWhiteSpace(id) ||
                 model == null ||
-                !await _externalService.PatientExists(model.PatientId))
+                !await _externalApiService.PatientExists(model.PatientId))
             {
                 return BadRequest();
             }

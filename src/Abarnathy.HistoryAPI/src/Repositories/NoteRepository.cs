@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Abarnathy.HistoryAPI.Data;
 using Abarnathy.HistoryAPI.Models;
@@ -25,41 +24,36 @@ namespace Abarnathy.HistoryAPI.Repositories
         }
 
         /// <summary>
-        /// Get all <see cref="Note"/> entities matching the predicate.
-        /// </summary>
-        /// <param name="predicate"></param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
-        public async Task<IEnumerable<Note>> GetByConditionAsync(Expression<Func<Note, bool>> predicate)
-        {
-            if (predicate == null)
-            {
-                throw new ArgumentNullException();
-            }
-
-            var tempResult = await _context.Notes.FindAsync(n => true);
-
-            IEnumerable<Note> result = tempResult.ToList();
-
-            return result;
-        }
-
-        /// <summary>
         /// Get a single <see cref="Note"/> entities by its ID.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
-        public async Task<Note> GetSingleByIdAsync(string id)
+        public async Task<Note> GetByIdAsync(string id)
         {
             if (string.IsNullOrWhiteSpace(id))
             {
-                throw new ArgumentNullException();
+                throw new ArgumentNullException(nameof(id));
             }
 
-            var result = await _context.Notes.FindAsync(n => n.Id == id);
+            var result = 
+                await _context.Notes.FindAsync(n => n.Id == id);
 
             return await result.FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// Get any <see cref="Note"/> entity belonging to a
+        /// specified Patient.
+        /// </summary>
+        /// <param name="patientId"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<Note>> GetByPatientIdAsync(int patientId)
+        {
+            var result = 
+                await _context.Notes.FindAsync(n => n.PatientId == patientId);
+
+            return result.ToList();
         }
 
         /// <summary>
@@ -72,7 +66,7 @@ namespace Abarnathy.HistoryAPI.Repositories
         {
             if (entity == null)
             {
-                throw new ArgumentNullException();
+                throw new ArgumentNullException(nameof(entity));
             }
             
             await _context.Notes.InsertOneAsync(entity);
@@ -84,14 +78,19 @@ namespace Abarnathy.HistoryAPI.Repositories
         /// <param name="id"></param>
         /// <param name="bookIn"></param>
         /// <exception cref="ArgumentNullException"></exception>
-        public async Task Update(string id, Note bookIn)
+        public async Task<Note> Update(string id, Note bookIn)
         {
-            if (string.IsNullOrWhiteSpace(id) || bookIn == null)
+            if (string.IsNullOrWhiteSpace(id))
             {
-                throw new ArgumentNullException();
+                throw new ArgumentNullException(nameof(id));
             }
 
-            await _context.Notes.FindOneAndReplaceAsync(note => note.Id == id, bookIn);
+            if (bookIn == null)
+            {
+                throw new ArgumentNullException(nameof(bookIn));
+            }
+
+            return await _context.Notes.FindOneAndReplaceAsync(note => note.Id == id, bookIn);
         }
     }
 }

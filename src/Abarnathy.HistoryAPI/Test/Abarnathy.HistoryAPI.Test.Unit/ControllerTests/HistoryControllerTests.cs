@@ -19,7 +19,6 @@ namespace Abarnathy.HistoryAPI.Test.ControllerTests
          * GetByNoteId()
          * ==============================================
          */
-        
         [Theory]
         [InlineData("")]
         [InlineData(null)]
@@ -27,7 +26,7 @@ namespace Abarnathy.HistoryAPI.Test.ControllerTests
         {
             // Arrange
             var controller = new HistoryController(null, null);
-            
+
             // Act
             var result = await controller.GetByNoteId(testId);
 
@@ -41,12 +40,12 @@ namespace Abarnathy.HistoryAPI.Test.ControllerTests
             // Arrange
             var mockService = new Mock<INoteService>();
             mockService
-                .Setup(x => x.GetByIdAsInputModelAsync(It.IsAny<string>()))
-                .ReturnsAsync(null as NoteInputModel);
-                
+                .Setup(x => x.GetByIdAsync(It.IsAny<string>()))
+                .ReturnsAsync(null as Note);
+
 
             var controller = new HistoryController(mockService.Object, null);
-            
+
             // Act
             var result = await controller.GetByNoteId("test");
 
@@ -60,11 +59,11 @@ namespace Abarnathy.HistoryAPI.Test.ControllerTests
             // Arrange
             var mockService = new Mock<INoteService>();
             mockService
-                .Setup(x => x.GetByIdAsInputModelAsync(It.IsAny<string>()))
-                .ReturnsAsync(new NoteInputModel());
+                .Setup(x => x.GetByIdAsync(It.IsAny<string>()))
+                .ReturnsAsync(new Note());
 
             var controller = new HistoryController(mockService.Object, null);
-            
+
             // Act
             var result = await controller.GetByNoteId("test");
 
@@ -78,12 +77,11 @@ namespace Abarnathy.HistoryAPI.Test.ControllerTests
          * GetByPatientId()
          * ==============================================
          */
-
         [Fact]
         public async Task TestGetByPatientIdPatientIdInvalid()
         {
             // Arrange
-            var mockService = new Mock<IExternalService>();
+            var mockService = new Mock<IExternalAPIService>();
             mockService
                 .Setup(x => x.PatientExists(It.IsAny<int>()))
                 .ReturnsAsync(false);
@@ -103,10 +101,10 @@ namespace Abarnathy.HistoryAPI.Test.ControllerTests
             // Arrange
             var mockNoteService = new Mock<INoteService>();
             mockNoteService
-                .Setup(x => x.GetByPatientIdAsInputModelAsync(1))
-                .ReturnsAsync(new List<NoteInputModel>());
-            
-            var mockExternalService = new Mock<IExternalService>();
+                .Setup(x => x.GetByPatientIdAsync(1))
+                .ReturnsAsync(new List<Note>());
+
+            var mockExternalService = new Mock<IExternalAPIService>();
             mockExternalService
                 .Setup(x => x.PatientExists(1))
                 .ReturnsAsync(true);
@@ -126,15 +124,15 @@ namespace Abarnathy.HistoryAPI.Test.ControllerTests
             // Arrange
             var mockNoteService = new Mock<INoteService>();
             mockNoteService
-                .Setup(x => x.GetByPatientIdAsInputModelAsync(1))
-                .ReturnsAsync(new List<NoteInputModel>
+                .Setup(x => x.GetByPatientIdAsync(1))
+                .ReturnsAsync(new List<Note>
                 {
-                    new NoteInputModel(),
-                    new NoteInputModel(),
-                    new NoteInputModel()
+                    new Note(),
+                    new Note(),
+                    new Note()
                 });
-            
-            var mockExternalService = new Mock<IExternalService>();
+
+            var mockExternalService = new Mock<IExternalAPIService>();
             mockExternalService
                 .Setup(x => x.PatientExists(1))
                 .ReturnsAsync(true);
@@ -145,9 +143,9 @@ namespace Abarnathy.HistoryAPI.Test.ControllerTests
             var result = await controller.GetByPatientId(1);
 
             // Assert
-            var actionResult = 
+            var actionResult =
                 Assert.IsAssignableFrom<OkObjectResult>(result.Result);
-            var objectResult = 
+            var objectResult =
                 Assert.IsAssignableFrom<IEnumerable<NoteInputModel>>(actionResult.Value);
             Assert.Equal(3, objectResult.Count());
         }
@@ -157,13 +155,12 @@ namespace Abarnathy.HistoryAPI.Test.ControllerTests
          * Post()
          * ==============================================
          */
-
         [Fact]
         public async Task TestPostModelNull()
         {
             // Arrange
             var controller = new HistoryController(null, null);
-            
+
             // Act
             var result = await controller.Post(null);
 
@@ -176,34 +173,35 @@ namespace Abarnathy.HistoryAPI.Test.ControllerTests
         {
             // Arrange
             var testModel = new NoteCreateModel { PatientId = 1 };
-            var testNoteId = Guid.NewGuid().ToString(); 
-            
+            var testNoteId = Guid.NewGuid().ToString();
+
             var mockNoteService = new Mock<INoteService>();
             mockNoteService
                 .Setup(x => x.Create(testModel))
-                .Returns(new Note
+                .ReturnsAsync((NoteCreateModel note) =>
+                new Note
                 {
                     Id = testNoteId,
-                    PatientId = testModel.PatientId 
+                    PatientId = note.PatientId
                 });
-            
-            var mockExternalService = new Mock<IExternalService>();
+
+            var mockExternalService = new Mock<IExternalAPIService>();
             mockExternalService
                 .Setup(x => x.PatientExists(1))
                 .ReturnsAsync(true);
 
             var controller = new HistoryController(mockNoteService.Object, mockExternalService.Object);
-            
+
             // Act
             var result = await controller.Post(testModel);
 
             // Assert
             var actionResult =
                 Assert.IsAssignableFrom<CreatedAtActionResult>(result.Result);
-            
+
             Assert.Equal("GetByNoteId", actionResult.ActionName);
             Assert.Equal(testNoteId, actionResult.RouteValues.FirstOrDefault().Value);
-            
+
             var modelResult =
                 Assert.IsAssignableFrom<Note>(actionResult.Value);
         }
@@ -213,7 +211,6 @@ namespace Abarnathy.HistoryAPI.Test.ControllerTests
          * Put()
          * ==============================================
          */
-
         [Fact]
         public async Task TestPutIdBad()
         {
@@ -243,12 +240,12 @@ namespace Abarnathy.HistoryAPI.Test.ControllerTests
         [Fact]
         public async Task TestPutPatientDoesNotExist()
         {
-            var mockExternalService = new Mock<IExternalService>();
+            var mockExternalService = new Mock<IExternalAPIService>();
             mockExternalService
                 .Setup(x => x.PatientExists(1))
                 .ReturnsAsync(false);
-            
-            var controller = 
+
+            var controller =
                 new HistoryController(null, mockExternalService.Object);
 
             // Act
@@ -266,14 +263,13 @@ namespace Abarnathy.HistoryAPI.Test.ControllerTests
         {
             // Arrange
             var testModel = new NoteInputModel { PatientId = 1 };
-            var testNoteId = Guid.NewGuid().ToString(); 
-            
+
             var mockNoteService = new Mock<INoteService>();
             mockNoteService
                 .Setup(x => x.GetByIdAsync(It.IsAny<string>()))
                 .ReturnsAsync(null as Note);
-            
-            var mockExternalService = new Mock<IExternalService>();
+
+            var mockExternalService = new Mock<IExternalAPIService>();
             mockExternalService
                 .Setup(x => x.PatientExists(1))
                 .ReturnsAsync(true);
@@ -285,7 +281,7 @@ namespace Abarnathy.HistoryAPI.Test.ControllerTests
                 await controller.Put("abc", testModel);
 
             // Assert
-            var actionResult = 
+            var actionResult =
                 Assert.IsAssignableFrom<BadRequestObjectResult>(result);
             Assert.Equal("No Note with the ID [abc] was found. Update aborted.", actionResult.Value);
         }
@@ -295,18 +291,18 @@ namespace Abarnathy.HistoryAPI.Test.ControllerTests
         {
             // Arrange
             var testModel = new NoteInputModel { PatientId = 1 };
-            var testNoteId = Guid.NewGuid().ToString(); 
-            
+            var testNoteId = Guid.NewGuid().ToString();
+
             var mockNoteService = new Mock<INoteService>();
             mockNoteService
                 .Setup(x => x.GetByIdAsync(It.IsAny<string>()))
                 .ReturnsAsync(new Note { Id = testNoteId });
-            
+
             mockNoteService
                 .Setup(x => x.Update(It.IsAny<Note>(), It.IsAny<NoteInputModel>()))
                 .Verifiable();
-            
-            var mockExternalService = new Mock<IExternalService>();
+
+            var mockExternalService = new Mock<IExternalAPIService>();
             mockExternalService
                 .Setup(x => x.PatientExists(1))
                 .ReturnsAsync(true);
@@ -318,10 +314,8 @@ namespace Abarnathy.HistoryAPI.Test.ControllerTests
                 await controller.Put("abc", testModel);
 
             // Assert
-            var actionResult = 
+            var actionResult =
                 Assert.IsAssignableFrom<NoContentResult>(result);
         }
-
-
     }
 }

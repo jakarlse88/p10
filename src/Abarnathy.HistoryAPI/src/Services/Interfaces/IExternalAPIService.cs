@@ -3,7 +3,10 @@ using System.Threading.Tasks;
 
 namespace Abarnathy.HistoryAPI.Services
 {
-    public interface IExternalService
+    /// <summary>
+    /// External API interaction.
+    /// </summary>
+    public interface IExternalAPIService
     {
         /// <summary>
         /// Call the DemographicsAPI to ensure that the Patient entity exists.

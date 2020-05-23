@@ -42,6 +42,8 @@ services:
   history_api:
     ports:
       - "${HISTORY_API_PORT_EXT}:${HISTORY_API_PORT_INT}"
+    environment:
+      - "DEMOGRAPHICS_API_BASE_ADDRESS=http://demographics_api:${DEMOGRAPHICS_API_PORT_INT}/"
 
 volumes:
   abarnathy-sqldata:

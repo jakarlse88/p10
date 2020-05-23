@@ -29,8 +29,6 @@
 
 @if (StatusEnum == PatientsAllOperationStatusEnum.Success)
 {
-    const string tableName = "patients-table";
-
     <body onbeforeunload="DestroyPatientsTable()">
     <table id="patients-table" class="table table-striped table-hover">
 

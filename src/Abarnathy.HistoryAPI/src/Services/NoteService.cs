@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Abarnathy.HistoryAPI.Models;
 using Abarnathy.HistoryAPI.Models.InputModels;
@@ -35,47 +34,12 @@ namespace Abarnathy.HistoryAPI.Services
         /// </summary>
         /// <param name="patientId">ID of the Patient to search by.</param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
-        public async Task<IEnumerable<NoteInputModel>> GetByPatientIdAsInputModelAsync(int patientId)
+        public async Task<IEnumerable<Note>> GetByPatientIdAsync(int patientId)
         {
-            var tempResult = 
-                await _noteRepository.GetByConditionAsync(n => n.PatientId == patientId);
-
-            if (!tempResult.Any())
-            {
-                return new List<NoteInputModel>();
-            }
-            
-            var result = _mapper.Map<IEnumerable<NoteInputModel>>(tempResult);
+            var result =
+                await _noteRepository.GetByPatientIdAsync(patientId);
 
             return result;
-        }
-
-        /// <summary>
-        /// Asynchronously get a single <see cref="Note"/> entity by its ID as a <seealso cref="NoteInputModel"/>
-        /// DTO.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
-        public async Task<NoteInputModel> GetByIdAsInputModelAsync(string id)
-        {
-            if (string.IsNullOrEmpty(id))
-            {
-                throw new ArgumentNullException();
-            }
-            
-            var entity =
-                await _noteRepository.GetSingleByIdAsync(id);
-
-            if (entity != null)
-            {
-                var model = _mapper.Map<NoteInputModel>(entity);
-
-                return model;             
-            }
-
-            return null;
         }
 
         /// <summary>
@@ -88,11 +52,11 @@ namespace Abarnathy.HistoryAPI.Services
         {
             if (string.IsNullOrEmpty(id))
             {
-                throw new ArgumentNullException();
+                throw new ArgumentNullException(nameof(id));
             }
             
             var entity =
-                await _noteRepository.GetSingleByIdAsync(id);
+                await _noteRepository.GetByIdAsync(id);
 
             return entity;
         }
@@ -103,18 +67,18 @@ namespace Abarnathy.HistoryAPI.Services
         /// <param name="model"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
-        public Note Create(NoteCreateModel model)
+        public async Task<Note> Create(NoteCreateModel model)
         {
             if (model == null)
             {
-                throw new ArgumentNullException();
+                throw new ArgumentNullException(nameof(model));
             }
             
             var entity = _mapper.Map<Note>(model);
 
             try
             {
-                _noteRepository.Insert(entity);
+                await _noteRepository.Insert(entity);
             }
             catch (Exception e)
             {
@@ -131,17 +95,22 @@ namespace Abarnathy.HistoryAPI.Services
         /// <param name="entity">The <see cref="Note"/> entity to update.</param>
         /// <param name="model">The <see cref="NoteInputModel"/> model containing the updated data.</param>
         /// <exception cref="ArgumentNullException"></exception>
-        public async Task Update(Note entity, NoteInputModel model)
+        public async Task<Note> Update(Note entity, NoteInputModel model)
         {
-            if (entity == null || model == null)
+            if (entity == null)
             {
-                throw new ArgumentNullException();
+                throw new ArgumentNullException(nameof(entity));
+            }
+
+            if (model == null)
+            {
+                throw new ArgumentNullException(nameof(model));
             }
 
             try
             {
                 var newEntity = _mapper.Map<Note>(model);
-                await _noteRepository.Update(entity.Id, newEntity);
+                return await _noteRepository.Update(entity.Id, newEntity);
             }
             catch (Exception e)
             {

@@ -13,6 +13,13 @@ namespace Abarnathy.HistoryAPI.Data
         /// <summary>
         /// Class constructor.
         /// </summary>
+        public PatientHistoryDbContext()
+        {
+        }
+        
+        /// <summary>
+        /// Class constructor.
+        /// </summary>
         /// <param name="client"></param>
         /// <param name="dbName"></param>
         public PatientHistoryDbContext(IMongoClient client, string dbName)
@@ -23,7 +30,7 @@ namespace Abarnathy.HistoryAPI.Data
         /// <summary>
         /// 
         /// </summary>
-        public IMongoCollection<Note> Notes =>
+        public virtual IMongoCollection<Note> Notes =>
             _db.GetCollection<Note>("Notes");
     }
 }

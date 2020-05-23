@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Abarnathy.HistoryAPI.Models;
 
@@ -12,18 +10,19 @@ namespace Abarnathy.HistoryAPI.Repositories
     public interface INoteRepository
     {
         /// <summary>
-        /// Get all <see cref="Note"/> entities matching the predicate.
-        /// </summary>
-        /// <param name="predicate"></param>
-        /// <returns></returns>
-        public Task<IEnumerable<Note>> GetByConditionAsync(Expression<Func<Note, bool>> predicate);
-
-        /// <summary>
         /// Get a single <see cref="Note"/> entities by its ID.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Task<Note> GetSingleByIdAsync(string id);
+        public Task<Note> GetByIdAsync(string id);
+
+        /// <summary>
+        /// Get any <see cref="Note"/> entity belonging to a
+        /// specified Patient.
+        /// </summary>
+        /// <param name="patientId"></param>
+        /// <returns></returns>
+        public Task<IEnumerable<Note>> GetByPatientIdAsync(int patientId);
 
         /// <summary>
         /// Inserts a new <see cref="Note"/> entity into the database.
@@ -37,6 +36,6 @@ namespace Abarnathy.HistoryAPI.Repositories
         /// </summary>
         /// <param name="id"></param>
         /// <param name="bookIn"></param>
-        public Task Update(string id, Note bookIn);
+        public Task<Note> Update(string id, Note bookIn);
     }
 }

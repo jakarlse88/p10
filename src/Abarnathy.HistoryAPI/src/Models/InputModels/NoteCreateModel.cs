@@ -3,9 +3,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Abarnathy.HistoryAPI.Models.InputModels
 {
+    /// <summary>
+    /// Input model for entity creation.
+    /// </summary>
     public class NoteCreateModel
     {
-        // <summary>
+        /// <summary>
         /// Class constructor.
         /// </summary>
         public NoteCreateModel()

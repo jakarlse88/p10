@@ -106,9 +106,11 @@ namespace Abarnathy.DemographicsAPI.Controllers
         /// <returns></returns>
         /// <response code="204">The <see cref="Patient"/> entity was successfully updated.</response>
         /// <response code="400">Malformed request.</response>
+        /// <response code="404">The specified entity could not be found.</response>
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Put(int id, PatientInputModel model)
         {
             if (id <= 0 || model == null)
@@ -134,11 +136,9 @@ namespace Abarnathy.DemographicsAPI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        /// <response code="200">Request OK, Patient exists.</response>
-        /// <response code="204">Request OK, Patient does not exist.</response>
-        /// <response code="400">Invalid ID.</response>
+        /// <response code="204">Entity exists.</response>
+        /// <response code="404">Entity not found.</response>
         [HttpGet("Exists/{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> PatientExists(int id)
@@ -152,10 +152,10 @@ namespace Abarnathy.DemographicsAPI.Controllers
 
             if (!exists)
             {
-                return NoContent();
+                return NotFound();
             }
             
-            return Ok();
+            return NoContent();
         }
     }
 }

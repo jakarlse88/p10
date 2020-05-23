@@ -32,11 +32,10 @@ namespace Abarnathy.HistoryAPI
         {
             services.ConfigureControllers();
             services.ConfigureDbContext(Configuration);
-            services.ConfigureLocalServices();
+            services.ConfigureLocalServices(Configuration);
             services.ConfigureSwagger();
             services.ConfigureCors();
             services.AddAutoMapper(typeof(Startup));
-            // services.AddAuthorization();
         }
 
         /// <summary>

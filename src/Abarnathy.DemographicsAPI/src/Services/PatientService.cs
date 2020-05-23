@@ -5,10 +5,8 @@ using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Abarnathy.DemographicsAPI.Infrastructure.Validators;
-using Serilog;
+using Abarnathy.DemographicsAPI.Infrastructure;
 
 namespace Abarnathy.DemographicsAPI.Services
 {
@@ -310,7 +308,7 @@ namespace Abarnathy.DemographicsAPI.Services
             {
                 throw new ArgumentNullException();
             }
-            
+
             // Does a functionally identical entity already exist?
             var result = await _unitOfWork.PhoneNumberRepository.GetByNumber(model);
 
@@ -319,7 +317,7 @@ namespace Abarnathy.DemographicsAPI.Services
                 var phoneNumber = _mapper.Map<PhoneNumber>(model);
 
                 // Get rid of symbols
-                phoneNumber.Number = Regex.Replace(phoneNumber.Number, @"[- ().]", "");
+                // phoneNumber.Number = Regex.Replace(phoneNumber.Number, @"[- ().]", "");
 
                 _unitOfWork.PhoneNumberRepository.Create(phoneNumber);
 
@@ -403,16 +401,17 @@ namespace Abarnathy.DemographicsAPI.Services
             }
             
             // Avoid multiple enumeration
-            var modelArray = modelEnumerable as PhoneNumberInputModel[] ?? modelEnumerable.ToArray();
+            var modelSet = modelEnumerable.DistinctBy(x => x.Number);
+            var phoneNumberInputModels = modelSet as PhoneNumberInputModel[] ?? modelSet.ToArray();
             
             // Keep a reference to the old collection and instantiate a new one
             var deprecatedPatientPhoneNumberCollection = entity.PatientPhoneNumbers;
             entity.PatientPhoneNumbers = new HashSet<PatientPhoneNumber>();
             
             // Handle any incoming phone numbers
-            if (modelArray.Any())
+            if (phoneNumberInputModels.Any())
             {
-                foreach (var model in modelArray)
+                foreach (var model in phoneNumberInputModels)
                 {
                     await HandleIncomingPhoneNumber(entity, model);
                 }
