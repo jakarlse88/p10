@@ -17,7 +17,12 @@
         <ValidationMessage For="@(() => InputModel.Content)" class="text-danger"/>
     </div>
 
-    <button @onclick="EventCallback"
+    <button @onclick="CancelCallback"
+             class="btn btn-outline-danger">
+        Cancel
+    </button>
+    
+    <button @onclick="SubmitCallback"
             class="btn btn-success"
             disabled=@(OperationStatus == APIOperationStatus.POST_Pending || OperationStatus == APIOperationStatus.PUT_Pending)>
         Submit

@@ -46,6 +46,11 @@ namespace Abarnathy.BlazorClient.Client.Pages.History
             }
         }
 
+        private void Cancel()
+        {
+            NavigationManager.NavigateTo($"patient/{PatientId}");
+        }
+        
         /// <summary>
         /// TODO
         /// </summary>
