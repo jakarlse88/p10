@@ -90,11 +90,7 @@ namespace Abarnathy.DemographicsAPI.Infrastructure
         {
             services.AddDbContext<DemographicsDbContext>(options =>
             {
-                if (environment.IsEnvironment("Test"))
-                {
-                    options.UseInMemoryDatabase("InMemoryDbForTesting");
-                }
-                else
+                if (!environment.IsEnvironment("Test"))
                 {
                     options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
                         sqlServerOptionsAction: sqlOptions =>

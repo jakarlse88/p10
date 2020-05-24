@@ -36,13 +36,13 @@ namespace Abarnathy.HistoryAPI.Controllers
         /// </summary>
         /// <param name="noteId"></param>
         /// <returns></returns>
-        /// <response code="200">Request OK, return results.</response>
-        /// <response code="204">Request OK, no results.</response>
-        /// <response code="400">Malformed request (ID null).</response>
+        /// <response code="200">Entity found.</response>
+        /// /// <response code="400">Malformed request (ID null).</response>
+        /// <response code="404">Entity not found.</response>
         [HttpGet("note/{noteId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<NoteInputModel>> GetByNoteId(string noteId)
         {
             if (string.IsNullOrWhiteSpace(noteId))
@@ -54,7 +54,7 @@ namespace Abarnathy.HistoryAPI.Controllers
 
             if (result == null)
             {
-                return NoContent();
+                return NotFound();
             }
 
             return Ok(result.ToInputModel());
@@ -67,10 +67,10 @@ namespace Abarnathy.HistoryAPI.Controllers
         /// <param name="patientId">ID of the Patient entity.</param>
         /// <returns></returns>
         /// <response code="200">Request OK, return results.</response>
-        /// <response code="204">Request OK, no results.</response>
+        /// <response code="404">No entities found.</response>
         [HttpGet("patient/{patientId:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<IEnumerable<NoteInputModel>>> GetByPatientId(int patientId)
         {
             if (!await _externalApiService.PatientExists(patientId))
@@ -84,7 +84,7 @@ namespace Abarnathy.HistoryAPI.Controllers
             
             if (!enumerable.Any())
             {
-                return NoContent();
+                return NotFound();
             }
 
             return Ok(enumerable.ToInputModel());
@@ -102,12 +102,11 @@ namespace Abarnathy.HistoryAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<Note>> Post(NoteCreateModel model)
         {
-            if (model == null)
+            if (model == null || 
+                !await _externalApiService.PatientExists(model.PatientId))
             {
                 return BadRequest();
             }
-
-            await _externalApiService.PatientExists(model.PatientId);
 
             var result = await _noteService.Create(model);
 
@@ -120,23 +119,31 @@ namespace Abarnathy.HistoryAPI.Controllers
         /// <param name="id"></param>
         /// <param name="model"></param>
         /// <returns></returns>
+        /// <response code="204">Operation successful.</response>
+        /// <response code="400">Malformed request.</response>
+        /// <response code="404">Patient/Note not found.</response>
         [HttpPut("note/{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult> Put(string id, NoteInputModel model)
         {
             if (string.IsNullOrWhiteSpace(id) ||
-                model == null ||
-                !await _externalApiService.PatientExists(model.PatientId))
+                model == null)
             {
                 return BadRequest();
+            }
+
+            if (!await _externalApiService.PatientExists(model.PatientId))
+            {
+                return NotFound(new { message = "Patient not found" });
             }
 
             var entity = await _noteService.GetByIdAsync(id);
 
             if (entity == null)
             {
-                return BadRequest($"No Note with the ID [{id}] was found. Update aborted.");
+                return NotFound(new { message = "Note not found" });
             }
 
             await _noteService.Update(entity, model);

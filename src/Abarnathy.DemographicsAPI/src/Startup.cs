@@ -44,7 +44,7 @@ namespace Abarnathy.DemographicsAPI
 
             if (env.EnvironmentName != "Test")
             {
-                app.ApplyMigrations();
+                //app.ApplyMigrations();
             }
             
             app.UseCustomExceptionHandler();

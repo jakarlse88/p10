@@ -17,7 +17,4 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 COPY Abarnathy.HistoryAPI/src/. .
-#COPY Abarnathy.HistoryAPI/src/wait-for-it.sh ./wait-for-it.sh
-#RUN chmod +x ./wait-for-it.sh
-#ENTRYPOINT ["./wait-for-it.sh", "sql_server:1434", "-t", "40", "--", "dotnet", "Abarnathy.HistoryAPI.dll"]
 ENTRYPOINT ["dotnet", "Abarnathy.HistoryAPI.dll"]
