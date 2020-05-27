@@ -24,5 +24,6 @@
 LICENSE
 README.md
 
-Abarnathy.DemographicsAPI/Test/**
-Abarnathy.HistoryAPI/Test/**
+Services/Abarnathy.DemographicsService/Test/**
+Services/Abarnathy.HistoryService/Test/**
+Services/Abarnathy.AssessmentService/Test/**

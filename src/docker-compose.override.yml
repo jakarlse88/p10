@@ -2,10 +2,6 @@ version: '3.4'
 
 services:
 
-  #api-gateway:
-   # ports:
-    #  - "8070:80"
-
   mongo:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
@@ -19,7 +15,7 @@ services:
       - MSSQL_PID=Express
     healthcheck:
       test: ["CMD", "/opt/mssql-tools/bin/sqlcmd", "-USA", "-P${SA_PASSWORD_SEED}", "-Q", "SELECT 1"]
-    ports:
+    ports:  
       - "${SQL_SERVER_PORT_EXT}:${SQL_SERVER_PORT_INT}"
     volumes:
       - abarnathy-sqldata:/var/opt/mssql
@@ -29,18 +25,25 @@ services:
     ports:
       - "${BLAZOR_SERVER_PORT_EXT}:${BLAZOR_SERVER_PORT_INT}"
 
-  demographics_api:
+  demographics-service:
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - "ConnectionStrings__DefaultConnection=Server=${SQL_SERVER_SERVER_NAME},${SQL_SERVER_PORT_INT};Initial Catalog=${DEMOGRAPHICS_API_DB_INITIAL_CATALOG};User Id=${DEMOGRAPHICS_API_DB_USER_ID};Password=${DEMOGRAPHICS_API_DB_PASSWORD}"
+      - "ASPNETCORE_ENVIRONMENT=Development"
+      - "ConnectionStrings__DefaultConnection=Server=${SQL_SERVER_SERVER_NAME},${SQL_SERVER_PORT_INT};Initial Catalog=${DEMOGRAPHICS_SERVICE_DB_INITIAL_CATALOG};User Id=${DEMOGRAPHICS_SERVICE_DB_USER_ID};Password=${DEMOGRAPHICS_SERVICE_DB_PASSWORD}"
     ports:
-      - "${DEMOGRAPHICS_API_PORT_EXT}:${DEMOGRAPHICS_API_PORT_INT}"
+      - "${DEMOGRAPHICS_SERVICE_PORT_EXT}:${DEMOGRAPHICS_SERVICE_PORT_INT}"
         
-  history_api:
+  history-service:
     ports:
-      - "${HISTORY_API_PORT_EXT}:${HISTORY_API_PORT_INT}"
+      - "${HISTORY_SERVICE_PORT_EXT}:${HISTORY_SERVICE_PORT_INT}"
     environment:
-      - "DEMOGRAPHICS_API_BASE_ADDRESS=http://demographics_api:${DEMOGRAPHICS_API_PORT_INT}/"
+      - "DEMOGRAPHICS_SERVICE_BASE_ADDRESS=http://demographics-service:${DEMOGRAPHICS_SERVICE_PORT_INT}/"
+
+  assessment-service:
+    ports:
+      - "${ASSESSMENT_SERVICE_PORT_EXT}:${ASSESSMENT_SERVICE_PORT_INT}"
+    environment:
+      - "DEMOGRAPHICS_SERVICE_BASE_ADDRESS=http://demographics-service:${DEMOGRAPHICS_SERVICE_PORT_INT}/"
+      - "HISTORY_SERVICE_BASE_ADDRESS=http://history-service:${HISTORY_SERVICE_PORT_INT}/"
 
 volumes:
   abarnathy-sqldata:

@@ -2,13 +2,6 @@ version: '3.4'
 
 services:
 
-  #api-gateway:
-    #build:
-     # context: .
-     # dockerfile: APIGateways/OcelotGateway/Dockerfile
-    #networks:
-     # - local
-
   mongo:
     container_name: mongo
     image: mongo
@@ -17,7 +10,7 @@ services:
       - "27017:27017"
     networks:
       - local
-    volumes: 
+    volumes:
       - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
 
   sql_server:
@@ -29,27 +22,35 @@ services:
     container_name: blazor_server
     build:
       context: .
-      dockerfile: Abarnathy.BlazorClient/Server/Dockerfile
+      dockerfile: Client/Abarnathy.BlazorClient/Server/Dockerfile
     networks:
       - local
 
-  demographics_api:
-    container_name: demographics_api
+  demographics-service:
+    container_name: demographics-service
     build:
       context: .
-      dockerfile: Abarnathy.DemographicsAPI/src/Dockerfile
+      dockerfile: Services/Abarnathy.DemographicsService/src/Dockerfile
     depends_on:
       - sql_server
     networks:
       - local
-    
-  history_api:
-    container_name: history_api
+
+  history-service:
+    container_name: history-service
     build:
       context: .
-      dockerfile: Abarnathy.HistoryAPI/src/Dockerfile
+      dockerfile: Services/Abarnathy.HistoryService/src/Dockerfile
     depends_on:
       - mongo
+    networks:
+      - local
+        
+  assessment-service:
+    container_name: assessment-service
+    build:
+      context: .
+      dockerfile: Services/Abarnathy.AssessmentService/src/Dockerfile
     networks:
       - local
 
