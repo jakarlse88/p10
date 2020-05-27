@@ -1,0 +1,35 @@
+﻿@using System.Buffers
+@using Abarnathy.BlazorClient.Client.Shared.Components.CustomRichTextInput
+@using Abarnathy.BlazorClient.Client.Models
+
+<EditForm Model="@InputModel">
+    <DataAnnotationsValidator/>
+
+    <div class="form-group">
+        <label for="title-input">Title</label>
+        <InputText id="title-input" @bind-Value="@InputModel.Title" placeholder="Title" class="form-control"/>
+        <ValidationMessage For="@(() => InputModel.Title)" class="text-danger"/>
+    </div>
+
+    <div class="form-group">
+        <label for="content-input">Content</label>
+        <CustomRichTextInput @bind-Value="@InputModel.Content" id="content-input" class="form-control" rows="10"/>
+        <ValidationMessage For="@(() => InputModel.Content)" class="text-danger"/>
+    </div>
+
+    <button @onclick="CancelCallback"
+             class="btn btn-outline-danger">
+        Cancel
+    </button>
+    
+    <button @onclick="SubmitCallback"
+            class="btn btn-success"
+            disabled=@(OperationStatus == APIOperationStatus.POST_Pending || OperationStatus == APIOperationStatus.PUT_Pending)>
+        Submit
+        @if (OperationStatus == APIOperationStatus.POST_Pending || OperationStatus == APIOperationStatus.PUT_Pending)
+        {
+            <i class="fas fa-spinner fa-spin"></i>
+        }
+    </button>
+
+</EditForm>
