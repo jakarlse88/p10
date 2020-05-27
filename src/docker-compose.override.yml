@@ -1,0 +1,59 @@
+version: '3.4'
+
+services:
+
+  mongo:
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
+      - MONGO_INITDB_DATABASE=${MONGO_INITDB_DB}
+
+  sql_server:
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=${SA_PASSWORD_SEED}
+      - MSSQL_PID=Express
+    healthcheck:
+      test: ["CMD", "/opt/mssql-tools/bin/sqlcmd", "-USA", "-P${SA_PASSWORD_SEED}", "-Q", "SELECT 1"]
+    ports:  
+      - "${SQL_SERVER_PORT_EXT}:${SQL_SERVER_PORT_INT}"
+    volumes:
+      - abarnathy-sqldata:/var/opt/mssql
+      - abarnathy-sqluser:/var/opt/sql
+
+  blazor_server:
+    ports:
+      - "${BLAZOR_SERVER_PORT_EXT}:${BLAZOR_SERVER_PORT_INT}"
+
+  demographics-service:
+    environment:
+      - "ASPNETCORE_ENVIRONMENT=Development"
+      - "ConnectionStrings__DefaultConnection=Server=${SQL_SERVER_SERVER_NAME},${SQL_SERVER_PORT_INT};Initial Catalog=${DEMOGRAPHICS_SERVICE_DB_INITIAL_CATALOG};User Id=${DEMOGRAPHICS_SERVICE_DB_USER_ID};Password=${DEMOGRAPHICS_SERVICE_DB_PASSWORD}"
+    ports:
+      - "${DEMOGRAPHICS_SERVICE_PORT_EXT}:${DEMOGRAPHICS_SERVICE_PORT_INT}"
+        
+  history-service:
+    ports:
+      - "${HISTORY_SERVICE_PORT_EXT}:${HISTORY_SERVICE_PORT_INT}"
+    environment:
+      - "DEMOGRAPHICS_SERVICE_BASE_ADDRESS=http://demographics-service:${DEMOGRAPHICS_SERVICE_PORT_INT}/"
+
+  assessment-service:
+    ports:
+      - "${ASSESSMENT_SERVICE_PORT_EXT}:${ASSESSMENT_SERVICE_PORT_INT}"
+    environment:
+      - "DEMOGRAPHICS_SERVICE_BASE_ADDRESS=http://demographics-service:${DEMOGRAPHICS_SERVICE_PORT_INT}/"
+      - "HISTORY_SERVICE_BASE_ADDRESS=http://history-service:${HISTORY_SERVICE_PORT_INT}/"
+
+volumes:
+  abarnathy-sqldata:
+    external: false
+  abarnathy-sqluser:
+    external: false
+  abarnathy-mongo:
+    external: false
+
+networks:
+  local:
+    driver: bridge
+

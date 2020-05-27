@@ -1,8 +1,2 @@
-bin/
-obj/
-/packages/
-.idea/**
-.vs/
-Abarnathy.DemographicsAPI/Test/.DS_Store
 
-Abarnathy.DemographicsAPI/src/C:/
+.DS_Store
