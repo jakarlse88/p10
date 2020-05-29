@@ -1,6 +1,8 @@
 using System;
 using System.IO;
 using System.Reflection;
+using Abarnathy.AssessmentService.Services;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 
@@ -34,6 +36,44 @@ namespace Abarnathy.AssessmentService.Infrastructure
 
             return services;
         }
+
+        internal static IServiceCollection ConfigureLocalServices(this IServiceCollection services,
+            IConfiguration configuration)
+        {
+            services
+                .AddTransient<IAssessmentService, Services.AssessmentService>()
+                .AddExternalDemographicsAPIService<ExternalDemographicsAPIService>(
+                    configuration["DEMOGRAPHICS_SERVICE_BASE_ADDRESS"])
+                .AddExternalHistoryAPIService<ExternalHistoryAPIService>(
+                    configuration["HISTORY_SERVICE_BASE_ADDRESS"]);
+
+            return services;
+        }
+        
+        private static IServiceCollection AddExternalDemographicsAPIService<TImplementation>(
+            this IServiceCollection services, string baseAddress)
+            where TImplementation : class, IExternalDemographicsAPIService
+        {
+            services.AddHttpClient<IExternalDemographicsAPIService, TImplementation>(cfg =>
+            {
+                cfg.BaseAddress = new Uri(baseAddress);
+            });
+
+            return services;
+        }
+
+        private static IServiceCollection AddExternalHistoryAPIService<TImplementation>(
+            this IServiceCollection services, string baseAddress)
+            where TImplementation : class, IExternalHistoryAPIService
+        {
+            services.AddHttpClient<IExternalHistoryAPIService, TImplementation>(cfg =>
+            {
+                cfg.BaseAddress = new Uri(baseAddress);
+            });
+
+            return services;
+        }
+        
         
         /// <summary>
         /// Configures Swagger.
