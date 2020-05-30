@@ -7,10 +7,29 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <None Remove="TriggerTerms.json" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="TriggerTerms.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </Content>
+    </ItemGroup>
+
+    <ItemGroup>
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
+        <PackageReference Include="Moq" Version="4.14.0" />
         <PackageReference Include="xunit" Version="2.4.0" />
         <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
         <PackageReference Include="coverlet.collector" Version="1.2.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Abarnathy.DemographicsService\src\Abarnathy.DemographicsService.csproj" />
+      <ProjectReference Include="..\..\..\Abarnathy.HistoryService\src\Abarnathy.HistoryService.csproj" />
+      <ProjectReference Include="..\..\src\Abarnathy.AssessmentService.csproj" />
     </ItemGroup>
 
 </Project>

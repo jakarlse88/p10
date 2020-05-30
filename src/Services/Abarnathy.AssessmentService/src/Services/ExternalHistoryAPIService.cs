@@ -20,6 +20,8 @@ namespace Abarnathy.AssessmentService.Services
         
         public async Task<IEnumerable<NoteModel>> GetNotes(int patientId)
         {
+            IEnumerable<NoteModel> result = null;
+
             var retry = Policy.Handle<HttpRequestException>()
                 .WaitAndRetry(new[]
                 {
@@ -38,16 +40,17 @@ namespace Abarnathy.AssessmentService.Services
                     response.EnsureSuccessStatusCode();
 
                     var stream = await response.Content.ReadAsStreamAsync();
-                    return JsonUtilities.DeserializeJsonFromStream<IEnumerable<NoteModel>>(stream);
+                    result = JsonUtilities.DeserializeJsonFromStream<IEnumerable<NoteModel>>(stream);
+                    
                 });
-                
-                return new List<NoteModel>();
             }
             catch (Exception e)
             {
                 Log.Error("An error occurred while attempting to fetch data from an external API.", e.Message);
                 throw;
             }
+
+            return result;
         }
     }
 }

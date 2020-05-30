@@ -1,18 +1,20 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Abarnathy.AssessmentService.Models;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Serilog;
 
 namespace Abarnathy.AssessmentService.Services
 {
-    public class AssessmentService : IAssessmentService
+    public class RiskAssessmentService : IAssessmentService
     {
-        private readonly IConfiguration _configuration;
         private readonly IExternalHistoryAPIService _externalHistoryAPIService;
+        private readonly IConfiguration _configuration;
 
-        public AssessmentService(IExternalHistoryAPIService externalHistoryAPIService, IConfiguration configuration)
+        public RiskAssessmentService(IExternalHistoryAPIService externalHistoryAPIService, IConfiguration configuration)
         {
             _externalHistoryAPIService = externalHistoryAPIService;
             _configuration = configuration;
@@ -34,7 +36,7 @@ namespace Abarnathy.AssessmentService.Services
             var triggerCount = await AssessNotes(patient.Id);
 
             var result = triggerCount == 0 ?
-                new AssessmentResult(patient.Id,RiskLevel.None) :    
+                new AssessmentResult(patient.Id, RiskLevel.None) :
                 AssesPersonalData(patient, triggerCount);
 
             return result;
@@ -49,75 +51,99 @@ namespace Abarnathy.AssessmentService.Services
         private AssessmentResult AssesPersonalData(PatientModel patient,
             int triggerCount)
         {
-            var patientAge = DateTime.Today.Year - patient.DateOfBirth.Year;
+            var patientAge = GetAge(patient);
 
             var riskLevel = patientAge > 30
-                ? AssessPatientUnder30(patient, triggerCount)
-                : AssessPatientOver30(patient, triggerCount);
+                ? AssessPatientOver30(patient, triggerCount)
+                : AssessPatientUnder30(patient, triggerCount);
 
             var result = new AssessmentResult(patient.Id, riskLevel);
-            
+
             return result;
         }
 
         private RiskLevel AssessPatientOver30(PatientModel patient, int triggerCount)
         {
-            if (triggerCount < 2)
+            if (triggerCount <= 0)
             {
                 throw new ArgumentNullException(nameof(triggerCount));
             }
-            
+
             RiskLevel result;
-            
+
             switch (patient.SexId)
             {
-                case 1 when triggerCount == 2:
-                case 2 when triggerCount == 2:
-                    result = RiskLevel.Borderline;
-                    break;
-
-                case 1 when triggerCount == 6:
-                case 2 when triggerCount == 6:
-                    result = RiskLevel.InDanger;
-                    break;
-
+                case 1 when triggerCount >= 8:
                 case 2 when triggerCount >= 8:
                     result = RiskLevel.EarlyOnset;
                     break;
-                
+
+                case 1 when triggerCount >= 6:
+                case 2 when triggerCount >= 6:
+                    result = RiskLevel.InDanger;
+                    break;
+
+                case 1 when triggerCount >= 2:
+                case 2 when triggerCount >= 2:
+                    result = RiskLevel.Borderline;
+                    break;
+
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(patient.SexId));
+                    result = RiskLevel.None;
+                    break;
             }
 
             return result;
         }
-        
+
         private RiskLevel AssessPatientUnder30(PatientModel patient, int triggerCount)
         {
-            if (triggerCount < 2)
+            if (triggerCount <= 0)
             {
                 throw new ArgumentNullException(nameof(triggerCount));
             }
-            
+
             RiskLevel result;
 
             switch (patient.SexId)
             {
-                case 1 when triggerCount == 3:
-                case 2 when triggerCount == 4:
+                case 1 when triggerCount >= 5:
+                case 2 when triggerCount >= 7:
+                    result = RiskLevel.EarlyOnset;
+                    break;
+
+                case 1 when triggerCount >= 3:
+                case 2 when triggerCount >= 4:
                     result = RiskLevel.InDanger;
                     break;
 
-                case 1 when triggerCount == 5:
-                case 2 when triggerCount == 7:
-                    result = RiskLevel.EarlyOnset;
+                case 1 when triggerCount >= 2:
+                case 2 when triggerCount >= 2:
+                    result = RiskLevel.Borderline;
                     break;
-                
+
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(patient.SexId));
+                    result = RiskLevel.None;
+                    break;
             }
 
             return result;
+        }
+
+        // https://stackoverflow.com/a/1404
+        private int GetAge(PatientModel patient)
+        {
+            // Save today's date.
+            var today = DateTime.Today;
+            // Calculate the age.
+            var age = today.Year - patient.DateOfBirth.Year;
+            // Go back to the year the person was born in case of a leap year
+            if (patient.DateOfBirth.Date > today.AddYears(-age))
+            {
+                age--;
+            }
+
+            return age;
         }
 
         /// <summary>
@@ -131,23 +157,23 @@ namespace Abarnathy.AssessmentService.Services
             var notes =
                 await _externalHistoryAPIService.GetNotes(patientId);
 
-            var triggers = 0;
+            var terms = _configuration.GetSection("TriggerTerms").GetChildren().ToList();
 
-            Log.Information(_configuration["TriggerTerms"]);
-            
+            var confirmedTerms = new List<string>();
+
             foreach (var note in notes)
             {
-                foreach (var term in _configuration["TriggerTerms"])
+                foreach (var term in terms)
                 {
-                    if (note.Content.Normalize().Contains(
-                        term.ToString().Normalize()))
+                    if (!confirmedTerms.Any(t => t.Contains(term.Value, StringComparison.OrdinalIgnoreCase)) &&
+                        (note.Content.Contains(term.Value, StringComparison.OrdinalIgnoreCase)))
                     {
-                        triggers++;
+                        confirmedTerms.Add(term.Value);
                     }
                 }
             }
 
-            return triggers;
+            return confirmedTerms.Count;
         }
     }
 }
