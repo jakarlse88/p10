@@ -41,7 +41,7 @@ namespace Abarnathy.AssessmentService.Services
         }
 
         /// <summary>
-        /// 
+        /// Entrypoint into the assessment workflow. 
         /// </summary>
         /// <param name="patient"></param>
         /// <param name="triggerCount"></param>
@@ -60,6 +60,12 @@ namespace Abarnathy.AssessmentService.Services
             return result;
         }
 
+        /// <summary>
+        /// Computes the <see cref="RiskLevel"/> of a given patient under 30.
+        /// </summary>
+        /// <param name="patient"></param>
+        /// <param name="triggerCount"></param>
+        /// <returns></returns>
         private RiskLevel AssessPatientOver30(PatientModel patient, int triggerCount)
         {
             if (triggerCount <= 0)
@@ -94,6 +100,12 @@ namespace Abarnathy.AssessmentService.Services
             return result;
         }
 
+        /// <summary>
+        /// Computes the <see cref="RiskLevel"/> of a patient over 30. 
+        /// </summary>
+        /// <param name="patient"></param>
+        /// <param name="triggerCount"></param>
+        /// <returns></returns>
         private RiskLevel AssessPatientUnder30(PatientModel patient, int triggerCount)
         {
             if (triggerCount <= 0)
@@ -129,6 +141,11 @@ namespace Abarnathy.AssessmentService.Services
         }
 
         // https://stackoverflow.com/a/1404
+        /// <summary>
+        /// Gets a patients age (accounting for leap years).
+        /// </summary>
+        /// <param name="patient"></param>
+        /// <returns></returns>
         private int GetAge(PatientModel patient)
         {
             // Save today's date.
