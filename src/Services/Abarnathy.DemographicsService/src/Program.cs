@@ -38,10 +38,6 @@ namespace Abarnathy.DemographicsService
                             outputTemplate:
                             "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}",
                             theme: AnsiConsoleTheme.Literate)
-                        .WriteTo.MSSqlServer(
-                            connectionString: appSettings.GetConnectionString("DefaultConnection"),
-                            tableName: "Log",
-                            autoCreateSqlTable: true)
                         .Enrich.FromLogContext()
                         .CreateLogger();
                 });

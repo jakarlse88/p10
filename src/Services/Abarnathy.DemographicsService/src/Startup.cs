@@ -41,11 +41,6 @@ namespace Abarnathy.DemographicsService
                 app.UseDeveloperExceptionPage();
             }
 
-            if (env.EnvironmentName != "Test")
-            {
-                app.ApplyMigrations();
-            }
-            
             app.UseCustomExceptionHandler();
             app.UseSwaggerUI();
             app.UseCors();

@@ -19,47 +19,6 @@ namespace Abarnathy.DemographicsService.Infrastructure
     public static class ApplicationBuilderExtensions
     {
         /// <summary>
-        /// Applies initial schema migration, if necessary.
-        /// </summary>
-        /// <param name="app"></param>
-        public static void ApplyMigrations(this IApplicationBuilder app)
-        {
-            using (var serviceScope = app.ApplicationServices.CreateScope())
-            using (var context = serviceScope.ServiceProvider.GetRequiredService<DemographicsDbContext>())
-            {
-                if (context.Database.GetService<IRelationalDatabaseCreator>().Exists())
-                {
-                    Log.Information("Database is up-to-date.");
-                }
-                else
-                {
-                    Log.Information("Database is not up-to-date; applying migrations. This may take some time.");
-
-                    try
-                    {
-                        var retry = Policy.Handle<SqlException>()
-                            .WaitAndRetry(new []
-                            {
-                                TimeSpan.FromSeconds(120),
-                                TimeSpan.FromSeconds(90),
-                                TimeSpan.FromSeconds(60)
-                            });
-
-                        retry.Execute(() =>
-                        {
-                            context.Database.Migrate();
-                        });
-                    }
-                    catch (Exception e)
-                    {
-                        Log.Error("There was an error applying migrations. Exception: {e}", e);
-                        throw;
-                    }
-                }
-            }
-        }
-
-        /// <summary>
         /// Configure forwarded headers.
         /// </summary>
         /// <param name="app"></param>
