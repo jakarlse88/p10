@@ -4,8 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Abarnathy.AssessmentService.Models;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
-using Serilog;
 
 namespace Abarnathy.AssessmentService.Services
 {
@@ -155,7 +153,7 @@ namespace Abarnathy.AssessmentService.Services
         private async Task<int> AssessNotes(int patientId)
         {
             var notes =
-                await _externalHistoryAPIService.GetNotes(patientId);
+                await _externalHistoryAPIService.GetPatientHistoryAsync(patientId);
 
             var terms = _configuration.GetSection("TriggerTerms").GetChildren().ToList();
 

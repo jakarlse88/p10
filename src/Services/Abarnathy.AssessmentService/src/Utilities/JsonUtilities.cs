@@ -1,5 +1,4 @@
 using System.IO;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 namespace Abarnathy.AssessmentService.Utilities
@@ -19,18 +18,6 @@ namespace Abarnathy.AssessmentService.Utilities
                 var searchResult = js.Deserialize<T>(jtr);
                 return searchResult;
             }
-        }
-        
-        // Source: https://johnthiriet.com/efficient-api-calls/
-        internal static async Task<string> StreamToStringAsync(Stream stream)
-        {
-            string content = null;
-
-            if (stream != null)
-                using (var sr = new StreamReader(stream))
-                    content = await sr.ReadToEndAsync();
-
-            return content;
         }
     }
 }

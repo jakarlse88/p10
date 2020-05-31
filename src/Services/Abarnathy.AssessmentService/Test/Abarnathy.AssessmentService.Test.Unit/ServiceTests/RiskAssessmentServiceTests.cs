@@ -3,7 +3,6 @@ using Abarnathy.AssessmentService.Services;
 using Microsoft.Extensions.Configuration;
 using Moq;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
@@ -453,7 +452,7 @@ namespace Abarnathy.AssessmentService.Test.Unit.ServiceTests
 
             var mockHistoryService = new Mock<IExternalHistoryAPIService>();
             mockHistoryService
-                .Setup(x => x.GetNotes(It.IsAny<int>()))
+                .Setup(x => x.GetPatientHistoryAsync(It.IsAny<int>()))
                 .ReturnsAsync(patientNotes);
 
             var service = new RiskAssessmentService(mockHistoryService.Object, _configuration);
@@ -481,7 +480,7 @@ namespace Abarnathy.AssessmentService.Test.Unit.ServiceTests
 
             var mockHistoryService = new Mock<IExternalHistoryAPIService>();
             mockHistoryService
-                .Setup(x => x.GetNotes(It.IsAny<int>()))
+                .Setup(x => x.GetPatientHistoryAsync(It.IsAny<int>()))
                 .ReturnsAsync(patientNotes);
 
             var service = new RiskAssessmentService(mockHistoryService.Object, _configuration);

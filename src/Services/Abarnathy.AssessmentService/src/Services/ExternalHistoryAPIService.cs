@@ -18,7 +18,7 @@ namespace Abarnathy.AssessmentService.Services
             _httpClient = httpClient;
         }
         
-        public async Task<IEnumerable<NoteModel>> GetNotes(int patientId)
+        public async Task<IEnumerable<NoteModel>> GetPatientHistoryAsync(int patientId)
         {
             IEnumerable<NoteModel> result = null;
 
@@ -37,11 +37,16 @@ namespace Abarnathy.AssessmentService.Services
                     var response =
                         await _httpClient.GetAsync($"/api/history/patient/{patientId}");
 
-                    response.EnsureSuccessStatusCode();
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var stream = await response.Content.ReadAsStreamAsync();
+                        result = JsonUtilities.DeserializeJsonFromStream<IEnumerable<NoteModel>>(stream);                        
+                    }
+                    else
+                    {
+                        result = new List<NoteModel>();
+                    }
 
-                    var stream = await response.Content.ReadAsStreamAsync();
-                    result = JsonUtilities.DeserializeJsonFromStream<IEnumerable<NoteModel>>(stream);
-                    
                 });
             }
             catch (Exception e)

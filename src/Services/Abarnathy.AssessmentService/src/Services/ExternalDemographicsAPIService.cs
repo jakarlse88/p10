@@ -17,7 +17,12 @@ namespace Abarnathy.AssessmentService.Services
             _httpClient = httpClient;
         }
 
-        public async Task<PatientModel> GetPatient(int patientId)
+        /// <summary>
+        /// Asynchronously gets a Patient entity from the Demographics Service.
+        /// </summary>
+        /// <param name="patientId"></param>
+        /// <returns></returns>
+        public async Task<PatientModel> GetPatientAsync(int patientId)
         {
             var retry = Policy.Handle<HttpRequestException>()
                 .WaitAndRetry(new[]
@@ -36,10 +41,16 @@ namespace Abarnathy.AssessmentService.Services
                     var response =
                         await _httpClient.GetAsync($"/api/patient/{patientId}");
 
-                    response.EnsureSuccessStatusCode();
-
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        return null;
+                    }
+                    
                     var stream = await response.Content.ReadAsStreamAsync();
                     result = JsonUtilities.DeserializeJsonFromStream<PatientModel>(stream);
+
+                    return result;
+
                 });
                 
                 return result;

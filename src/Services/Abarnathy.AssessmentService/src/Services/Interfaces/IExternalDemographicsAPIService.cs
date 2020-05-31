@@ -5,7 +5,7 @@ namespace Abarnathy.AssessmentService.Services
 {
     public interface IExternalDemographicsAPIService
     {
-        Task<PatientModel> GetPatient(int patientId);
+        Task<PatientModel> GetPatientAsync(int patientId);
         
     }
 }

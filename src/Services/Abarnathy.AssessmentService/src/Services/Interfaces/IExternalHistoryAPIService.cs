@@ -6,6 +6,6 @@ namespace Abarnathy.AssessmentService.Services
 {
     public interface IExternalHistoryAPIService
     {
-        Task<IEnumerable<NoteModel>> GetNotes(int patientId);
+        Task<IEnumerable<NoteModel>> GetPatientHistoryAsync(int patientId);
     }
 }

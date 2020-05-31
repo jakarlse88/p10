@@ -1,8 +1,6 @@
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Abarnathy.AssessmentService.Models;
 using Abarnathy.AssessmentService.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Abarnathy.AssessmentService.Controllers
@@ -21,15 +19,19 @@ namespace Abarnathy.AssessmentService.Controllers
         }
 
         /// <summary>
-        /// TODO
+        /// Gets the diabetes risk assessment for a given patient.
         /// </summary>
         /// <param name="patientId"></param>
         /// <returns></returns>
+        /// <response code="200">Request OK, returns assessment.</response>
+        /// <response code="404">Patient not found..</response>
         [HttpGet("Patient/{patientId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Get(int patientId)
         {
             var patient = 
-                await _externalDemographicsAPIService.GetPatient(patientId);
+                await _externalDemographicsAPIService.GetPatientAsync(patientId);
 
             if (patient == null)
             {

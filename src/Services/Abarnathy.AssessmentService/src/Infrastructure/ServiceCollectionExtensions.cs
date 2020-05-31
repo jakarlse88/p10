@@ -1,7 +1,6 @@
 using System;
 using System.IO;
 using System.Reflection;
-using Abarnathy.AssessmentService.Models;
 using Abarnathy.AssessmentService.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
