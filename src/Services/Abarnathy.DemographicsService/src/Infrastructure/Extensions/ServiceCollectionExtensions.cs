@@ -11,7 +11,6 @@ using Abarnathy.DemographicsService.Services.Interfaces;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Formatters;
-using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 
 namespace Abarnathy.DemographicsService.Infrastructure

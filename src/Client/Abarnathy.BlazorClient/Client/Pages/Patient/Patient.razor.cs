@@ -19,13 +19,13 @@ namespace Abarnathy.BlazorClient.Client.Pages.Patient
         private const int RedirectDelaySeconds = 5;
         [Parameter] public int Id { get; set; }
         [Inject] private HttpClient HttpClient { get; set; }
-        [Inject] private NavigationManager NavigationManager { get; set; }
         [Inject] private IJSRuntime JsRunTime { get; set; }
         private PatientInputModel PatientModel { get; set; }
         private AddressInputModel AddressModel { get; set; }
         private List<AddressInputModel> AddedAddresses { get; set; }
         private PhoneNumberInputModel PhoneNumberModel { get; set; }
         private List<PhoneNumberInputModel> AddedPhoneNumbers { get; set; }
+        private RiskLevel RiskLevel { get; set; }
         private EditContext PatientEditContext { get; set; }
         private EditContext AddressEditContext { get; set; }
         private EditContext PhoneNumberEditContext { get; set; }
@@ -47,6 +47,7 @@ namespace Abarnathy.BlazorClient.Client.Pages.Patient
             AddedAddresses = new List<AddressInputModel>();
             PhoneNumberModel = new PhoneNumberInputModel();
             AddedPhoneNumbers = new List<PhoneNumberInputModel>();
+            RiskLevel = RiskLevel.None;
             
             CurrentAddressValid = false;
             CurrentPhoneNumberValid = false;
@@ -63,37 +64,9 @@ namespace Abarnathy.BlazorClient.Client.Pages.Patient
 
             try
             {
-                var response = await HttpClient.GetAsync($"http://localhost:8080/api/patient/{Id}");
+                await FetchPatientData();
 
-                if ((int) response.StatusCode == 200)
-                {
-                    var stringContent = await response.Content.ReadAsStringAsync();
-
-                    var content = JsonConvert.DeserializeObject<PatientInputModel>(stringContent);
-
-                    PatientModel = content;
-
-                    PatientModel.Sex = content.SexId == 1 ? SexEnum.Male : SexEnum.Female;
-                    
-                    PatientEditContext = new EditContext(PatientModel);
-                    PatientEditContext.OnFieldChanged += (sender, @event) =>
-                    {
-                        PatientValid = PatientEditContext.Validate();
-                        StateHasChanged();
-                    };
-                    
-                    PatientValid = PatientEditContext.Validate();
-                    
-                    if (PatientModel.Addresses.Any())
-                    {
-                        AddedAddresses = PatientModel.Addresses.ToList();
-                    }
-
-                    if (PatientModel.PhoneNumbers.Any())
-                    {
-                        AddedPhoneNumbers = PatientModel.PhoneNumbers.ToList();
-                    }
-                }
+                await FetchAssessmentResult();
 
                 OperationStatus = PatientSingleOperationStatusEnum.GET_Success;
                 StateHasChanged();
@@ -105,7 +78,75 @@ namespace Abarnathy.BlazorClient.Client.Pages.Patient
                 StateHasChanged();
             }
         }
+
+        private string RiskLevelCardClass() =>
+            RiskLevel switch
+            {
+                RiskLevel.None => "alert alert-light text-center",
+                RiskLevel.Borderline => "alert alert-info text-center",
+                RiskLevel.InDanger => "alert alert-warning text-center",
+                RiskLevel.EarlyOnset => "alert alert-danger text-center",
+                _ => "alert alert-light text-center"
+            };
+
+        private string RiskLevelDescriptionString() =>
+            RiskLevel switch
+            {
+                RiskLevel.None => "none",
+                RiskLevel.Borderline => "borderline",
+                RiskLevel.InDanger => "in danger",
+                RiskLevel.EarlyOnset => "early onset",
+                _ => "none"
+            };
         
+        private async Task FetchAssessmentResult()
+        {
+            var response = await HttpClient.GetAsync($"http://localhost:8083/api/assessment/patient/{Id}");
+
+            response.EnsureSuccessStatusCode();
+
+            var stringContent = await response.Content.ReadAsStringAsync();
+
+            var content = JsonConvert.DeserializeObject<AssessmentResult>(stringContent);
+
+            RiskLevel = content.RiskLevel;
+        }
+
+        private async Task FetchPatientData()
+        {
+            var response = await HttpClient.GetAsync($"http://localhost:8080/api/patient/{Id}");
+
+            if ((int) response.StatusCode == 200)
+            {
+                var stringContent = await response.Content.ReadAsStringAsync();
+
+                var content = JsonConvert.DeserializeObject<PatientInputModel>(stringContent);
+
+                PatientModel = content;
+
+                PatientModel.Sex = content.SexId == 1 ? SexEnum.Male : SexEnum.Female;
+
+                PatientEditContext = new EditContext(PatientModel);
+                PatientEditContext.OnFieldChanged += (sender, @event) =>
+                {
+                    PatientValid = PatientEditContext.Validate();
+                    StateHasChanged();
+                };
+
+                PatientValid = PatientEditContext.Validate();
+
+                if (PatientModel.Addresses.Any())
+                {
+                    AddedAddresses = PatientModel.Addresses.ToList();
+                }
+
+                if (PatientModel.PhoneNumbers.Any())
+                {
+                    AddedPhoneNumbers = PatientModel.PhoneNumbers.ToList();
+                }
+            }
+        }
+
         /// <summary>
         /// Toggle fields readonly/editable.
         /// </summary>

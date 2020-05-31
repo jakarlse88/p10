@@ -55,7 +55,7 @@ namespace Abarnathy.DemographicsAPI.Test.Unit.ControllerTests
             var result = await controller.Get();
 
             // Assert
-            Assert.IsAssignableFrom<NotFoundResult>(result.Result);
+            Assert.IsAssignableFrom<NotFoundObjectResult>(result.Result);
 
             mockService
                 .Verify(x => x.GetInputModelsAll(), Times.Once());

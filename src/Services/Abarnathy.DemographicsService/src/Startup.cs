@@ -6,7 +6,6 @@ using Microsoft.Extensions.Hosting;
 using Abarnathy.DemographicsService.Infrastructure;
 using Abarnathy.DemographicsService.Repositories;
 using AutoMapper;
-using ApplicationBuilderExtensions = Abarnathy.DemographicsService.Infrastructure.ApplicationBuilderExtensions;
 
 namespace Abarnathy.DemographicsService
 {
@@ -42,11 +41,6 @@ namespace Abarnathy.DemographicsService
                 app.UseDeveloperExceptionPage();
             }
 
-            if (env.EnvironmentName != "Test")
-            {
-                app.ApplyMigrations();
-            }
-            
             app.UseCustomExceptionHandler();
             app.UseSwaggerUI();
             app.UseCors();

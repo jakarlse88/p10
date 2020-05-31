@@ -15,25 +15,33 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demographics Service", "Dem
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "History Service", "History Service", "{39B6658B-C342-4BD2-A3DB-CE3093E06CB6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abarnathy.AssessmentService", "Services\Abarnathy.AssessmentService\src\Abarnathy.AssessmentService.csproj", "{45B83D6E-1DF3-4B9E-9147-D9661D41AF9E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abarnathy.AssessmentService", "Services\Abarnathy.AssessmentService\src\Abarnathy.AssessmentService.csproj", "{45B83D6E-1DF3-4B9E-9147-D9661D41AF9E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abarnathy.DemographicsService", "Services\Abarnathy.DemographicsService\src\Abarnathy.DemographicsService.csproj", "{73FE9DC5-81E9-43E3-87F3-A1DAB2513E09}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abarnathy.DemographicsService", "Services\Abarnathy.DemographicsService\src\Abarnathy.DemographicsService.csproj", "{73FE9DC5-81E9-43E3-87F3-A1DAB2513E09}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abarnathy.HistoryService", "Services\Abarnathy.HistoryService\src\Abarnathy.HistoryService.csproj", "{0A2B2748-D0BB-42A8-B487-5B60298D2079}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abarnathy.HistoryService", "Services\Abarnathy.HistoryService\src\Abarnathy.HistoryService.csproj", "{0A2B2748-D0BB-42A8-B487-5B60298D2079}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abarnathy.HistoryService.Test.Unit", "Services\Abarnathy.HistoryService\Test\Abarnathy.HistoryService.Test.Unit\Abarnathy.HistoryService.Test.Unit.csproj", "{528453D3-9177-4399-9C42-5CA1708928A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abarnathy.HistoryService.Test.Unit", "Services\Abarnathy.HistoryService\Test\Abarnathy.HistoryService.Test.Unit\Abarnathy.HistoryService.Test.Unit.csproj", "{528453D3-9177-4399-9C42-5CA1708928A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abarnathy.DemographicsService.Test.Integration", "Services\Abarnathy.DemographicsService\Test\Abarnathy.DemographicsService.Test.Integration\Abarnathy.DemographicsService.Test.Integration.csproj", "{6697BE28-DA8A-460A-BC18-3B9A96D0CA05}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abarnathy.DemographicsService.Test.Unit", "Services\Abarnathy.DemographicsService\Test\Abarnathy.DemographicsService.Test.Unit\Abarnathy.DemographicsService.Test.Unit.csproj", "{F9DD39CF-AE2F-4B63-A643-4C4D6C4E7A3C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abarnathy.DemographicsService.Test.Unit", "Services\Abarnathy.DemographicsService\Test\Abarnathy.DemographicsService.Test.Unit\Abarnathy.DemographicsService.Test.Unit.csproj", "{F9DD39CF-AE2F-4B63-A643-4C4D6C4E7A3C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abarnathy.BlazorClient.Server", "Client\Abarnathy.BlazorClient\Server\Abarnathy.BlazorClient.Server.csproj", "{2A369DF2-A4A8-41A0-97CB-37AB6D96F7CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abarnathy.BlazorClient.Server", "Client\Abarnathy.BlazorClient\Server\Abarnathy.BlazorClient.Server.csproj", "{2A369DF2-A4A8-41A0-97CB-37AB6D96F7CA}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abarnathy.BlazorClient.Client", "Client\Abarnathy.BlazorClient\Client\Abarnathy.BlazorClient.Client.csproj", "{649FA99F-AD89-4116-982C-88E0887B77E4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abarnathy.BlazorClient.Client", "Client\Abarnathy.BlazorClient\Client\Abarnathy.BlazorClient.Client.csproj", "{649FA99F-AD89-4116-982C-88E0887B77E4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Assessment Service", "Assessment Service", "{BCBA17FA-3783-4496-B2F2-223DAC622EEF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abarnathy.AssessmentService.Test.Unit", "Services\Abarnathy.AssessmentService\Test\Abarnathy.AssessmentService.Test.Unit\Abarnathy.AssessmentService.Test.Unit.csproj", "{B6F25C06-E7D3-4B79-AF78-C0D9B385473A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abarnathy.AssessmentService.Test.Unit", "Services\Abarnathy.AssessmentService\Test\Abarnathy.AssessmentService.Test.Unit\Abarnathy.AssessmentService.Test.Unit.csproj", "{B6F25C06-E7D3-4B79-AF78-C0D9B385473A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{62BAA5E5-97B4-482C-9B5D-AC753DC1ABB7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQL Server", "SQL Server", "{47C49826-B729-4486-9DD1-C7D556AFB1D2}"
+	ProjectSection(SolutionItems) = preProject
+		Infrastructure\SQLServer\demographicsdbcontext.sql = Infrastructure\SQLServer\demographicsdbcontext.sql
+		Infrastructure\SQLServer\Dockerfile = Infrastructure\SQLServer\Dockerfile
+		Infrastructure\SQLServer\entrypoint.sh = Infrastructure\SQLServer\entrypoint.sh
+		Infrastructure\SQLServer\migrate.sh = Infrastructure\SQLServer\migrate.sh
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -60,10 +68,6 @@ Global
 		{528453D3-9177-4399-9C42-5CA1708928A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{528453D3-9177-4399-9C42-5CA1708928A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{528453D3-9177-4399-9C42-5CA1708928A7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6697BE28-DA8A-460A-BC18-3B9A96D0CA05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6697BE28-DA8A-460A-BC18-3B9A96D0CA05}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6697BE28-DA8A-460A-BC18-3B9A96D0CA05}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6697BE28-DA8A-460A-BC18-3B9A96D0CA05}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F9DD39CF-AE2F-4B63-A643-4C4D6C4E7A3C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F9DD39CF-AE2F-4B63-A643-4C4D6C4E7A3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F9DD39CF-AE2F-4B63-A643-4C4D6C4E7A3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -91,12 +95,12 @@ Global
 		{73FE9DC5-81E9-43E3-87F3-A1DAB2513E09} = {93F5489A-7C33-45AD-9197-BDCB1A2CD9B0}
 		{0A2B2748-D0BB-42A8-B487-5B60298D2079} = {93F5489A-7C33-45AD-9197-BDCB1A2CD9B0}
 		{528453D3-9177-4399-9C42-5CA1708928A7} = {39B6658B-C342-4BD2-A3DB-CE3093E06CB6}
-		{6697BE28-DA8A-460A-BC18-3B9A96D0CA05} = {453E24AF-3F4E-4835-AFF3-D1481ED8BB3C}
 		{F9DD39CF-AE2F-4B63-A643-4C4D6C4E7A3C} = {453E24AF-3F4E-4835-AFF3-D1481ED8BB3C}
 		{2A369DF2-A4A8-41A0-97CB-37AB6D96F7CA} = {491F72FA-F17C-42C7-A387-552BCB85A93E}
 		{649FA99F-AD89-4116-982C-88E0887B77E4} = {491F72FA-F17C-42C7-A387-552BCB85A93E}
 		{BCBA17FA-3783-4496-B2F2-223DAC622EEF} = {41577B56-3321-4CDB-ABDF-6C791A74E55B}
 		{B6F25C06-E7D3-4B79-AF78-C0D9B385473A} = {BCBA17FA-3783-4496-B2F2-223DAC622EEF}
+		{47C49826-B729-4486-9DD1-C7D556AFB1D2} = {62BAA5E5-97B4-482C-9B5D-AC753DC1ABB7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {835E535C-1F98-48D8-81F3-8304DEEDEA64}
