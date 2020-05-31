@@ -6,7 +6,6 @@ using Microsoft.Extensions.Hosting;
 using Abarnathy.DemographicsService.Infrastructure;
 using Abarnathy.DemographicsService.Repositories;
 using AutoMapper;
-using ApplicationBuilderExtensions = Abarnathy.DemographicsService.Infrastructure.ApplicationBuilderExtensions;
 
 namespace Abarnathy.DemographicsService
 {

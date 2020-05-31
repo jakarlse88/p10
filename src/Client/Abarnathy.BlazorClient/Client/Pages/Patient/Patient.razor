@@ -15,17 +15,18 @@
      (OperationStatus == PatientSingleOperationStatusEnum.GET_Success &&
       Readonly))
 {
-    <div class="col-12">
-        <p class="text-dark">
-            <b>Readonly</b>
-            <label class="switch">
-                <input type="checkbox" @onclick="@ToggleReadonly" checked>
-                <span class="slider round"></span>
-            </label>
-        </p>
+    <div class="row d-flex justify-content-center">
+        <div class="col-12">
+            <p class="text-dark">
+                <b>Readonly</b>
+                <label class="switch">
+                    <input type="checkbox" @onclick="@ToggleReadonly" checked>
+                    <span class="slider round"></span>
+                </label>
+            </p>
+        </div>
     </div>
 }
-
 
 @if (OperationStatus == PatientSingleOperationStatusEnum.GET_Success &&
      Readonly == false)
@@ -37,33 +38,48 @@
 
                 <DataAnnotationsValidator/>
 
-                <div class="form-group">
-                    <label for="given-name-input">Given Name</label>
-                    <InputText id="given-name-input" @bind-Value="@PatientModel.GivenName" placeholder="Given Name" class="form-control"/>
-                    <ValidationMessage For="@(() => PatientModel.GivenName)" class="text-danger"/>
+                <div class="form-row">
+
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="given-name-input">Given Name</label>
+                            <InputText id="given-name-input" @bind-Value="@PatientModel.GivenName" placeholder="Given Name" class="form-control"/>
+                            <ValidationMessage For="@(() => PatientModel.GivenName)" class="text-danger"/>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="family-name-input">Family Name</label>
+                            <InputText id="family-name-input" @bind-Value="@PatientModel.FamilyName" placeholder="Family Name" class="form-control"/>
+                            <ValidationMessage For="@(() => PatientModel.FamilyName)" class="text-danger"/>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="family-name-input">Family Name</label>
-                    <InputText id="family-name-input" @bind-Value="@PatientModel.FamilyName" placeholder="Family Name" class="form-control"/>
-                    <ValidationMessage For="@(() => PatientModel.FamilyName)" class="text-danger"/>
+                <div class="form-row">
+
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="date-of-birth-input">Date of Birth</label>
+                            <InputDate id="date-of-birth-input" @bind-Value="@PatientModel.DateOfBirth" placeholder="DD/MM/YYYY" class="form-control" aria-describedby="date-of-birth-input-help"/>
+                            <ValidationMessage For="@(() => PatientModel.DateOfBirth)" class="text-danger"/>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="sex-input">Sex</label>
+                            <InputSelect id="sex-input" @bind-Value="@PatientModel.Sex" class="form-control" placeholder="Aasdasd">
+                                <option value="@SexEnum.Default" disabled>Please choose an option...</option>
+                                <option value="@SexEnum.Male">Male</option>
+                                <option value="@SexEnum.Female">Female</option>
+                            </InputSelect>
+                            <ValidationMessage For="@(() => PatientModel.Sex)" class="text-danger"/>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="date-of-birth-input">Date of Birth</label>
-                    <InputDate id="date-of-birth-input" @bind-Value="@PatientModel.DateOfBirth" placeholder="DD/MM/YYYY" class="form-control" aria-describedby="date-of-birth-input-help"/>
-                    <ValidationMessage For="@(() => PatientModel.DateOfBirth)" class="text-danger"/>
-                </div>
 
-                <div class="form-group">
-                    <label for="sex-input">Sex</label>
-                    <InputSelect id="sex-input" @bind-Value="@PatientModel.Sex" class="form-control" placeholder="Aasdasd">
-                        <option value="@SexEnum.Default" disabled>Please choose an option...</option>
-                        <option value="@SexEnum.Male">Male</option>
-                        <option value="@SexEnum.Female">Female</option>
-                    </InputSelect>
-                    <ValidationMessage For="@(() => PatientModel.Sex)" class="text-danger"/>
-                </div>
             </EditForm>
         </FormWizardStep>
 
@@ -179,6 +195,12 @@
 @if (OperationStatus == PatientSingleOperationStatusEnum.GET_Success && Readonly)
 {
     <h4 class="pt-4 pb-2">Personal Details</h4>
+
+    <div class="@RiskLevelCardClass()">
+        Diabetes risk level:  <strong>@RiskLevelDescriptionString().</strong>
+    </div>
+
+
     <table class="table table-sm table-hover table-striped">
         <thead>
         <tr>
@@ -288,13 +310,13 @@
     <hr/>
 
 
-        <h3 class="mt-4 mb-2">History</h3>
+    <h3 class="mt-4 mb-2">History</h3>
 
-        <NavLink href=@($"/Patient/{Id}/History/Note/Create")>
-            <button class="btn btn-success btn-sm text-white mt-1 mb-3">
-                New Note <i class="fas fa-file-medical"></i>
-            </button>
-        </NavLink>
+    <NavLink href=@($"/Patient/{Id}/History/Note/Create")>
+        <button class="btn btn-success btn-sm text-white mt-1 mb-3">
+            New Note <i class="fas fa-file-medical"></i>
+        </button>
+    </NavLink>
 
 
     <NoteDisplay PatientId="@Id"/>

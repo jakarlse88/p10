@@ -40,14 +40,23 @@ namespace Abarnathy.HistoryService.Services
                     TimeSpan.FromSeconds(5)
                 });
 
-            await retry.Execute(async () =>
+            try
             {
-                var response = await _httpClient.GetAsync($"/api/Patient/Exists/{id}");
 
-                patientExists = response.IsSuccessStatusCode;
-            });
+                await retry.Execute(async () =>
+                {
+                    var response = await _httpClient.GetAsync($"/api/Patient/Exists/{id}");
 
-            return patientExists;
+                    patientExists = response.IsSuccessStatusCode;
+                });
+
+                return patientExists;
+            }
+            catch (Exception e)
+            {
+                Log.Error("An error occurred while attempting to fetch data from an external API.", e.Message);
+                throw;
+            }
         }
     }
 }

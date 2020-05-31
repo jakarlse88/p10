@@ -4,7 +4,6 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Abarnathy.HistoryService.Services;
-using Microsoft.AspNetCore.Http;
 using Moq;
 using Moq.Protected;
 using Xunit;
