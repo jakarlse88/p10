@@ -46,7 +46,7 @@
 
         <tbody>
 
-        @if (PatientList.Any())
+        @if (PatientList != null && PatientList.Any())
         {
             @foreach (var item in PatientList)
             {

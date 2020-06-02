@@ -24,6 +24,8 @@ namespace Abarnathy.BlazorClient.Client.Pages.Patient
             {
                 var response = await HttpClient.GetAsync("http://localhost:8080/api/patient");
 
+                response.EnsureSuccessStatusCode();
+                
                 if ((int)response.StatusCode == 200)
                 {
                     var stringContent = await response.Content.ReadAsStringAsync();
@@ -35,7 +37,7 @@ namespace Abarnathy.BlazorClient.Client.Pages.Patient
                     await JsRuntime.InvokeAsync<object>("InitDataTable", "patients-table");
                 }
 
-                if ((int) response.StatusCode == 204)
+                else
                 {
                     PatientList = new List<PatientInputModel>();
                     await JsRuntime.InvokeAsync<object>("InitDataTable", "patients-table");
