@@ -19,6 +19,35 @@ namespace Abarnathy.DemographicsService.Infrastructure
     public static class ApplicationBuilderExtensions
     {
         /// <summary>
+        /// Applies initial schema migration, if necessary.
+        /// </summary>
+        /// <param name="app"></param>
+        public static void ApplyMigrations(this IApplicationBuilder app)
+        {
+            using (var serviceScope = app.ApplicationServices.CreateScope())
+            using (var context = serviceScope.ServiceProvider.GetRequiredService<DemographicsDbContext>())
+            {
+                try
+                {
+                    var retry = Policy.Handle<SqlException>()
+                        .WaitAndRetry(new[]
+                        {
+                            TimeSpan.FromSeconds(120),
+                            TimeSpan.FromSeconds(90),
+                            TimeSpan.FromSeconds(60)
+                        });
+
+                    retry.Execute(() => { context.Database.Migrate(); });
+                }
+                catch (Exception e)
+                {
+                    Log.Error("There was an error applying migrations. Exception: {e}", e);
+                    throw;
+                }
+            }
+        }
+
+        /// <summary>
         /// Configure forwarded headers.
         /// </summary>
         /// <param name="app"></param>
@@ -54,23 +83,23 @@ namespace Abarnathy.DemographicsService.Infrastructure
             app.UseExceptionHandler(appError =>
             {
                 appError.Run(async context =>
+                {
+                    context.Response.StatusCode = (int) HttpStatusCode.InternalServerError;
+                    context.Response.ContentType = "application/json";
+
+                    var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
+
+                    if (contextFeature != null)
                     {
-                        context.Response.StatusCode = (int) HttpStatusCode.InternalServerError;
-                        context.Response.ContentType = "application/json";
+                        Log.Error("Error: {0}", contextFeature.Error);
 
-                        var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
-
-                        if (contextFeature != null)
+                        await context.Response.WriteAsync(new ErrorDetails()
                         {
-                            Log.Error("Error: {0}", contextFeature.Error);
-
-                            await context.Response.WriteAsync(new ErrorDetails()
-                            {
-                                StatusCode = context.Response.StatusCode,
-                                Message = "Internal Server Error"
-                            }.ToString());
-                        }
-                    });
+                            StatusCode = context.Response.StatusCode,
+                            Message = "Internal Server Error"
+                        }.ToString());
+                    }
+                });
             });
         }
     }

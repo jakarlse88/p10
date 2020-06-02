@@ -14,9 +14,7 @@ services:
       - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
 
   sql_server:
-    build:
-        context: .
-        dockerfile: Infrastructure/SQLServer/Dockerfile
+    image: "mcr.microsoft.com/mssql/server:2017-CU20-ubuntu-16.04"
     networks:
       - local
 

@@ -24,8 +24,6 @@ namespace Abarnathy.BlazorClient.Client.Pages.Patient
             {
                 var response = await HttpClient.GetAsync("http://localhost:8080/api/patient");
 
-                response.EnsureSuccessStatusCode();
-                
                 if ((int)response.StatusCode == 200)
                 {
                     var stringContent = await response.Content.ReadAsStringAsync();
