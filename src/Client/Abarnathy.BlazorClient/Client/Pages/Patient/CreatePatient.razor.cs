@@ -1,10 +1,13 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using Abarnathy.BlazorClient.Client.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.JSInterop;
 using Newtonsoft.Json;
 
 namespace Abarnathy.BlazorClient.Client.Pages.Patient
@@ -14,6 +17,8 @@ namespace Abarnathy.BlazorClient.Client.Pages.Patient
         private const int RedirectDelaySeconds = 1;
         [Inject] private HttpClient HttpClient { get; set; }
         [Inject] private NavigationManager NavigationManager { get; set; }
+        [Inject] private IJSRuntime JsRuntime { get; set; }
+        [Parameter] public string PatientId { get; set; }
         private PatientInputModel PatientModel { get; set; }
         private EditContext PatientEditContext { get; set; }
         private EditContext AddressEditContext { get; set; }
@@ -21,14 +26,21 @@ namespace Abarnathy.BlazorClient.Client.Pages.Patient
         private bool PatientValid { get; set; }
         private bool AddressValid { get; set; }
         private bool PhoneNumberValid { get; set; }
+        private ComponentMode Mode { get; set; }
+        private APIOperationStatus OperationStatus { get; set; }
+
+        private bool PostPhoneNumber =>
+            !string.IsNullOrWhiteSpace(PatientModel.PhoneNumbers.First().Number);
+
+        public bool FormValid { get; set; }
 
         private bool PostAddress
         {
             get
             {
-                var address = PatientModel.Addresses[0];
-                
-                return 
+                var address = PatientModel.Addresses.First();
+
+                return
                     !string.IsNullOrWhiteSpace(address.StreetName) ||
                     !string.IsNullOrWhiteSpace(address.HouseNumber) ||
                     !string.IsNullOrWhiteSpace(address.Town) ||
@@ -37,34 +49,107 @@ namespace Abarnathy.BlazorClient.Client.Pages.Patient
             }
         }
 
-        private bool PostPhoneNumber => 
-            !string.IsNullOrWhiteSpace(PatientModel.PhoneNumbers[0].Number);
-        private PatientsAllOperationStatusEnum PatientsAllOperationStatusEnum { get; set; }
-
-        public bool FormValid { get; set; }
-
         /// <summary>
         /// Component initialisation logic.
         /// </summary>
-        protected override void OnInitialized()
+        protected override async Task OnInitializedAsync()
+        {
+            SetComponentMode();
+
+            if (Mode == ComponentMode.Create)
+            {
+                InitCreate();
+            }
+            else
+            {
+                await InitEdit();
+            }
+            
+            PatientEditContext = new EditContext(PatientModel);
+            PatientEditContext.OnFieldChanged += HandlePatientOnFieldChanged;
+
+            AddressEditContext = new EditContext(PatientModel.Addresses.First());
+            AddressEditContext.OnFieldChanged += HandleAddressOnFieldChanged;
+
+            PhoneNumberEditContext = new EditContext(PatientModel.PhoneNumbers.First());
+            PhoneNumberEditContext.OnFieldChanged += HandlePhoneNumberOnFieldChanged;
+
+            if (Mode == ComponentMode.Edit)
+            {
+                FormValid = true;
+                PatientValid = true;
+                AddressValid = true;
+                PhoneNumberValid = true;
+                OperationStatus = APIOperationStatus.GET_Success;
+                StateHasChanged();
+            }
+        }
+
+        private async Task InitEdit()
+        {
+            OperationStatus = APIOperationStatus.GET_Pending;
+
+            try
+            {
+                var response = await HttpClient.GetAsync($"http://localhost:8080/api/patient/{PatientId}");
+                response.EnsureSuccessStatusCode();
+
+                if ((int) response.StatusCode == 200)
+                {
+                    var stringContent = await response.Content.ReadAsStringAsync();
+
+                    var content = JsonConvert.DeserializeObject<PatientInputModel>(stringContent);
+
+                    if (!content.Addresses.Any())
+                    {
+                        content.Addresses.Add(new AddressInputModel());
+                    }
+                    
+                    if(!content.PhoneNumbers.Any())
+                    {
+                        content.PhoneNumbers.Add(new PhoneNumberInputModel());
+                    } 
+                    
+                    PatientModel = content;
+                    
+                    PatientModel.Sex = content.SexId == 1 ? SexEnum.Male : SexEnum.Female;
+                }
+            }
+            catch (Exception e)
+            {
+                OperationStatus = APIOperationStatus.GET_Error;
+                Console.WriteLine(e);
+                StateHasChanged();
+            }
+        }
+
+        private void InitCreate()
         {
             FormValid = false;
             PatientValid = false;
             AddressValid = true;
             PhoneNumberValid = true;
-            
-            PatientsAllOperationStatusEnum = PatientsAllOperationStatusEnum.Initial;
+
+            OperationStatus = APIOperationStatus.Initial;
 
             PatientModel = new PatientInputModel();
+            PatientModel.Addresses.Add(new AddressInputModel());
+            PatientModel.PhoneNumbers.Add(new PhoneNumberInputModel());
+        }
 
-            PatientEditContext = new EditContext(PatientModel);
-            PatientEditContext.OnFieldChanged += HandlePatientOnFieldChanged;
-
-            AddressEditContext = new EditContext(PatientModel.Addresses[0]);
-            AddressEditContext.OnFieldChanged += HandleAddressOnFieldChanged;
-
-            PhoneNumberEditContext = new EditContext(PatientModel.PhoneNumbers[0]);
-            PhoneNumberEditContext.OnFieldChanged += HandlePhoneNumberOnFieldChanged;
+        /// <summary>
+        /// Set the component mode based on the URI.
+        /// </summary>
+        private void SetComponentMode()
+        {
+            if (NavigationManager.Uri.Contains("Edit", StringComparison.OrdinalIgnoreCase))
+            {
+                Mode = ComponentMode.Edit;
+            }
+            else
+            {
+                Mode = ComponentMode.Create;
+            }
         }
 
         private void HandlePatientOnFieldChanged(object sender, FieldChangedEventArgs e)
@@ -90,29 +175,68 @@ namespace Abarnathy.BlazorClient.Client.Pages.Patient
             FormValid = PatientValid &&
                         AddressValid &&
                         PhoneNumberValid;
-            
+
             StateHasChanged();
         }
 
         /// <summary>
-        /// Submit the Patient creation form. 
+        /// Submit the Patient PUT request. 
         /// </summary>
         /// <returns></returns>
-        private async Task Submit()
+        private async Task SubmitUpdate()
         {
-            PatientsAllOperationStatusEnum = PatientsAllOperationStatusEnum.Pending;
+            OperationStatus = APIOperationStatus.PUT_Pending;
+            
+            StateHasChanged();
+
+            PatientModel.SexId = (int) PatientModel.Sex;
+
+            try
+            {
+                var response = await HttpClient.PutAsJsonAsync($"http://localhost:8080/api/patient/{PatientId}", PatientModel);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    OperationStatus = APIOperationStatus.PUT_Success;
+                    StateHasChanged();
+                    
+                    await Task.Delay(RedirectDelaySeconds * 1000);
+
+                    NavigationManager.NavigateTo($"/patient/{PatientId}");
+                }
+                else
+                {
+                    OperationStatus = APIOperationStatus.PUT_Error;
+                    StateHasChanged();
+                }
+            }
+            catch (Exception e)
+            {
+                OperationStatus = APIOperationStatus.PUT_Error;
+                StateHasChanged();
+                Console.WriteLine(e);
+            }
+        }
+        
+        /// <summary>
+        /// Submit the Patient POST request. 
+        /// </summary>
+        /// <returns></returns>
+        private async Task SubmitCreate()
+        {
+            OperationStatus = APIOperationStatus.POST_Pending;
             StateHasChanged();
 
             PatientModel.SexId = (int) PatientModel.Sex;
 
             if (!PostAddress)
             {
-                PatientModel.Addresses = new AddressInputModel[]{};
+                PatientModel.Addresses = new List<AddressInputModel>();
             }
 
             if (!PostPhoneNumber)
             {
-                PatientModel.PhoneNumbers = new PhoneNumberInputModel[]{};
+                PatientModel.PhoneNumbers = new List<PhoneNumberInputModel>();
             }
 
             try
@@ -125,7 +249,7 @@ namespace Abarnathy.BlazorClient.Client.Pages.Patient
 
                     var content = JsonConvert.DeserializeObject<PatientViewModel>(stringContent);
 
-                    PatientsAllOperationStatusEnum = PatientsAllOperationStatusEnum.Success;
+                    OperationStatus = APIOperationStatus.POST_Success;
                     StateHasChanged();
 
                     await Task.Delay(RedirectDelaySeconds * 1000);
@@ -134,13 +258,13 @@ namespace Abarnathy.BlazorClient.Client.Pages.Patient
                 }
                 else
                 {
-                    PatientsAllOperationStatusEnum = PatientsAllOperationStatusEnum.Error;
+                    OperationStatus = APIOperationStatus.POST_Error;
                     StateHasChanged();
                 }
             }
             catch (Exception e)
             {
-                PatientsAllOperationStatusEnum = PatientsAllOperationStatusEnum.Error;
+                OperationStatus = APIOperationStatus.POST_Error;
                 StateHasChanged();
                 Console.WriteLine(e);
             }
@@ -151,7 +275,8 @@ namespace Abarnathy.BlazorClient.Client.Pages.Patient
         /// </summary>
         private void Cancel()
         {
-            NavigationManager.NavigateTo("/");
+            // NavigationManager.NavigateTo("/");
+            JsRuntime.InvokeAsync<object>("NavigateBack");
         }
     }
 }

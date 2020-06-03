@@ -20,3 +20,6 @@ window.DestroyNoteTable = () =>
 
 window.ForceReload = () =>
     window.location.reload(true);
+
+window.NavigateBack = () => 
+    window.history.back();

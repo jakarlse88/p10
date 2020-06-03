@@ -52,7 +52,7 @@ namespace Abarnathy.BlazorClient.Client.Pages.History
         }
         
         /// <summary>
-        /// TODO
+        /// Attempts to fetch a given note from the History Service. 
         /// </summary>
         /// <returns></returns>
         private async Task GetNote()
@@ -175,12 +175,6 @@ namespace Abarnathy.BlazorClient.Client.Pages.History
                 OperationStatus = APIOperationStatus.POST_Error;
                 StateHasChanged();
             }
-        }
-
-        private enum ComponentMode
-        {
-            Create,
-            Edit
         }
     }
 }

@@ -8,15 +8,9 @@ namespace Abarnathy.BlazorClient.Client.Models
     {
         public PatientInputModel()
         {
-            Addresses = new []
-            {
-                new AddressInputModel()
-            };
+            Addresses = new List<AddressInputModel>();
             
-            PhoneNumbers = new []
-            {
-                new PhoneNumberInputModel()
-            };
+            PhoneNumbers = new List<PhoneNumberInputModel>();
             
             DateOfBirth = DateTime.Today;
             Sex = SexEnum.Default;
@@ -30,18 +24,18 @@ namespace Abarnathy.BlazorClient.Client.Models
         
         public int SexId { get; set; }
         
-        [Required]
-        [MaxLength(50)]
+        [Required(ErrorMessage = "Given name is required.")]
+        [MaxLength(50, ErrorMessage = "Maximum length is 50 characters.")]
         public string GivenName { get; set; }
         
-        [Required]
-        [MaxLength(50)]
+        [Required(ErrorMessage = "Family name is required.")]
+        [MaxLength(50, ErrorMessage = "Maximum length is 50 characters.")]
         public string FamilyName { get; set; }
         
         [Required]
         public DateTime DateOfBirth { get; set; }
         
-        public AddressInputModel[] Addresses { get; set; }
-        public PhoneNumberInputModel[] PhoneNumbers { get; set; }
+        public List<AddressInputModel> Addresses { get; set; }
+        public List<PhoneNumberInputModel> PhoneNumbers { get; set; }
     }
 }

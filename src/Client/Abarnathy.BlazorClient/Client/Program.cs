@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using System.Text;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Serilog;
+using Serilog.Sinks.SystemConsole.Themes;
 
 namespace Abarnathy.BlazorClient.Client
 {
@@ -13,7 +15,7 @@ namespace Abarnathy.BlazorClient.Client
         {
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("app");
-
+            
             builder.Services.AddBaseAddressHttpClient();
 
             await builder.Build().RunAsync();
