@@ -8,8 +8,16 @@ namespace Abarnathy.BlazorClient.Client.Models
     {
         public PatientInputModel()
         {
-            Addresses = new HashSet<AddressInputModel>();
-            PhoneNumbers = new HashSet<PhoneNumberInputModel>();
+            Addresses = new []
+            {
+                new AddressInputModel()
+            };
+            
+            PhoneNumbers = new []
+            {
+                new PhoneNumberInputModel()
+            };
+            
             DateOfBirth = DateTime.Today;
             Sex = SexEnum.Default;
         }
@@ -17,7 +25,7 @@ namespace Abarnathy.BlazorClient.Client.Models
         public int Id { get; set; }
 
         [Required]
-        [Range((int) SexEnum.Male, (int) SexEnum.Female, ErrorMessage = "Sex must be either Male or Female.")]
+        [Range((int) SexEnum.Male, (int) SexEnum.Female, ErrorMessage = "Sex must be either 'Male' or 'Female'.")]
         public SexEnum Sex { get; set; }
         
         public int SexId { get; set; }
@@ -33,8 +41,7 @@ namespace Abarnathy.BlazorClient.Client.Models
         [Required]
         public DateTime DateOfBirth { get; set; }
         
-
-        public ICollection<AddressInputModel> Addresses { get; set; }
-        public ICollection<PhoneNumberInputModel> PhoneNumbers { get; set; }
+        public AddressInputModel[] Addresses { get; set; }
+        public PhoneNumberInputModel[] PhoneNumbers { get; set; }
     }
 }

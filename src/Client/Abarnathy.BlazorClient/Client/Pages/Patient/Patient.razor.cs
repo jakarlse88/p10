@@ -252,8 +252,8 @@ namespace Abarnathy.BlazorClient.Client.Pages.Patient
             
             StateHasChanged();
 
-            PatientModel.Addresses = AddedAddresses;
-            PatientModel.PhoneNumbers = AddedPhoneNumbers;
+            PatientModel.Addresses = AddedAddresses.ToArray();
+            PatientModel.PhoneNumbers = AddedPhoneNumbers.ToArray();
             PatientModel.SexId = (int) PatientModel.Sex;
 
             try

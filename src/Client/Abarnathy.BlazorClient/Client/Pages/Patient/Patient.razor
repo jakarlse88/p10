@@ -200,7 +200,6 @@
         Diabetes risk level:  <strong>@RiskLevelDescriptionString().</strong>
     </div>
 
-
     <table class="table table-sm table-hover table-striped">
         <thead>
         <tr>
@@ -252,7 +251,7 @@
             @foreach (var number in PatientModel.PhoneNumbers)
             {
                 <tr>
-                    <td>@number.Number</td>
+                    <td>@number.ToString()</td>
                 </tr>
             }
             </tbody>
@@ -317,7 +316,6 @@
             New Note <i class="fas fa-file-medical"></i>
         </button>
     </NavLink>
-
 
     <NoteDisplay PatientId="@Id"/>
 }
