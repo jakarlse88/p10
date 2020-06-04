@@ -469,8 +469,8 @@ namespace Abarnathy.AssessmentService.Test.Unit.ServiceTests
         [InlineData(2, RiskLevel.EarlyOnset)]
         [InlineData(3, RiskLevel.InDanger)]
         [InlineData(4, RiskLevel.InDanger)]
-        [InlineData(5, RiskLevel.Borderline)]
-        [InlineData(6, RiskLevel.Borderline)]
+        [InlineData(5, RiskLevel.None)]
+        [InlineData(6, RiskLevel.None)]
         [InlineData(7, RiskLevel.None)]
         [InlineData(8, RiskLevel.None)]
         public async Task TestGenerateAssessmentPatientUnder30(int patientId, RiskLevel expectedResult)

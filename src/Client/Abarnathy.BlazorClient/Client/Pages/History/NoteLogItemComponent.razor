@@ -1,0 +1,21 @@
+@inherits NoteLogItemComponentBase
+@using Blazored.Modal;
+
+<div class="container" style="width: 50vw;">
+    <div class="row d-flex flex-column justify-content-center align-content-center">
+
+        <small class="text-muted mt-4">
+            <span class="mr-4">
+                <strong>Originally created: </strong>@OriginallyCreated.ToString("dd/MM/yyyy")
+            </span>
+            <span>
+                <strong>Archived: </strong>@Archived.ToString("dd/MM/yyyy")
+            </span>
+        </small>
+
+        <div class="row d-flex flex-column">
+            <p class="mt-4">@((MarkupString) Content)</p>
+        </div>
+
+    </div>
+</div>

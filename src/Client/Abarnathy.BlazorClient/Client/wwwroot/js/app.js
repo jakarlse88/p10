@@ -18,6 +18,9 @@ window.DestroyPatientsTable = () =>
 window.DestroyNoteTable = () =>
     $("#notes-table").DataTable().destroy(true);
 
+window.DestroyAuditLogTable = () =>
+    $("#auditlog-table").DataTable().destroy(true);
+
 window.ForceReload = () =>
     window.location.reload(true);
 

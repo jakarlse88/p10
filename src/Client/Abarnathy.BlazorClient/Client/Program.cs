@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Text;
+using Blazored.Modal;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
@@ -17,6 +18,7 @@ namespace Abarnathy.BlazorClient.Client
             builder.RootComponents.Add<App>("app");
             
             builder.Services.AddBaseAddressHttpClient();
+            builder.Services.AddBlazoredModal();
 
             await builder.Build().RunAsync();
         }

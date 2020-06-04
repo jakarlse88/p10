@@ -127,11 +127,6 @@ namespace Abarnathy.AssessmentService.Services
                     result = RiskLevel.InDanger;
                     break;
 
-                case 1 when triggerCount >= 2:
-                case 2 when triggerCount >= 2:
-                    result = RiskLevel.Borderline;
-                    break;
-
                 default:
                     result = RiskLevel.None;
                     break;

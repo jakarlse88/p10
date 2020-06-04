@@ -15,11 +15,11 @@ namespace Abarnathy.HistoryService.Infrastructure
         public MappingProfiles()
         {
             CreateMap<Note, NoteInputModel>();
-
             CreateMap<NoteInputModel, Note>();
-            // .ForMember(dest => dest.Id, action => action.Ignore());
-
             CreateMap<NoteCreateModel, Note>();
+
+            CreateMap<NoteLogItem, NoteLogItemInputModel>();
+            CreateMap<NoteLogItemInputModel, NoteLogItem>();
         }
     }
 }

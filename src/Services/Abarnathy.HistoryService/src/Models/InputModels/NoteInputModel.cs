@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Abarnathy.HistoryService.Models.InputModels
@@ -31,5 +33,7 @@ namespace Abarnathy.HistoryService.Models.InputModels
         
         public DateTime TimeCreated { get; set; }
         public DateTime TimeLastUpdated { get; set; }
+
+        public IEnumerable<NoteLogItemInputModel> NoteLog { get; set; }
     }
 }

@@ -31,6 +31,18 @@ app {
     flex: 1;
 }
 
+.blazored-modal-content {
+    height: 66vh;
+    width: auto;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.blazored-modal-custom
+{
+    width: 66vw;
+}
+
 .main .top-row {
     background-color: #f7f7f7;
     border-bottom: 1px solid #d6d5d5;
@@ -430,4 +442,15 @@ input:checked + .slider:before {
 
 .slider.round:before {
     border-radius: 50%;
-} 
+}
+
+::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 7px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, .5);
+    box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+}

@@ -59,7 +59,7 @@ namespace Abarnathy.HistoryService.Infrastructure
                 {
                     noContentFormatter.TreatNullValueAsNoContent = false;
                 }
-            });
+            }).AddNewtonsoftJson(options => options.UseMemberCasing());
         }
 
         /// <summary>

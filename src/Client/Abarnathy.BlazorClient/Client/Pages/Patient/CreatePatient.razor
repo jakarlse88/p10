@@ -178,7 +178,7 @@
     </div>
 }
 
-@if (OperationStatus == APIOperationStatus.POST_Success)
+@if (OperationStatus == APIOperationStatus.POST_Success || OperationStatus == APIOperationStatus.PUT_Success)
 {
     <div class="row">
         <div class="col-12 d-flex justify-content-center mb-2">

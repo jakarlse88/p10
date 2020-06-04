@@ -17,19 +17,23 @@
         <ValidationMessage For="@(() => InputModel.Content)" class="text-danger"/>
     </div>
 
-    <button @onclick="CancelCallback"
-             class="btn btn-outline-danger">
-        Cancel
-    </button>
-    
-    <button @onclick="SubmitCallback"
-            class="btn btn-success"
-            disabled=@(OperationStatus == APIOperationStatus.POST_Pending || OperationStatus == APIOperationStatus.PUT_Pending)>
-        Submit
-        @if (OperationStatus == APIOperationStatus.POST_Pending || OperationStatus == APIOperationStatus.PUT_Pending)
-        {
-            <i class="fas fa-spinner fa-spin"></i>
-        }
-    </button>
+    <div class="row d-flex justify-content-center mb-5">
+        <button @onclick="CancelCallback"
+                 class="btn btn-outline-danger mr-4">
+            Cancel
+        </button>
+        
+        <NavLink href="/"></NavLink>
+
+        <button @onclick="SubmitCallback"
+                 class="btn btn-success"
+                 disabled=@(OperationStatus == APIOperationStatus.POST_Pending || OperationStatus == APIOperationStatus.PUT_Pending)>
+            Submit
+            @if (OperationStatus == APIOperationStatus.POST_Pending || OperationStatus == APIOperationStatus.PUT_Pending)
+            {
+                <i class="fas fa-spinner fa-spin"></i>
+            }
+        </button>
+    </div>
 
 </EditForm>

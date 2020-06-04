@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Abarnathy.BlazorClient.Client.Models
@@ -10,6 +11,8 @@ namespace Abarnathy.BlazorClient.Client.Models
             TimeCreated = DateTime.Now;
             TimeLastUpdated = DateTime.Now;
 
+            NoteLog = new List<NoteLogItemInputModel>();
+            
             Id = Guid.NewGuid().ToString();
         }
         
@@ -23,5 +26,7 @@ namespace Abarnathy.BlazorClient.Client.Models
         public string Content { get; set; }
         public DateTime TimeCreated { get; set; }
         public DateTime TimeLastUpdated { get; set; }
+
+        public List<NoteLogItemInputModel> NoteLog { get; set; }
     }
 }

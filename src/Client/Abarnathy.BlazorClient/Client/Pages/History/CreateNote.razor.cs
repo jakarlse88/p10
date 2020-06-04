@@ -10,7 +10,7 @@ namespace Abarnathy.BlazorClient.Client.Pages.History
 {
     public partial class CreateNote
     {
-        private const int RedirectDelaySeconds = 5;
+        private const int RedirectDelaySeconds = 1;
         [Inject] private HttpClient HttpClient { get; set; }
         [Inject] private NavigationManager NavigationManager { get; set; }
         [Parameter] public int PatientId { get; set; }

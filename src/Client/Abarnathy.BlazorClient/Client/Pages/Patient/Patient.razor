@@ -10,26 +10,31 @@
         <div class="row d-flex justify-content-center">
             <h2 class="mb-4 mt-4">Patient Overview</h2>
         </div>
-        
-        <div class="row d-flex justify-content-center">
-            <NavLink href="@($"/Patient/Edit/{Id}")">
-                <button class="btn btn-primary">
-                    Edit
-                </button>
-            </NavLink>
-        </div>
 
-            <div class="row d-flex justify-content-center">
-                <div class="@RiskLevelCardClass()">
-                    Diabetes risk level: <strong>@RiskLevelDescriptionString().</strong>
-                </div>
+        <div class="row d-flex justify-content-center">
+            <div class="@RiskLevelCardClass()">
+                Diabetes risk level: <strong>@RiskLevelDescriptionString().</strong>
             </div>
         </div>
-
+    </div>
 
     @if (OperationStatus == PatientSingleOperationStatusEnum.GET_Success)
     {
-        <h4 class="pt-4 pb-2">Personal Details</h4>
+        <div class="row d-flex justify-content-between align-items-center">
+
+            <div class="col">
+                <h5 class="mt-4 mb-2">Personal Details</h5>
+            </div>
+
+            <div class="col d-flex justify-content-end">
+                <NavLink href="@($"/Patient/Edit/{Id}")">
+                    <button class="btn btn-warning btn-sm mt-4 mb-2">
+                        Edit Patient Data
+                    </button>
+                </NavLink>
+            </div>
+        </div>
+
 
         <table class="table table-sm table-hover table-striped">
             <thead>
@@ -64,7 +69,7 @@
             </tbody>
         </table>
 
-        <h4 class="pt-4 pb-2">Phone Numbers</h4>
+        <h5 class="pt-4 pb-2">Phone Numbers</h5>
 
         @if (PatientModel?.PhoneNumbers != null && PatientModel.PhoneNumbers.Any())
         {
@@ -93,7 +98,7 @@
             <p>There are no phone numbers recorded for this patient.</p>
         }
 
-        <h4 class="pt-4 pb-2">Addresses</h4>
+        <h5 class="pt-4 pb-2">Addresses</h5>
 
         @if (PatientModel?.Addresses != null && PatientModel.Addresses.Any())
         {
@@ -139,13 +144,21 @@
 
         <hr/>
 
-        <h3 class="mt-4 mb-2">History</h3>
+        <div class="row d-flex justify-content-between align-items-center">
+            
+            <div class="col">
+                <h5 class="mt-4 mb-4">History</h5>
+            </div>
 
-        <NavLink href=@($"/Patient/{Id}/History/Note/Create")>
-            <button class="btn btn-success btn-sm text-white mt-1 mb-3">
-                New Note <i class="fas fa-file-medical"></i>
-            </button>
-        </NavLink>
+            <div class="col d-flex justify-content-end">
+                <NavLink href=@($"/Patient/{Id}/History/Note/Create")>
+                    <button class="btn btn-success btn-sm text-white mt-4 mb-2">
+                        Add New Note
+                    </button>
+                </NavLink>
+            </div>
+            
+        </div>
 
         <NoteDisplay PatientId="@Id"/>
     }

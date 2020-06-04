@@ -48,7 +48,6 @@
             </thead>
 
             <tbody>
-
             @if (PatientList != null && PatientList.Any())
             {
                 @foreach (var item in PatientList)
@@ -67,7 +66,7 @@
                         <td>@address</td>
                         <td>
                             <NavLink href="@($"/Patient/Edit/{item.Id}")">
-                                <button class="btn btn-sm btn-success">
+                                <button class="btn btn-sm btn-secondary">
                                     Edit
                                 </button>
                             </NavLink>

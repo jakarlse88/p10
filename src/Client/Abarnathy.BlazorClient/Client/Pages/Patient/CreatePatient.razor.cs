@@ -191,6 +191,16 @@ namespace Abarnathy.BlazorClient.Client.Pages.Patient
 
             PatientModel.SexId = (int) PatientModel.Sex;
 
+            if (!PostAddress)
+            {
+                PatientModel.Addresses = new List<AddressInputModel>();
+            }
+
+            if (!PostPhoneNumber)
+            {
+                PatientModel.PhoneNumbers = new List<PhoneNumberInputModel>();
+            }
+            
             try
             {
                 var response = await HttpClient.PutAsJsonAsync($"http://localhost:8080/api/patient/{PatientId}", PatientModel);
