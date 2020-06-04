@@ -31,14 +31,15 @@
                 <p class="mt-4">@((MarkupString) NoteModel.Content)</p>
             </div>
             
-            <div class="row d-flex d-row justify-content-center">
-                <button class="btn btn-outline-dark btn-sm mr-3" @onclick="NavigateBackToPatient">
-                    <i class="fas fa-arrow-left"></i> 
+            <div class="row d-flex d-row justify-content-center mb-5">
+                <button class="btn btn-danger btn-sm mr-3" @onclick="NavigateBackToPatient">
                     Back
                 </button>
                 <button class="btn btn-primary btn-sm ml-3" @onclick="NavigateToEdit">
                     Edit Note 
-                    <i class="fas fa-edit"></i>
+                </button>
+                <button class="btn btn-warning btn-sm ml-3" @onclick="NavigateToAuditLog">
+                    Audit Log
                 </button>
             </div>
         }
@@ -60,6 +61,5 @@
             <p>There was an error fetching the note.</p>
         </div>
     }
-
 
 </div>

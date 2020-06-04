@@ -1,25 +1,41 @@
-﻿using System;
+using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Abarnathy.BlazorClient.Client.Models;
+using Blazored.Modal;
+using Blazored.Modal.Services;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using Newtonsoft.Json;
 
 namespace Abarnathy.BlazorClient.Client.Pages.History
 {
-    public partial class Note
+    public partial class AuditLog
     {
-        [Parameter] public string NoteId { get; set; }
-        [Parameter] public int PatientId { get; set; }
         [Inject] private HttpClient HttpClient { get; set; }
-        [Inject] private NavigationManager NavigationManager { get; set; }
+        [Inject] private IModalService ModalService { get; set; }
+        [Inject] private IJSRuntime JsRuntime { get; set; }
+        [Parameter] public string PatientId { get; set; }
+        [Parameter] public string NoteId { get; set; }
         private NoteInputModel NoteModel { get; set; }
         private APIOperationStatus OperationStatus { get; set; }
+
+        private void NavigateBack()
+        {
+            JsRuntime.InvokeVoidAsync("NavigateBack");
+        }
         
-        /// <summary>
-        /// Component initialisation logic.
-        /// </summary>
-        /// <returns></returns>
+        private void ShowNoteModal(DateTime timeCreated, DateTime timeArchived, string title, string content)
+        {
+            var parameters = new ModalParameters();
+            
+            parameters.Add(nameof(NoteLogItemComponent.OriginallyCreated), timeCreated);
+            parameters.Add(nameof(NoteLogItemComponent.Archived), timeArchived);
+            parameters.Add(nameof(NoteLogItemComponent.Content), content);
+
+            ModalService.Show<NoteLogItemComponent>(title, parameters);
+        }
+        
         protected override async Task OnInitializedAsync()
         {
             NoteModel = null;
@@ -37,6 +53,8 @@ namespace Abarnathy.BlazorClient.Client.Pages.History
                     var content = JsonConvert.DeserializeObject<NoteInputModel>(stringContent);
 
                     NoteModel = content;
+
+                    await JsRuntime.InvokeAsync<object>("InitDataTable", "auditlog-table");
                 }
                 
                 OperationStatus = APIOperationStatus.GET_Success;
@@ -48,30 +66,6 @@ namespace Abarnathy.BlazorClient.Client.Pages.History
                 OperationStatus = APIOperationStatus.GET_Error;
                 StateHasChanged();
             }
-        }
-
-        /// <summary>
-        /// Return to the relevant Patient details page.
-        /// </summary>
-        private void NavigateBackToPatient()
-        {
-            NavigationManager.NavigateTo($"/patient/{PatientId}");
-        }
-
-        /// <summary>
-        /// Navigate to the Audit Log page.
-        /// </summary>
-        private void NavigateToAuditLog()
-        {
-            NavigationManager.NavigateTo($"/Patient/{PatientId}/History/Note/Log/{NoteId}");
-        }
-
-        /// <summary>
-        /// Navigate to note edit functionality.
-        /// </summary>
-        private void NavigateToEdit()
-        {
-            NavigationManager.NavigateTo($"/Patient/{PatientId}/History/Note/Edit/{NoteId}");
         }
     }
 }

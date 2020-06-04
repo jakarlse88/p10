@@ -1,1 +1,0 @@
-/usr/work/migrate.sh & /opt/mssql/bin/sqlservr

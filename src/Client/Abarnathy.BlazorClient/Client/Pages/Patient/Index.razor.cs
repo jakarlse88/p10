@@ -35,7 +35,7 @@ namespace Abarnathy.BlazorClient.Client.Pages.Patient
                     await JsRuntime.InvokeAsync<object>("InitDataTable", "patients-table");
                 }
 
-                if ((int) response.StatusCode == 204)
+                else
                 {
                     PatientList = new List<PatientInputModel>();
                     await JsRuntime.InvokeAsync<object>("InitDataTable", "patients-table");

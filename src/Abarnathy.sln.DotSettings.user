@@ -4,9 +4,13 @@
   &lt;Solution /&gt;
 &lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=97359559_002Df5bf_002D4c56_002Db3f8_002D5dbeee52e74d/@EntryIndexedValue">&lt;SessionState ContinuousTestingIsOn="False" ContinuousTestingMode="0" FrameworkVersion="{x:Null}" IsLocked="False" Name="TestGetPatientNull" PlatformMonoPreference="{x:Null}" PlatformType="{x:Null}" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"&gt;
-  &lt;TestAncestor&gt;
-    &lt;TestId&gt;xUnit::B6F25C06-E7D3-4B79-AF78-C0D9B385473A::.NETCoreApp,Version=v3.1::Abarnathy.AssessmentService.Test.Unit.ControllerTests.AssessmentControllerTests.TestGetPatientNull&lt;/TestId&gt;
-  &lt;/TestAncestor&gt;
+  &lt;Or&gt;
+    &lt;Or&gt;
+      &lt;Project Location="/Users/jkarlsen/code/p10/src/Services/Abarnathy.AssessmentService/Test/Abarnathy.AssessmentService.Test.Unit" Presentation="&amp;lt;Test&amp;gt;\&amp;lt;Assessment Service&amp;gt;\&amp;lt;Abarnathy.AssessmentService.Test.Unit&amp;gt;" /&gt;
+      &lt;Project Location="/Users/jkarlsen/code/p10/src/Services/Abarnathy.DemographicsService/Test/Abarnathy.DemographicsService.Test.Unit" Presentation="&amp;lt;Test&amp;gt;\&amp;lt;Demographics Service&amp;gt;\&amp;lt;Abarnathy.DemographicsService.Test.Unit&amp;gt;" /&gt;
+    &lt;/Or&gt;
+    &lt;Project Location="/Users/jkarlsen/code/p10/src/Services/Abarnathy.HistoryService/Test/Abarnathy.HistoryService.Test.Unit" Presentation="&amp;lt;Test&amp;gt;\&amp;lt;History Service&amp;gt;\&amp;lt;Abarnathy.HistoryService.Test.Unit&amp;gt;" /&gt;
+  &lt;/Or&gt;
 &lt;/SessionState&gt;</s:String>
 	
 	
