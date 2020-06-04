@@ -1,372 +1,196 @@
 @using Abarnathy.BlazorClient.Client.Shared.Components
-@using Abarnathy.BlazorClient.Client.Shared.Components.FormWizard
 @using Abarnathy.BlazorClient.Client.Shared.Components.NoteDisplay
 @using Abarnathy.BlazorClient.Client.Models
 @page "/Patient/{Id:int}"
 
 <div class="container mb-5">
 
-<div class="row d-flex justify-content-center">
+    <div class="row d-flex flex-column justify-content-center">
 
-    <h2 class="mb-4 mt-4">View/Edit</h2>
-</div>
+        <div class="row d-flex justify-content-center">
+            <h2 class="mb-4 mt-4">Patient Overview</h2>
+        </div>
 
-@if ((OperationStatus == PatientSingleOperationStatusEnum.GET_Success && Readonly == false) ||
-     (OperationStatus == PatientSingleOperationStatusEnum.GET_Success &&
-      Readonly))
-{
-    <div class="row d-flex justify-content-center">
-        <div class="col-12">
-            <p class="text-dark">
-                <b>Readonly</b>
-                <label class="switch">
-                    <input type="checkbox" @onclick="@ToggleReadonly" checked>
-                    <span class="slider round"></span>
-                </label>
-            </p>
+        <div class="row d-flex justify-content-center">
+            <div class="@RiskLevelCardClass()">
+                Diabetes risk level: <strong>@RiskLevelDescriptionString().</strong>
+            </div>
         </div>
     </div>
-}
 
-@if (OperationStatus == PatientSingleOperationStatusEnum.GET_Success &&
-     Readonly == false)
-{
-    <FormWizard Id="PatientCreateForm" OnClickSubmit="@Submit" OnClickCancel="@Cancel" EnableSubmit="@PatientValid">
-        <FormWizardStep Name="Personal Details">
+    @if (OperationStatus == PatientSingleOperationStatusEnum.GET_Success)
+    {
+        <div class="row d-flex justify-content-between align-items-center">
 
-            <EditForm EditContext="@PatientEditContext">
-
-                <DataAnnotationsValidator/>
-
-                <div class="form-row">
-
-                    <div class="col">
-                        <div class="form-group">
-                            <label for="given-name-input">Given Name</label>
-                            <InputText id="given-name-input" @bind-Value="@PatientModel.GivenName" placeholder="Given Name" class="form-control"/>
-                            <ValidationMessage For="@(() => PatientModel.GivenName)" class="text-danger"/>
-                        </div>
-                    </div>
-
-                    <div class="col">
-                        <div class="form-group">
-                            <label for="family-name-input">Family Name</label>
-                            <InputText id="family-name-input" @bind-Value="@PatientModel.FamilyName" placeholder="Family Name" class="form-control"/>
-                            <ValidationMessage For="@(() => PatientModel.FamilyName)" class="text-danger"/>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-row">
-
-                    <div class="col">
-                        <div class="form-group">
-                            <label for="date-of-birth-input">Date of Birth</label>
-                            <InputDate id="date-of-birth-input" @bind-Value="@PatientModel.DateOfBirth" placeholder="DD/MM/YYYY" class="form-control" aria-describedby="date-of-birth-input-help"/>
-                            <ValidationMessage For="@(() => PatientModel.DateOfBirth)" class="text-danger"/>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="form-group">
-                            <label for="sex-input">Sex</label>
-                            <InputSelect id="sex-input" @bind-Value="@PatientModel.Sex" class="form-control" placeholder="Aasdasd">
-                                <option value="@SexEnum.Default" disabled>Please choose an option...</option>
-                                <option value="@SexEnum.Male">Male</option>
-                                <option value="@SexEnum.Female">Female</option>
-                            </InputSelect>
-                            <ValidationMessage For="@(() => PatientModel.Sex)" class="text-danger"/>
-                        </div>
-                    </div>
-                </div>
-
-
-            </EditForm>
-        </FormWizardStep>
-
-        <FormWizardStep Name="Telephone">
-
-            <div class="row">
-                <div class="col-7">
-                    <EditForm EditContext="@PhoneNumberEditContext">
-
-                        <DataAnnotationsValidator/>
-
-                        <div class="form-group">
-                            <label for="phone-number-input">Telephone Number</label>
-
-                            <div class="input-group">
-                                <InputText id="phone-number-input" @bind-Value="@PhoneNumberModel.Number" placeholder="Ex. (123) 456-7890" class="form-control" aria-describedby="phone-number-input-help"/>
-
-                                <div class="input-group-append">
-                                    <button class="btn btn-outline-success" @onclick="@AddPhoneNumber">
-                                        <i class="fas fa-plus"></i>
-                                    </button>
-                                </div>
-                            </div>
-
-                            <small id="phone-number-input-help" class="text-muted">Optional. Must be in US standard format.</small>
-                            <ValidationMessage For="@(() => PhoneNumberModel.Number)" class="text-danger"/>
-                        </div>
-
-                    </EditForm>
-                </div>
-
-
-                <div class="col-5 border-left border-light">
-                    <h5>Added Phone Numbers</h5>
-                    <ul>
-                        @foreach (var item in AddedPhoneNumbers)
-                        {
-                            <li>
-                                @item.Number <i class="far delete-icon fa-lg fa-times-circle" @onclick="@(() => RemovePhoneNumber(@item.Number))"></i>
-                            </li>
-                        }
-                    </ul>
-                </div>
+            <div class="col">
+                <h5 class="mt-4 mb-2">Personal Details</h5>
             </div>
 
-
-        </FormWizardStep>
-
-        <FormWizardStep Name="Address">
-
-            <div class="row">
-                <div class="col-8">
-                    <EditForm EditContext="@AddressEditContext">
-                        <DataAnnotationsValidator/>
-
-                        <div class="form-group">
-                            <label for="street-name-input">Street Name</label>
-                            <InputText id="street-name-input" @bind-Value="@AddressModel.StreetName" placeholder="EG. Main Street" class="form-control"/>
-                            <ValidationMessage For="@(() => AddressModel.StreetName)" class="text-danger"/>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="house-number-input">House Number</label>
-                            <InputText id="house-number-input" @bind-Value="@AddressModel.HouseNumber" placeholder="EG. 6A" class="form-control"/>
-                            <ValidationMessage For="@(() => AddressModel.HouseNumber)" class="text-danger"/>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="town-input">Town</label>
-                            <InputText id="town-input" @bind-Value="@AddressModel.Town" placeholder="EG. Amityville" class="form-control"/>
-                            <ValidationMessage For="@(() => AddressModel.Town)" class="text-danger"/>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="state-input">State</label>
-                            <InputText id="state-input" @bind-Value="@AddressModel.State" placeholder="EG. Washington" class="form-control"/>
-                            <ValidationMessage For="@(() => AddressModel.State)" class="text-danger"/>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="zip-code-input">ZIP Code</label>
-                            <div class="input-group">
-
-                                <InputText id="zip-code-input" @bind-Value="@AddressModel.ZipCode" placeholder="EG. 51210" class="form-control"/>
-                                <div class="input-group-append">
-                                    <button class="btn btn-small btn-outline-success" @onclick="@AddAddress">
-                                        <i class="fas fa-plus"></i>
-                                    </button>
-                                </div>
-
-                            </div>
-                            <ValidationMessage For="@(() => AddressModel.ZipCode)" class="text-danger"/>
-                        </div>
-
-
-                    </EditForm>
-                </div>
-                <div class="col-4">
-                    <h5>Added Addresses</h5>
-                    <ul>
-                        @foreach (var item in AddedAddresses)
-                        {
-                            <li>@item.StreetName @item.HouseNumber, @item.Town <i class="far delete-icon fa-lg fa-times-circle" @onclick="@(() => RemoveAddress(item))"></i></li>
-                        }
-                    </ul>
-                </div>
+            <div class="col d-flex justify-content-end">
+                <NavLink href="@($"/Patient/Edit/{Id}")">
+                    <button class="btn btn-warning btn-sm mt-4 mb-2">
+                        Edit Patient Data
+                    </button>
+                </NavLink>
             </div>
-
-        </FormWizardStep>
-    </FormWizard>
-}
-
-@if (OperationStatus == PatientSingleOperationStatusEnum.GET_Success && Readonly)
-{
-    <h4 class="pt-4 pb-2">Personal Details</h4>
-
-    <div class="@RiskLevelCardClass()">
-        Diabetes risk level:  <strong>@RiskLevelDescriptionString().</strong>
-    </div>
+        </div>
 
 
-    <table class="table table-sm table-hover table-striped">
-        <thead>
-        <tr>
-            <th scope="col">
-                Given Name
-            </th>
-            <th scope="col">
-                Family Name
-            </th>
-            <th scope="col">
-                Date of Birth
-            </th>
-            <th scope="col">
-                Sex
-            </th>
-        </tr>
-        </thead>
+        <table class="table table-sm table-hover table-striped">
+            <thead>
+            <tr>
+                <th scope="col">
+                    Given Name
+                </th>
+                <th scope="col">
+                    Family Name
+                </th>
+                <th scope="col">
+                    Date of Birth
+                </th>
+                <th scope="col">
+                    Sex
+                </th>
+            </tr>
+            </thead>
 
-        <tbody>
-        @if (PatientModel != null)
+            <tbody>
+            @if (PatientModel != null)
+            {
+                var sex = PatientModel.SexId == 1 ? "Male" : "Female";
+
+                <tr>
+                    <td>@PatientModel.GivenName</td>
+                    <td>@PatientModel.FamilyName</td>
+                    <td>@PatientModel.DateOfBirth.Date.ToString("dd/MM/yyyy")</td>
+                    <td>@sex</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+
+        <h5 class="pt-4 pb-2">Phone Numbers</h5>
+
+        @if (PatientModel?.PhoneNumbers != null && PatientModel.PhoneNumbers.Any())
         {
-            var sex = PatientModel.SexId == 1 ? "Male" : "Female";
+            <table class="table table-sm table-hover table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">
+                        Number
+                    </th>
+                </tr>
+                </thead>
 
-            <tr>
-                <td>@PatientModel.GivenName</td>
-                <td>@PatientModel.FamilyName</td>
-                <td>@PatientModel.DateOfBirth.Date.ToString("dd/MM/yyyy")</td>
-                <td>@sex</td>
-            </tr>
+
+                <tbody>
+                @foreach (var number in PatientModel.PhoneNumbers)
+                {
+                    <tr>
+                        <td>@number.ToString()</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
         }
-        </tbody>
-    </table>
+        else
+        {
+            <p>There are no phone numbers recorded for this patient.</p>
+        }
 
-    <h4 class="pt-4 pb-2">Phone Numbers</h4>
+        <h5 class="pt-4 pb-2">Addresses</h5>
 
-    @if (PatientModel != null && PatientModel.Addresses.Any())
-    {
-        <table class="table table-sm table-hover table-striped">
-            <thead>
-            <tr>
-                <th scope="col">
-                    Number
-                </th>
-            </tr>
-            </thead>
-
-
-            <tbody>
-            @foreach (var number in PatientModel.PhoneNumbers)
-            {
+        @if (PatientModel?.Addresses != null && PatientModel.Addresses.Any())
+        {
+            <table class="table table-sm table-hover table-striped">
+                <thead>
                 <tr>
-                    <td>@number.Number</td>
+                    <th scope="col">
+                        Street Name
+                    </th>
+                    <th scope="col">
+                        House Number
+                    </th>
+                    <th scope="col">
+                        Town
+                    </th>
+                    <th scope="col">
+                        State
+                    </th>
+                    <th scope="col">
+                        ZIP Code
+                    </th>
                 </tr>
-            }
-            </tbody>
-        </table>
+                </thead>
+
+                <tbody>
+                @foreach (var address in PatientModel.Addresses)
+                {
+                    <tr>
+                        <td>@address.StreetName</td>
+                        <td>@address.HouseNumber</td>
+                        <td>@address.Town</td>
+                        <td>@address.State</td>
+                        <td>@address.ZipCode</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>There are no addresss recorded for this patient.</p>
+        }
+
+        <hr/>
+
+        <div class="row d-flex justify-content-between align-items-center">
+            
+            <div class="col">
+                <h5 class="mt-4 mb-4">History</h5>
+            </div>
+
+            <div class="col d-flex justify-content-end">
+                <NavLink href=@($"/Patient/{Id}/History/Note/Create")>
+                    <button class="btn btn-success btn-sm text-white mt-4 mb-2">
+                        Add New Note
+                    </button>
+                </NavLink>
+            </div>
+            
+        </div>
+
+        <NoteDisplay PatientId="@Id"/>
     }
-    else
+
+    @if (OperationStatus == PatientSingleOperationStatusEnum.GET_Pending)
     {
-        <p>There are no phone numbers recorded for this patient.</p>
+        <div class="row">
+            <div class="col-12 d-flex justify-content-center mb-2">
+                <div id="loading"></div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 d-flex justify-content-center">
+                <small class="text-muted">Please wait...</small>
+            </div>
+        </div>
     }
 
-    <h4 class="pt-4 pb-2">Addresses</h4>
-
-    @if (PatientModel != null && PatientModel.Addresses.Any())
+    @if (OperationStatus == PatientSingleOperationStatusEnum.GET_Error)
     {
-        <table class="table table-sm table-hover table-striped">
-            <thead>
-            <tr>
-                <th scope="col">
-                    Street Name
-                </th>
-                <th scope="col">
-                    House Number
-                </th>
-                <th scope="col">
-                    Town
-                </th>
-                <th scope="col">
-                    State
-                </th>
-                <th scope="col">
-                    ZIP Code
-                </th>
-            </tr>
-            </thead>
+        <div class="row">
+            <div class="col-12 d-flex justify-content-center mb-2">
+                <h3>Error</h3>
+            </div>
+        </div>
 
-            <tbody>
-            @foreach (var address in PatientModel.Addresses)
-            {
-                <tr>
-                    <td>@address.StreetName</td>
-                    <td>@address.HouseNumber</td>
-                    <td>@address.Town</td>
-                    <td>@address.State</td>
-                    <td>@address.ZipCode</td>
-                </tr>
-            }
-            </tbody>
-        </table>
+        <div class="row">
+            <div class="col-12 d-flex justify-content-center">
+                <p class="text-danger">An error has occurred.</p>
+            </div>
+        </div>
     }
-    else
-    {
-        <p>There are no addresss recorded for this patient.</p>
-    }
-
-    <hr/>
-
-
-    <h3 class="mt-4 mb-2">History</h3>
-
-    <NavLink href=@($"/Patient/{Id}/History/Note/Create")>
-        <button class="btn btn-success btn-sm text-white mt-1 mb-3">
-            New Note <i class="fas fa-file-medical"></i>
-        </button>
-    </NavLink>
-
-
-    <NoteDisplay PatientId="@Id"/>
-}
-
-@if (OperationStatus == PatientSingleOperationStatusEnum.GET_Pending ||
-     OperationStatus == PatientSingleOperationStatusEnum.PUT_Pending)
-{
-    <div class="row">
-        <div class="col-12 d-flex justify-content-center mb-2">
-            <div id="loading"></div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-12 d-flex justify-content-center">
-            <small class="text-muted">Please wait...</small>
-        </div>
-    </div>
-}
-
-@if (OperationStatus == PatientSingleOperationStatusEnum.PUT_Success)
-{
-    <div class="row">
-        <div class="col-12 d-flex justify-content-center mb-2">
-            <h3>Success!</h3>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-12 d-flex justify-content-center">
-            <p class="text-info">We'll redirect you in a second.</p>
-        </div>
-    </div>
-}
-
-@if (OperationStatus == PatientSingleOperationStatusEnum.PUT_Error ||
-     OperationStatus == PatientSingleOperationStatusEnum.GET_Error)
-{
-    <div class="row">
-        <div class="col-12 d-flex justify-content-center mb-2">
-            <h3>Error</h3>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-12 d-flex justify-content-center">
-            <p class="text-danger">An error has occurred.</p>
-        </div>
-    </div>
-}
 
 </div>

@@ -15,8 +15,8 @@ namespace Abarnathy.DemographicsService.Infrastructure.Validators
 
             RuleFor(x => x.HouseNumber)
                 .NotEmpty()
-                .Matches(new Regex("^[0-9a-zA-Z ]*$"))
-                .MaximumLength(6);
+                .Matches(new Regex(@"^[0-9a-zA-Z ]*$"))
+                .MaximumLength(8);
             
             RuleFor(x => x.Town)
                 .NotEmpty()

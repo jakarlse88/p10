@@ -109,7 +109,19 @@ namespace Abarnathy.HistoryService.Services
 
             try
             {
+                var logItem = new NoteLogItem
+                {
+                    TimeOriginallyCreated = entity.TimeLastUpdated,
+                    TimeArchived = DateTime.Now,
+                    Title = entity.Title,
+                    Content = entity.Content
+                };
+                
                 var newEntity = _mapper.Map<Note>(model);
+                
+                newEntity.TimeLastUpdated = DateTime.Now;
+                newEntity.NoteLog.Add(logItem);
+                
                 return await _noteRepository.Update(entity.Id, newEntity);
             }
             catch (Exception e)

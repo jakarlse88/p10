@@ -7,8 +7,8 @@ namespace Abarnathy.DemographicsService.Models
     {
         public PatientInputModel()
         {
-            Addresses = new HashSet<AddressInputModel>();
-            PhoneNumbers = new HashSet<PhoneNumberInputModel>();
+            Addresses = new List<AddressInputModel>();
+            PhoneNumbers = new List<PhoneNumberInputModel>();
         }
 
         public int Id { get; set; }
@@ -18,7 +18,7 @@ namespace Abarnathy.DemographicsService.Models
 
         public int SexId { get; set; }
         
-        public ICollection<AddressInputModel> Addresses { get; set; }
-        public ICollection<PhoneNumberInputModel> PhoneNumbers { get; set; }
+        public List<AddressInputModel> Addresses { get; set; }
+        public List<PhoneNumberInputModel> PhoneNumbers { get; set; }
     }
 }

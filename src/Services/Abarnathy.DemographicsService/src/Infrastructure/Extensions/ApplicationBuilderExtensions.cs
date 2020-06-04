@@ -24,6 +24,8 @@ namespace Abarnathy.DemographicsService.Infrastructure
         /// <param name="app"></param>
         public static void ApplyMigrations(this IApplicationBuilder app)
         {
+            Log.Information("Applying migrations.");
+            
             using (var serviceScope = app.ApplicationServices.CreateScope())
             using (var context = serviceScope.ServiceProvider.GetRequiredService<DemographicsDbContext>())
             {

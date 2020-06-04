@@ -1,0 +1,63 @@
+@using Abarnathy.BlazorClient.Client.Models
+@page "/Patient/{PatientId}/History/Note/Log/{NoteId}"
+
+<div class="container">
+
+    @if (OperationStatus == APIOperationStatus.GET_Pending)
+    {
+        <div class="row d-flex justify-content-center align-content-center">
+            <i class="fas fa-spinner fa-spin fa-3x"></i>
+            <br/>
+            <small class="text-muted">Loading...</small>
+        </div>
+    }
+
+    @if (OperationStatus == APIOperationStatus.GET_Success)
+    {
+        <div class="row d-flex justify-content-center align-content-center">
+            <h2 class="mt-4 mb-4">Note Audit Log</h2>
+        </div>
+        <body onbeforeunload="DestroyAuditLogTable()">
+        <table id="auditlog-table" class="table table-sm table-hover table-striped">
+            <thead>
+            <tr>
+                <th scope="col">
+                    Originally created
+                </th>
+                <th scope="col">
+                    Archived
+                </th>
+                <th scope="col">
+                    Title
+                </th>
+                <th scope="col">
+                </th>
+            </tr>
+            </thead>
+
+            <tbody>
+            @if (NoteModel != null && NoteModel.NoteLog.Any())
+            {
+                foreach (var logItem in NoteModel.NoteLog)
+                {
+                    <tr>
+                        <td>@logItem.TimeOriginallyCreated</td>
+                        <td>@logItem.TimeArchived</td>
+                        <td>@logItem.Title</td>
+                        <td>
+                            <button class="btn btn-sm btn-primary"
+                                    @onclick="@(() => ShowNoteModal(logItem.TimeOriginallyCreated, logItem.TimeArchived, logItem.Title, logItem.Content))">
+                                View
+                            </button>
+                        </td>
+                    </tr>
+                }
+            }
+            </tbody>
+        </table>
+        </body>
+    }
+    <div class="row d-flex justify-content-center align-content-center">
+        <button class="btn btn-danger mt-5 mb-5" @onclick="@NavigateBack">Return</button>
+    </div>
+</div>
