@@ -2,7 +2,7 @@
 @using Abarnathy.BlazorClient.Client.Shared.Components.CustomRichTextInput
 @using Abarnathy.BlazorClient.Client.Models
 
-<EditForm Model="@InputModel">
+<EditForm EditContext="@_editContext">
     <DataAnnotationsValidator/>
 
     <div class="form-group">
@@ -26,8 +26,8 @@
         <NavLink href="/"></NavLink>
 
         <button @onclick="SubmitCallback"
-                 class="btn btn-success"
-                 disabled=@(OperationStatus == APIOperationStatus.POST_Pending || OperationStatus == APIOperationStatus.PUT_Pending)>
+                 class="@(_isValid ? "btn btn-success" : "btn btn-success disabled")"
+                 disabled="@(!_isValid || (OperationStatus == APIOperationStatus.POST_Pending || OperationStatus == APIOperationStatus.PUT_Pending))">
             Submit
             @if (OperationStatus == APIOperationStatus.POST_Pending || OperationStatus == APIOperationStatus.PUT_Pending)
             {
