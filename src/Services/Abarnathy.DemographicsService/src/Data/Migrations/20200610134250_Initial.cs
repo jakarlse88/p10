@@ -130,6 +130,25 @@ namespace Abarnathy.DemographicsService.Data.Migrations
                 columns: new[] { "Id", "Type" },
                 values: new object[] { 2, "Female" });
 
+            migrationBuilder.InsertData(
+                table: "Patient",
+                columns: new[] { "Id", "DateOfBirth", "FamilyName", "GivenName", "SexId" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(1960, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Smith", "James", 1 },
+                    { 3, new DateTime(2010, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Abe", "Masaaki", 1 },
+                    { 5, new DateTime(1960, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Haitam", "Nurma", 1 },
+                    { 7, new DateTime(2010, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Aleesami", "Brian", 1 },
+                    { 10, new DateTime(1960, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "King", "Andrew", 1 },
+                    { 11, new DateTime(2010, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Locke", "Brian", 1 },
+                    { 2, new DateTime(1960, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Lee", "Jiyeon", 2 },
+                    { 4, new DateTime(2010, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Svensson", "Anna", 2 },
+                    { 6, new DateTime(1960, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Johnson", "Lucy", 2 },
+                    { 8, new DateTime(2010, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "van Lingen", "Elizabeth", 2 },
+                    { 9, new DateTime(1960, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Okparaebo", "Vivienne", 2 },
+                    { 12, new DateTime(2010, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Wang", "Su Lin", 2 }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Patient_SexId",
                 table: "Patient",

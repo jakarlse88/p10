@@ -73,11 +73,6 @@ namespace Abarnathy.HistoryService.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<IEnumerable<NoteInputModel>>> GetByPatientId(int patientId)
         {
-            if (!await _externalApiService.PatientExists(patientId))
-            {
-                return BadRequest();
-            }
-
             var result = await _noteService.GetByPatientIdAsync(patientId);
 
             var enumerable = result as Note[] ?? result.ToArray();

@@ -16,15 +16,15 @@ using Microsoft.AspNetCore.HttpOverrides;
 
 namespace Abarnathy.DemographicsService.Infrastructure
 {
-    public static class ApplicationBuilderExtensions
+    internal static class ApplicationBuilderExtensions
     {
         /// <summary>
-        /// Applies initial schema migration, if necessary.
+        /// Applies pending migrations.
         /// </summary>
         /// <param name="app"></param>
-        public static void ApplyMigrations(this IApplicationBuilder app)
+        internal static void ApplyMigrations(this IApplicationBuilder app)
         {
-            Log.Information("Applying migrations.");
+            Log.Information("Applying migrations...");
             
             using (var serviceScope = app.ApplicationServices.CreateScope())
             using (var context = serviceScope.ServiceProvider.GetRequiredService<DemographicsDbContext>())
@@ -53,7 +53,7 @@ namespace Abarnathy.DemographicsService.Infrastructure
         /// Configure forwarded headers.
         /// </summary>
         /// <param name="app"></param>
-        public static void UseForwardedHeaders(this IApplicationBuilder app)
+        internal static void UseForwardedHeaders(this IApplicationBuilder app)
         {
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {
@@ -66,7 +66,7 @@ namespace Abarnathy.DemographicsService.Infrastructure
         /// Configure Swagger UI.
         /// </summary>
         /// <param name="app"></param>
-        public static void UseSwaggerUI(this IApplicationBuilder app)
+        internal static void UseSwaggerUI(this IApplicationBuilder app)
         {
             app.UseSwagger();
             app.UseSwaggerUI(c =>
@@ -80,7 +80,7 @@ namespace Abarnathy.DemographicsService.Infrastructure
         /// Configures the global exception handler middleware.
         /// </summary>
         /// <param name="app"></param>
-        public static void UseCustomExceptionHandler(this IApplicationBuilder app)
+        internal static void UseCustomExceptionHandler(this IApplicationBuilder app)
         {
             app.UseExceptionHandler(appError =>
             {

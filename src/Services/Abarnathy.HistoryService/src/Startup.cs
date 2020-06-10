@@ -49,6 +49,8 @@ namespace Abarnathy.HistoryService
             {
                 app.UseDeveloperExceptionPage();
             }
+            
+            app.ApplyMigrations();
             app.UseCustomExceptionHandlerExtension();
             app.UseSwaggerUI();
             app.UseHttpsRedirection();
