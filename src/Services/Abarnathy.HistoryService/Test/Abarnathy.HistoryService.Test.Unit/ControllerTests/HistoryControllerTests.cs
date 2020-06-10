@@ -81,18 +81,18 @@ namespace Abarnathy.HistoryAPI.Test.ControllerTests
         public async Task TestGetByPatientIdPatientIdInvalid()
         {
             // Arrange
-            var mockService = new Mock<IExternalAPIService>();
+            var mockService = new Mock<INoteService>();
             mockService
-                .Setup(x => x.PatientExists(It.IsAny<int>()))
-                .ReturnsAsync(false);
+                .Setup(x => x.GetByPatientIdAsync(1))
+                .ReturnsAsync(new List<Note>());
 
-            var controller = new HistoryController(null, mockService.Object);
+            var controller = new HistoryController(mockService.Object, null);
 
             // Act
             var result = await controller.GetByPatientId(1);
 
             // Assert
-            Assert.IsAssignableFrom<BadRequestResult>(result.Result);
+            Assert.IsAssignableFrom<NotFoundResult>(result.Result);
         }
 
         [Fact]

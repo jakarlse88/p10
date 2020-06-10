@@ -10,14 +10,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Abarnathy.DemographicsService.Data.Migrations
 {
     [DbContext(typeof(DemographicsDbContext))]
-    [Migration("20200505065401_Initial")]
+    [Migration("20200610134250_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.3")
+                .HasAnnotation("ProductVersion", "3.1.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -87,6 +87,104 @@ namespace Abarnathy.DemographicsService.Data.Migrations
                     b.HasIndex("SexId");
 
                     b.ToTable("Patient");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DateOfBirth = new DateTime(1960, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FamilyName = "Smith",
+                            GivenName = "James",
+                            SexId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            DateOfBirth = new DateTime(1960, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FamilyName = "Lee",
+                            GivenName = "Jiyeon",
+                            SexId = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            DateOfBirth = new DateTime(2010, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FamilyName = "Abe",
+                            GivenName = "Masaaki",
+                            SexId = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            DateOfBirth = new DateTime(2010, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FamilyName = "Svensson",
+                            GivenName = "Anna",
+                            SexId = 2
+                        },
+                        new
+                        {
+                            Id = 5,
+                            DateOfBirth = new DateTime(1960, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FamilyName = "Haitam",
+                            GivenName = "Nurma",
+                            SexId = 1
+                        },
+                        new
+                        {
+                            Id = 6,
+                            DateOfBirth = new DateTime(1960, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FamilyName = "Johnson",
+                            GivenName = "Lucy",
+                            SexId = 2
+                        },
+                        new
+                        {
+                            Id = 7,
+                            DateOfBirth = new DateTime(2010, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FamilyName = "Aleesami",
+                            GivenName = "Brian",
+                            SexId = 1
+                        },
+                        new
+                        {
+                            Id = 8,
+                            DateOfBirth = new DateTime(2010, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FamilyName = "van Lingen",
+                            GivenName = "Elizabeth",
+                            SexId = 2
+                        },
+                        new
+                        {
+                            Id = 9,
+                            DateOfBirth = new DateTime(1960, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FamilyName = "Okparaebo",
+                            GivenName = "Vivienne",
+                            SexId = 2
+                        },
+                        new
+                        {
+                            Id = 10,
+                            DateOfBirth = new DateTime(1960, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FamilyName = "King",
+                            GivenName = "Andrew",
+                            SexId = 1
+                        },
+                        new
+                        {
+                            Id = 11,
+                            DateOfBirth = new DateTime(2010, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FamilyName = "Locke",
+                            GivenName = "Brian",
+                            SexId = 1
+                        },
+                        new
+                        {
+                            Id = 12,
+                            DateOfBirth = new DateTime(2010, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FamilyName = "Wang",
+                            GivenName = "Su Lin",
+                            SexId = 2
+                        });
                 });
 
             modelBuilder.Entity("Abarnathy.DemographicsService.Models.PatientAddress", b =>
