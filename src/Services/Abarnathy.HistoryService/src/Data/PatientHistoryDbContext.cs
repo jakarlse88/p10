@@ -1,4 +1,5 @@
-﻿using Abarnathy.HistoryService.Models;
+﻿using System;
+using Abarnathy.HistoryService.Models;
 using MongoDB.Driver;
 
 namespace Abarnathy.HistoryService.Data
@@ -6,7 +7,7 @@ namespace Abarnathy.HistoryService.Data
     /// <summary>
     /// Application DB context.
     /// </summary>
-    public class PatientHistoryDbContext
+    public class PatientHistoryDbContext : IDisposable
     {
         private readonly IMongoDatabase _db;
 
@@ -32,5 +33,9 @@ namespace Abarnathy.HistoryService.Data
         /// </summary>
         public virtual IMongoCollection<Note> Notes =>
             _db.GetCollection<Note>("Notes");
+
+        public void Dispose()
+        {
+        }
     }
 }

@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 using Abarnathy.DemographicsService.Models;
 
 namespace Abarnathy.DemographicsService.Data
@@ -27,7 +29,7 @@ namespace Abarnathy.DemographicsService.Data
             if (!optionsBuilder.IsConfigured)
             {
             }
-            
+
             base.OnConfiguring(optionsBuilder);
         }
 
@@ -137,6 +139,130 @@ namespace Abarnathy.DemographicsService.Data
                         Id = 2,
                         Type = "Female"
                     });
+
+            modelBuilder.Entity<Patient>()
+                .HasData(
+                    new Patient
+                    {
+                        Id = 1,
+                        SexId = 1,
+                        FamilyName = "Smith",
+                        GivenName = "James",
+                        DateOfBirth = new DateTime(1960, 1, 1),
+                        PatientAddresses = new List<PatientAddress>(),
+                        PatientPhoneNumbers = new List<PatientPhoneNumber>()
+                    },
+                    new Patient
+                    {
+                        Id = 2,
+                        SexId = 2,
+                        FamilyName = "Lee",
+                        GivenName = "Jiyeon",
+                        DateOfBirth = new DateTime(1960, 1, 1),
+                        PatientAddresses = new List<PatientAddress>(),
+                        PatientPhoneNumbers = new List<PatientPhoneNumber>()
+                    },
+                    new Patient
+                    {
+                        Id = 3,
+                        SexId = 1,
+                        FamilyName = "Abe",
+                        GivenName = "Masaaki",
+                        DateOfBirth = new DateTime(2010, 1, 1),
+                        PatientAddresses = new List<PatientAddress>(),
+                        PatientPhoneNumbers = new List<PatientPhoneNumber>()
+                    },
+                    new Patient
+                    {
+                        Id = 4,
+                        SexId = 2,
+                        FamilyName = "Svensson",
+                        GivenName = "Anna",
+                        DateOfBirth = new DateTime(2010, 1, 1),
+                        PatientAddresses = new List<PatientAddress>(),
+                        PatientPhoneNumbers = new List<PatientPhoneNumber>()
+                    },
+                    new Patient
+                    {
+                        Id = 5,
+                        SexId = 1,
+                        FamilyName = "Haitam",
+                        GivenName = "Nurma",
+                        DateOfBirth = new DateTime(1960, 1, 1),
+                        PatientAddresses = new List<PatientAddress>(),
+                        PatientPhoneNumbers = new List<PatientPhoneNumber>()
+                    },
+                    new Patient
+                    {
+                        Id = 6,
+                        SexId = 2,
+                        FamilyName = "Johnson",
+                        GivenName = "Lucy",
+                        DateOfBirth = new DateTime(1960, 1, 1),
+                        PatientAddresses = new List<PatientAddress>(),
+                        PatientPhoneNumbers = new List<PatientPhoneNumber>()
+                    },
+                    new Patient
+                    {
+                        Id = 7,
+                        SexId = 1,
+                        FamilyName = "Aleesami",
+                        GivenName = "Brian",
+                        DateOfBirth = new DateTime(2010, 1, 1),
+                        PatientAddresses = new List<PatientAddress>(),
+                        PatientPhoneNumbers = new List<PatientPhoneNumber>()
+                    },
+                    new Patient
+                    {
+                        Id = 8,
+                        SexId = 2,
+                        FamilyName = "van Lingen",
+                        GivenName = "Elizabeth",
+                        DateOfBirth = new DateTime(2010, 1, 1),
+                        PatientAddresses = new List<PatientAddress>(),
+                        PatientPhoneNumbers = new List<PatientPhoneNumber>()
+                    },
+                    new Patient
+                    {
+                        Id = 9,
+                        SexId = 2,
+                        FamilyName = "Okparaebo",
+                        GivenName = "Vivienne",
+                        DateOfBirth = new DateTime(1960, 1, 1),
+                        PatientAddresses = new List<PatientAddress>(),
+                        PatientPhoneNumbers = new List<PatientPhoneNumber>()
+                    },
+                    new Patient
+                    {
+                        Id = 10,
+                        SexId = 1,
+                        FamilyName = "King",
+                        GivenName = "Andrew",
+                        DateOfBirth = new DateTime(1960, 1, 1),
+                        PatientAddresses = new List<PatientAddress>(),
+                        PatientPhoneNumbers = new List<PatientPhoneNumber>()
+                    },
+                    new Patient
+                    {
+                        Id = 11,
+                        SexId = 1,
+                        FamilyName = "Locke",
+                        GivenName = "Brian",
+                        DateOfBirth = new DateTime(2010, 1, 1),
+                        PatientAddresses = new List<PatientAddress>(),
+                        PatientPhoneNumbers = new List<PatientPhoneNumber>()
+                    },
+                    new Patient
+                    {
+                        Id = 12,
+                        SexId = 2,
+                        FamilyName = "Wang",
+                        GivenName = "Su Lin",
+                        DateOfBirth = new DateTime(2010, 1, 1),
+                        PatientAddresses = new List<PatientAddress>(),
+                        PatientPhoneNumbers = new List<PatientPhoneNumber>()
+                    }
+                );
         }
     }
 }

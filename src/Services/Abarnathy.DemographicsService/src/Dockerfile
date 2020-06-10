@@ -23,6 +23,4 @@ COPY --from=publish /app/publish .
 COPY Services/Abarnathy.DemographicsService/src/. .
 COPY Services/Abarnathy.DemographicsService/src/wait-for-it.sh ./wait-for-it.sh
 RUN chmod +x ./wait-for-it.sh
-RUN chmod +x ./fix-line-endings.sh
-RUN ./fix-line-endings.sh 
 ENTRYPOINT ["./wait-for-it.sh", "sql_server:1434", "-t", "40", "--", "dotnet", "Abarnathy.DemographicsService.dll"]
