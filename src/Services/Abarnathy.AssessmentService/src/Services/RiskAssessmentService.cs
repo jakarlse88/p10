@@ -41,7 +41,8 @@ namespace Abarnathy.AssessmentService.Services
         }
 
         /// <summary>
-        /// Entrypoint into the assessment workflow. 
+        /// Assesses a Patient's age and no. of trigger terms to determine
+        /// the assessment result. 
         /// </summary>
         /// <param name="patient"></param>
         /// <param name="triggerCount"></param>

@@ -37,7 +37,7 @@ namespace Abarnathy.HistoryService.Controllers
         /// <param name="noteId"></param>
         /// <returns></returns>
         /// <response code="200">Entity found.</response>
-        /// /// <response code="400">Malformed request (ID null).</response>
+        /// <response code="400">Malformed request (ID null).</response>
         /// <response code="404">Entity not found.</response>
         [HttpGet("note/{noteId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
