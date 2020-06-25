@@ -16,7 +16,7 @@ Download or clone this repository, and then either run the application using the
 
 ### Docker CLI
 Open your terminal of choice, and then:
-1. Navigate to the project's ``src/`` directory
+1. Navigate to the project's root directory
 2. Bring up the project by entering ``docker-compose up -d``
 3. Enjoy a cup of coffee while waiting for Docker to do its thing and for the services to come online; note that there is a 90 second delay imposed on the ``demographics-service``to give SQL Server time to come up
 4. Test app functionality (see URL overview below), optionally view logs using ``docker logs --details <CONTAINER_ID>``
@@ -24,7 +24,7 @@ Open your terminal of choice, and then:
 
 ### Visual Studio
 Using Visual Studio:
-1. Open ``src/Abarnathy.sln``
+1. Open ``Abarnathy.sln``
 2. **Critical:** set the configuration to ``Release`` (see below)
 3. Run the project by hitting ``CTRL+F5``, let enjoy a cup of coffee while VS/Docker do their things
 
