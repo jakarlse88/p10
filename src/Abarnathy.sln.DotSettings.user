@@ -1,17 +1,18 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
 	<s:String x:Key="/Default/CodeInspection/Highlighting/AnalysisEnabled/@EntryValue">VISIBLE_FILES</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=1beb8365_002De92b_002D4a04_002Da232_002Dfe8cf0835441/@EntryIndexedValue">&lt;SessionState ContinuousTestingIsOn="False" ContinuousTestingMode="0" FrameworkVersion="{x:Null}" IsLocked="False" Name="All tests from Solution" PlatformMonoPreference="{x:Null}" PlatformType="{x:Null}" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"&gt;
-  &lt;Solution /&gt;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=1beb8365_002De92b_002D4a04_002Da232_002Dfe8cf0835441/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from Solution" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;Solution /&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=97359559_002Df5bf_002D4c56_002Db3f8_002D5dbeee52e74d/@EntryIndexedValue">&lt;SessionState ContinuousTestingIsOn="False" ContinuousTestingMode="0" FrameworkVersion="{x:Null}" IsLocked="False" Name="TestGetPatientNull" PlatformMonoPreference="{x:Null}" PlatformType="{x:Null}" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"&gt;
-  &lt;Or&gt;
-    &lt;Or&gt;
-      &lt;Project Location="/Users/jkarlsen/code/p10/src/Services/Abarnathy.AssessmentService/Test/Abarnathy.AssessmentService.Test.Unit" Presentation="&amp;lt;Test&amp;gt;\&amp;lt;Assessment Service&amp;gt;\&amp;lt;Abarnathy.AssessmentService.Test.Unit&amp;gt;" /&gt;
-      &lt;Project Location="/Users/jkarlsen/code/p10/src/Services/Abarnathy.DemographicsService/Test/Abarnathy.DemographicsService.Test.Unit" Presentation="&amp;lt;Test&amp;gt;\&amp;lt;Demographics Service&amp;gt;\&amp;lt;Abarnathy.DemographicsService.Test.Unit&amp;gt;" /&gt;
-    &lt;/Or&gt;
-    &lt;Project Location="/Users/jkarlsen/code/p10/src/Services/Abarnathy.HistoryService/Test/Abarnathy.HistoryService.Test.Unit" Presentation="&amp;lt;Test&amp;gt;\&amp;lt;History Service&amp;gt;\&amp;lt;Abarnathy.HistoryService.Test.Unit&amp;gt;" /&gt;
-  &lt;/Or&gt;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=97359559_002Df5bf_002D4c56_002Db3f8_002D5dbeee52e74d/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="TestGetPatientNull" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;Or&gt;&#xD;
+    &lt;Or&gt;&#xD;
+      &lt;Project Location="\Users\jkarlsen\code\p10\src\Services\Abarnathy.AssessmentService\Test\Abarnathy.AssessmentService.Test.Unit" Presentation="&amp;lt;Test&amp;gt;\&amp;lt;Assessment Service&amp;gt;\&amp;lt;Abarnathy.AssessmentService.Test.Unit&amp;gt;" /&gt;&#xD;
+      &lt;Project Location="\Users\jkarlsen\code\p10\src\Services\Abarnathy.DemographicsService\Test\Abarnathy.DemographicsService.Test.Unit" Presentation="&amp;lt;Test&amp;gt;\&amp;lt;Demographics Service&amp;gt;\&amp;lt;Abarnathy.DemographicsService.Test.Unit&amp;gt;" /&gt;&#xD;
+    &lt;/Or&gt;&#xD;
+    &lt;Project Location="\Users\jkarlsen\code\p10\src\Services\Abarnathy.HistoryService\Test\Abarnathy.HistoryService.Test.Unit" Presentation="&amp;lt;Test&amp;gt;\&amp;lt;History Service&amp;gt;\&amp;lt;Abarnathy.HistoryService.Test.Unit&amp;gt;" /&gt;&#xD;
+  &lt;/Or&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
+	
 	
 	
 	

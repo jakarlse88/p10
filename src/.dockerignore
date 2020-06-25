@@ -23,7 +23,14 @@
 **/values.dev.yaml
 LICENSE
 README.md
+**/Test/
+**/test/
+
+Services\Abarnathy.DemographicsService\Test\Abarnathy.DemographicsService.Test.Unit\Abarnathy.DemographicsService.Test.Unit.csproj
 
 Services/Abarnathy.DemographicsService/Test/**
+Services/Abarnathy.DemographicsService/test/**
 Services/Abarnathy.HistoryService/Test/**
+Services/Abarnathy.HistoryService/test/**
 Services/Abarnathy.AssessmentService/Test/**
+Services/Abarnathy.AssessmentService/test/**
