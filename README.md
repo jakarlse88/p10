@@ -30,8 +30,15 @@ Using Visual Studio:
 
 ![Release config](https://i.imgur.com/YH2SIlI.png)
 
+### Port overview
+| Service | Port  |
+| ------- | ----- |
+| Client  | 8081  |
+| Demographcis | 8080 |
+| History | 8082 |
+| Assessment | 8083 |
 
-
+To view the Swagger UI for the API services, simply navigate to `http://localhost:<port>` in your browser.
 
 ## Issues
 
